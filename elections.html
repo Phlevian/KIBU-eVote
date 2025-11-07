@@ -1,0 +1,626 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KIBU Election Center 2025</title>
+    <link rel="stylesheet" href="css/elections.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header Section -->
+    <header class="election-header">
+        <div class="header-content">
+            <div class="header-main">
+                <h1>KIBU Election Center 2025</h1>
+                <p class="subtitle">All university elections and voting opportunities</p>
+            </div>
+            <div class="header-status">
+                <div class="live-counter">
+                    <span class="live-dot"></span>
+                    LIVE: <span id="live-voter-count">2,341</span> students voting right now
+                </div>
+                <div class="system-status">
+                    <i class="fas fa-check-circle"></i> All voting systems operational
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Quick Stats Bar -->
+    <section class="stats-bar">
+        <div class="stats-container">
+            <div class="stat-card stat-active">
+                <div class="stat-value">3 OPEN</div>
+                <div class="stat-label">Active Elections</div>
+            </div>
+            <div class="stat-card stat-upcoming">
+                <div class="stat-value">5 STARTING SOON</div>
+                <div class="stat-label">Upcoming Elections</div>
+            </div>
+            <div class="stat-card stat-participation">
+                <div class="stat-value">Voted in 7/10 elections</div>
+                <div class="stat-label">Your Participation</div>
+            </div>
+            <div class="stat-card stat-total">
+                <div class="stat-value">9,482 registered voters</div>
+                <div class="stat-label">Total Students</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Filter & Search Section -->
+    <section class="filter-section">
+        <div class="filter-container">
+            <div class="filter-group">
+                <label for="status-filter">Status:</label>
+                <select id="status-filter">
+                    <option value="all">All Elections</option>
+                    <option value="active">Open Elections</option>
+                    <option value="upcoming">Upcoming Elections</option>
+                    <option value="completed">Completed Elections</option>
+                </select>
+            </div>
+            
+            <div class="filter-group">
+                <label for="category-filter">Category:</label>
+                <select id="category-filter">
+                    <option value="all">All Categories</option>
+                    <option value="student-council">Student Council</option>
+                    <option value="sports">Sports</option>
+                    <option value="clubs">Clubs</option>
+                    <option value="academic">Academic</option>
+                </select>
+            </div>
+            
+            <div class="search-group">
+                <i class="fas fa-search"></i>
+                <input type="text" id="search-elections" placeholder="Search elections...">
+            </div>
+            
+            <div class="sort-group">
+                <label for="sort-options">Sort by:</label>
+                <select id="sort-options">
+                    <option value="newest">Newest</option>
+                    <option value="closing-soon">Closing Soon</option>
+                    <option value="most-popular">Most Popular</option>
+                </select>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="election-main">
+        <div class="election-container">
+            <!-- Active Elections Section -->
+            <section class="election-section" id="active-elections">
+                <div class="section-header">
+                    <span class="status-indicator active"></span>
+                    <h2>ACTIVE ELECTIONS - VOTE NOW</h2>
+                </div>
+                <div class="election-grid">
+                    <!-- Student Council Card -->
+                    <div class="election-card active" data-category="student-council">
+                        <div class="card-header">
+                            <span class="status-badge active">VOTING OPEN</span>
+                            <div class="card-icon">
+                                <i class="fas fa-crown"></i>
+                            </div>
+                        </div>
+                        <h3 class="card-title">Student Council Elections 2024</h3>
+                        <div class="card-dates">
+                            <i class="far fa-calendar"></i> March 10 - March 17, 2025
+                        </div>
+                        <div class="countdown-timer" id="student-council-timer">
+                            Ends in: <span class="countdown">1 day 14:32:15</span>
+                        </div>
+                        
+                        <!-- Positions List -->
+                        <div class="positions-list">
+                            <h4>13 Positions Available:</h4>
+                            <div class="positions-grid">
+                                <span class="position-tag">👑 Chairperson</span>
+                                <span class="position-tag">👥 Vice Chairperson</span>
+                                <span class="position-tag">📝 Secretary General</span>
+                                <span class="position-tag">💰 Treasurer</span>
+                                <span class="position-tag">📚 Academic Secretary</span>
+                                <span class="position-tag">🏠 Accommodation & Security</span>
+                                <span class="position-tag">🎭 Special Interests</span>
+                                <span class="position-tag">🎓 FASS Academic</span>
+                                <span class="position-tag">👩 FASS Female</span>
+                                <span class="position-tag">👨 FASS Male</span>
+                                <span class="position-tag">🌙 Evening & Weekend</span>
+                                <span class="position-tag">⏱️ Part-Time</span>
+                                <span class="position-tag">🎓 Postgraduate</span>
+                            </div>
+                        </div>
+                        
+                        <div class="participation">
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 87%"></div>
+                            </div>
+                            <span class="vote-count">8,247 votes cast (87% turnout)</span>
+                        </div>
+                        <div class="user-status">
+                            <i class="fas fa-check-circle"></i> <span>VOTED</span>
+                        </div>
+                        <div class="positions">
+                            <i class="fas fa-users"></i> 13 positions • 23 candidates
+                        </div>
+                        <div class="card-actions">
+                            <button class="btn-primary" onclick="viewReceipt()">VIEW RECEIPT</button>
+                        </div>
+                    </div>
+
+                    <!-- Library Committee Card -->
+                    <div class="election-card active" data-category="academic">
+                        <div class="card-header">
+                            <span class="status-badge active">VOTING OPEN</span>
+                            <div class="card-icon">
+                                <i class="fas fa-book"></i>
+                            </div>
+                        </div>
+                        <h3 class="card-title">Library Committee Representatives</h3>
+                        <div class="card-dates">
+                            <i class="far fa-calendar"></i> March 15 - March 20, 2025
+                        </div>
+                        <div class="countdown-timer" id="library-timer">
+                            Ends in: <span class="countdown">3 days 08:15:30</span>
+                        </div>
+                        
+                        <div class="positions-list">
+                            <h4>3 Positions Available:</h4>
+                            <div class="positions-grid">
+                                <span class="position-tag">📚 Head Librarian</span>
+                                <span class="position-tag">💻 Digital Resources</span>
+                                <span class="position-tag">📖 Collections Manager</span>
+                            </div>
+                        </div>
+                        
+                        <div class="participation">
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 15%"></div>
+                            </div>
+                            <span class="vote-count">1,456 votes cast (15% turnout)</span>
+                        </div>
+                        <div class="user-status not-voted">
+                            <i class="far fa-clock"></i> <span>NOT VOTED</span>
+                        </div>
+                        <div class="positions">
+                            <i class="fas fa-users"></i> 3 positions • 9 candidates
+                        </div>
+                        <div class="card-actions">
+                            <button class="btn-primary" onclick="startVoting()">VOTE NOW</button>
+                        </div>
+                    </div>
+
+                    <!-- Faculty Representatives Card -->
+                    <div class="election-card active" data-category="academic">
+                        <div class="card-header">
+                            <span class="status-badge active">VOTING OPEN</span>
+                            <div class="card-icon">
+                                <i class="fas fa-graduation-cap"></i>
+                            </div>
+                        </div>
+                        <h3 class="card-title">Faculty Representatives Election</h3>
+                        <div class="card-dates">
+                            <i class="far fa-calendar"></i> March 12 - March 18, 2025
+                        </div>
+                        <div class="countdown-timer" id="faculty-timer">
+                            Ends in: <span class="countdown">2 days 06:45:12</span>
+                        </div>
+                        
+                        <div class="positions-list">
+                            <h4>6 Faculty Positions:</h4>
+                            <div class="positions-grid">
+                                <span class="position-tag">🔬 Computing & Informatics</span>
+                                <span class="position-tag">📊 Business & Economics</span>
+                                <span class="position-tag">🎓 Arts & Social Sciences</span>
+                                <span class="position-tag">🏥 Nursing</span>
+                                <span class="position-tag">⚖️ sciences</span>
+                                <span class="position-tag">🎨 Education</span>
+                            </div>
+                        </div>
+                        
+                        <div class="participation">
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 62%"></div>
+                            </div>
+                            <span class="vote-count">5,879 votes cast (62% turnout)</span>
+                        </div>
+                        <div class="user-status not-voted">
+                            <i class="far fa-clock"></i> <span>NOT VOTED</span>
+                        </div>
+                        <div class="positions">
+                            <i class="fas fa-users"></i> 6 positions • 18 candidates
+                        </div>
+                        <div class="card-actions">
+                            <button class="btn-primary" onclick="startVoting()">VOTE NOW</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Upcoming Elections Section -->
+            <section class="election-section" id="upcoming-elections">
+                <div class="section-header">
+                    <span class="status-indicator upcoming"></span>
+                    <h2>UPCOMING ELECTIONS - GET READY</h2>
+                </div>
+                <div class="election-grid">
+                    <!-- Sports Captain Card -->
+                    <div class="election-card upcoming" data-category="sports">
+                        <div class="card-header">
+                            <span class="status-badge upcoming">OPENS MONDAY</span>
+                            <div class="card-icon">
+                                <i class="fas fa-futbol"></i>
+                            </div>
+                        </div>
+                        <h3 class="card-title">Sports Captain Elections</h3>
+                        <div class="card-dates">
+                            <i class="far fa-calendar"></i> March 20 - March 25, 2025
+                        </div>
+                        <div class="countdown-timer" id="sports-timer">
+                            Opens in: <span class="countdown upcoming">3 days 12:45:00</span>
+                        </div>
+                        
+                        <div class="positions-list">
+                            <h4>8 Sports Disciplines:</h4>
+                            <div class="positions-grid">
+                                <span class="position-tag">⚽ Football Captain</span>
+                                <span class="position-tag">🏀 Basketball Captain</span>
+                                <span class="position-tag">🎾 Tennis Captain</span>
+                                <span class="position-tag">🏏 Cricket Captain</span>
+                                <span class="position-tag">🏊 Swimming Captain</span>
+                                <span class="position-tag">🏃 Athletics Captain</span>
+                                <span class="position-tag">🥊 Martial Arts Captain</span>
+                                <span class="position-tag">🏐 Volleyball Captain</span>
+                            </div>
+                        </div>
+                        
+                        <div class="candidates">
+                            <i class="fas fa-user-plus"></i> 16 candidates registered
+                        </div>
+                        <div class="notification-badge">
+                            <i class="fas fa-bell"></i> Get notified when voting opens
+                        </div>
+                        <div class="card-actions">
+                            <button class="btn-outline" onclick="setReminder('Sports Captain Elections')">SET REMINDER</button>
+                        </div>
+                    </div>
+
+                    <!-- Club Leadership Card -->
+                    <div class="election-card upcoming" data-category="clubs">
+                        <div class="card-header">
+                            <span class="status-badge nominations">NOMINATIONS OPEN</span>
+                            <div class="card-icon">
+                                <i class="fas fa-mask"></i>
+                            </div>
+                        </div>
+                        <h3 class="card-title">Club Leadership Positions</h3>
+                        <div class="card-dates">
+                            <i class="far fa-calendar"></i> April 1 - April 7, 2025
+                        </div>
+                        <div class="phase-info">
+                            Nomination period: <span class="highlight">12 days left</span>
+                        </div>
+                        
+                        <div class="positions-list">
+                            <h4>12 Student Clubs:</h4>
+                            <div class="positions-grid">
+                                <span class="position-tag">💻 Tech Club President</span>
+                                <span class="position-tag">🎭 Drama Club Director</span>
+                                <span class="position-tag">🎵 Music Club Head</span>
+                                <span class="position-tag">📸 Photography Club</span>
+                                <span class="position-tag">🌍 Environmental Club</span>
+                                <span class="position-tag">🤝 Debate Club President</span>
+                                <span class="position-tag">✍️ Writers' Guild</span>
+                                <span class="position-tag">🎨 Art Society President</span>
+                            </div>
+                        </div>
+                        
+                        <div class="current-stats">
+                            <i class="fas fa-file-signature"></i> 28 nominations received
+                        </div>
+                        <div class="card-actions">
+                            <button class="btn-outline yellow" onclick="openNominations()">NOMINATE SOMEONE</button>
+                        </div>
+                    </div>
+
+                    <!-- Academic Committee Card -->
+                    <div class="election-card upcoming" data-category="academic">
+                        <div class="card-header">
+                            <span class="status-badge upcoming">STARTS NEXT WEEK</span>
+                            <div class="card-icon">
+                                <i class="fas fa-chalkboard-teacher"></i>
+                            </div>
+                        </div>
+                        <h3 class="card-title">Academic Committee Representatives</h3>
+                        <div class="card-dates">
+                            <i class="far fa-calendar"></i> March 25 - March 30, 2025
+                        </div>
+                        <div class="countdown-timer" id="academic-timer">
+                            Opens in: <span class="countdown upcoming">5 days 08:30:00</span>
+                        </div>
+                        
+                        <div class="positions-list">
+                            <h4>5 Committee Positions:</h4>
+                            <div class="positions-grid">
+                                <span class="position-tag">📋 Curriculum Committee</span>
+                                <span class="position-tag">🏆 Academic Standards</span>
+                                <span class="position-tag">💡 Innovation & Research</span>
+                                <span class="position-tag">🌐 International Programs</span>
+                                <span class="position-tag">🎯 Student Welfare</span>
+                            </div>
+                        </div>
+                        
+                        <div class="candidates">
+                            <i class="fas fa-user-plus"></i> 14 candidates registered
+                        </div>
+                        <div class="card-actions">
+                            <button class="btn-outline" onclick="setReminder('Academic Committee')">SET REMINDER</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Completed Elections Section -->
+            <section class="election-section" id="completed-elections">
+                <div class="section-header">
+                    <span class="status-indicator completed"></span>
+                    <h2>COMPLETED ELECTIONS - VIEW RESULTS</h2>
+                </div>
+                <div class="election-grid">
+                    <!-- Departmental Reps Card -->
+                    <div class="election-card completed" data-category="academic">
+                        <div class="card-header">
+                            <span class="status-badge completed">COMPLETED</span>
+                            <div class="card-icon">
+                                <i class="fas fa-university"></i>
+                            </div>
+                        </div>
+                        <h3 class="card-title">Departmental Representatives</h3>
+                        <div class="card-dates">
+                            <i class="far fa-calendar"></i> February 15 - February 20, 2025
+                        </div>
+                        <div class="results-info">
+                            Results announced February 21
+                        </div>
+                        
+                        <div class="positions-list">
+                            <h4>8 Departments:</h4>
+                            <div class="positions-grid">
+                                <span class="position-tag">💻 Computer Science</span>
+                                <span class="position-tag">📊 Information Technology</span>
+                                <span class="position-tag">⚖️ Business and Economics</span>
+                                <span class="position-tag">🏥 Nursing</span>
+                                <span class="position-tag">🔧 Engineering</span>
+                                <span class="position-tag">🎓 Education</span>
+                                <span class="position-tag">🎨 Fine Arts</span>
+                                <span class="position-tag">🔬 Pure Sciences</span>
+                            </div>
+                        </div>
+                        
+                        <div class="participation">
+                            <div class="progress-bar">
+                                <div class="progress-fill completed" style="width: 71%"></div>
+                            </div>
+                            <span class="vote-count">6,789 votes cast (71% turnout)</span>
+                        </div>
+                        <div class="user-status">
+                            <i class="fas fa-check-circle"></i> <span>PARTICIPATED</span>
+                        </div>
+                        <div class="winner-info">
+                            <i class="fas fa-trophy"></i> Results available
+                        </div>
+                        <div class="card-actions">
+                            <button class="btn-outline" onclick="viewResults('Departmental Representatives')">VIEW RESULTS</button>
+                        </div>
+                    </div>
+
+                    <!-- Hostel Committee Card -->
+                    <div class="election-card completed" data-category="academic">
+                        <div class="card-header">
+                            <span class="status-badge completed">COMPLETED</span>
+                            <div class="card-icon">
+                                <i class="fas fa-home"></i>
+                            </div>
+                        </div>
+                        <h3 class="card-title">Hostel Committee Elections</h3>
+                        <div class="card-dates">
+                            <i class="far fa-calendar"></i> February 5 - February 12, 2025
+                        </div>
+                        <div class="results-info">
+                            Results announced February 13
+                        </div>
+                        
+                        <div class="positions-list">
+                            <h4>6 Hostel Positions:</h4>
+                            <div class="positions-grid">
+                                <span class="position-tag">🏠 Main Hostel Chair</span>
+                                <span class="position-tag">🏢 Annex Hostel Chair</span>
+                                <span class="position-tag">👥 Welfare Secretary</span>
+                                <span class="position-tag">💰 Finance Secretary</span>
+                                <span class="position-tag">🎉 Social Secretary</span>
+                                <span class="position-tag">🛡️ Security Liaison</span>
+                            </div>
+                        </div>
+                        
+                        <div class="participation">
+                            <div class="progress-bar">
+                                <div class="progress-fill completed" style="width: 58%"></div>
+                            </div>
+                            <span class="vote-count">5,499 votes cast (58% turnout)</span>
+                        </div>
+                        <div class="user-status">
+                            <i class="fas fa-check-circle"></i> <span>PARTICIPATED</span>
+                        </div>
+                        <div class="winner-info">
+                            <i class="fas fa-trophy"></i> Results available
+                        </div>
+                        <div class="card-actions">
+                            <button class="btn-outline" onclick="viewResults('Hostel Committee')">VIEW RESULTS</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Sidebar Content -->
+            <aside class="election-sidebar">
+                <!-- Personal Voting History -->
+                <div class="sidebar-card">
+                    <div class="card-header">
+                        <i class="fas fa-chart-bar"></i>
+                        <h3>Your Voting History</h3>
+                    </div>
+                    <div class="history-stats">
+                        <div class="stat-item">
+                            <span class="stat-number">7/10</span>
+                            <span class="stat-label">Elections Participated</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">3</span>
+                            <span class="stat-label">Perfect Attendance</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number">Today at 2:30 PM</span>
+                            <span class="stat-label">Last Vote</span>
+                        </div>
+                    </div>
+                    <div class="recent-activity">
+                        <h4>Recent Activity</h4>
+                        <div class="activity-item">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Student Council - Voted today</span>
+                        </div>
+                        <div class="activity-item">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Library Committee - Voted yesterday</span>
+                        </div>
+                        <div class="activity-item">
+                            <i class="far fa-clock"></i>
+                            <span>Sports Captain - Voting opens Monday</span>
+                        </div>
+                    </div>
+                    <div class="card-actions">
+                        <button class="btn-link" onclick="viewFullHistory()">VIEW ALL HISTORY</button>
+                    </div>
+                </div>
+
+                <!-- Notification Center -->
+                <div class="sidebar-card">
+                    <div class="card-header">
+                        <i class="fas fa-bell"></i>
+                        <h3>Election Updates & Reminders</h3>
+                    </div>
+                    <div class="notifications-list">
+                        <div class="notification-item">
+                            <span class="notification-indicator active"></span>
+                            <span>Student Council voting closes in 24 hours</span>
+                        </div>
+                        <div class="notification-item">
+                            <span class="notification-indicator upcoming"></span>
+                            <span>Sports Captain nominations close tomorrow</span>
+                        </div>
+                        <div class="notification-item">
+                            <span class="notification-indicator results"></span>
+                            <span>Library Committee results announced</span>
+                        </div>
+                        <div class="notification-item">
+                            <span class="notification-indicator system"></span>
+                            <span>System maintenance scheduled for Sunday</span>
+                        </div>
+                    </div>
+                    <div class="card-actions">
+                        <button class="btn-link" onclick="manageNotifications()">Manage notification preferences</button>
+                    </div>
+                </div>
+
+                <!-- Quick Actions -->
+                <div class="sidebar-card quick-actions">
+                    <div class="card-header">
+                        <i class="fas fa-bolt"></i>
+                        <h3>Quick Actions</h3>
+                    </div>
+                    <div class="actions-grid">
+                        <button class="action-btn emergency" onclick="startVoting()">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            <span>CAST PENDING VOTES</span>
+                        </button>
+                        <button class="action-btn" onclick="downloadRecords()">
+                            <i class="fas fa-download"></i>
+                            <span>Download My Voting Records</span>
+                        </button>
+                        <button class="action-btn" onclick="verifyVotes()">
+                            <i class="fas fa-search"></i>
+                            <span>Verify All My Votes</span>
+                        </button>
+                        <button class="action-btn" onclick="showHelp()">
+                            <i class="fas fa-question-circle"></i>
+                            <span>Voting Help & FAQs</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- System Information -->
+                <div class="sidebar-card">
+                    <div class="card-header">
+                        <i class="fas fa-cog"></i>
+                        <h3>System Information</h3>
+                    </div>
+                    <div class="system-status-list">
+                        <div class="status-item">
+                            <span class="status-indicator active"></span>
+                            <span>Blockchain Network: Operational</span>
+                        </div>
+                        <div class="status-item">
+                            <span class="status-indicator active"></span>
+                            <span>Voting Platform: Online</span>
+                        </div>
+                        <div class="status-item">
+                            <span class="status-indicator active"></span>
+                            <span>Security: All systems secure</span>
+                        </div>
+                        <div class="status-item">
+                            <span class="status-indicator stats"></span>
+                            <span>Today's Activity: 3,247 votes processed</span>
+                        </div>
+                    </div>
+                    <div class="system-info">
+                        <p>Last system update: March 10, 2024</p>
+                        <button class="btn-link error" onclick="reportIssue()">Report issues</button>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </main>
+
+    <!-- Mobile Navigation -->
+    <div class="mobile-nav">
+        <button class="nav-btn active">
+            <i class="fas fa-home"></i>
+            <span>Home</span>
+        </button>
+        <button class="nav-btn" onclick="startVoting()">
+            <i class="fas fa-vote-yea"></i>
+            <span>Vote</span>
+        </button>
+        <button class="nav-btn" onclick="viewResults()">
+            <i class="fas fa-poll"></i>
+            <span>Results</span>
+        </button>
+        <button class="nav-btn" onclick="viewFullHistory()">
+            <i class="fas fa-user"></i>
+            <span>Profile</span>
+        </button>
+    </div>
+
+    <!-- Floating Action Button -->
+    <button class="fab" onclick="startVoting()">
+        <i class="fas fa-vote-yea"></i>
+    </button>
+
+    <script src="js/elections.js"></script>
+</body>
+</html>

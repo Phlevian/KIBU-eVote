@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Join KIBU Digital Democracy - KIBU-eVote</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/auth.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="auth-container">
+        <!-- Left Side - Registration Form (70%) -->
+        <div class="form-section">
+            <!-- Header Section -->
+            <div class="header-section">
+                <div class="top-nav">
+                    <div class="logo-container">
+                         <div class="kibu-logo">
+          <img src="assets/images/logo.jpg" alt="KIBU Digital Democracy" class="logo-image">
+
+    <span class="logo-text">Digital Democracy</span>
+</div>
+                        <div class="system-name">KIBU Voting Registration</div>
+                    </div>
+                    <div class="progress-indicator">
+                        <span class="step-text">Step 1 of 4</span>
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 25%"></div>
+                        </div>
+                    </div>
+                    <button class="help-button">
+                        <span class="help-icon">🆘</span>
+                        <span class="help-text">Help</span>
+                    </button>
+                </div>
+
+                <div class="welcome-message">
+                    <h1 class="main-headline">JOIN KIBU'S DIGITAL DEMOCRACY</h1>
+                    <p class="subtext">Register in 2 minutes and make your voice heard in university decisions</p>
+                </div>
+            </div>
+
+            <!-- Registration Form -->
+            <div class="form-container">
+                <div class="form-card">
+                    <!-- Step 1: Basic Information -->
+                    <div class="form-step active" data-step="1">
+                        <h2 class="step-title">Basic Information</h2>
+                        
+                        <!-- Full Name Section -->
+                        <div class="form-section-group">
+                            <div class="section-header">
+                                <div class="section-icon user-icon">👤</div>
+                                <h3>Full Name</h3>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <input type="text" id="first-name" class="form-input" required>
+                                    <label for="first-name" class="floating-label">First Name</label>
+                                    <div class="validation-check"></div>
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" id="middle-name" class="form-input">
+                                    <label for="middle-name" class="floating-label">Middle Name</label>
+                                </div>
+                                <div class="form-group">
+                                    <input type="text" id="last-name" class="form-input" required>
+                                    <label for="last-name" class="floating-label">Last Name</label>
+                                    <div class="validation-check"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- KIBU Registration Number -->
+                        <div class="form-section-group">
+                            <div class="section-header">
+                                <div class="section-icon student-icon">🎓</div>
+                                <h3>KIBU Registration Number</h3>
+                            </div>
+                            <div class="form-group full-width">
+                                <input type="text" id="reg-number" class="form-input" required pattern="[A-Z]{2,4}\/\d{4}\/\d{2}">
+                                <label for="reg-number" class="floating-label">Registration Number (e.g., BIT/0019/23)</label>
+                                <div class="input-helper">Format: CourseCode/Number/Year (e.g., BIT/0019/23)</div>
+                                <div class="validation-container">
+                                    <div class="loading-spinner" style="display: none;"></div>
+                                    <div class="validation-check"></div>
+                                </div>
+                                <div class="error-message" id="reg-error"></div>
+                            </div>
+                        </div>
+
+                        <!-- Contact Information -->
+                        <div class="form-row">
+                            <div class="form-section-group">
+                                <div class="section-header">
+                                    <div class="section-icon email-icon">📧</div>
+                                    <h3>Email Address</h3>
+                                </div>
+                                <div class="form-group">
+                                    <input type="email" id="email" class="form-input" required>
+                                    <label for="email" class="floating-label">Email Address</label>
+                                    <div class="validation-check"></div>
+                                    <div class="error-message" id="email-error"></div>
+                                </div>
+                            </div>
+
+                            <div class="form-section-group">
+                                <div class="section-header">
+                                    <div class="section-icon phone-icon">📱</div>
+                                    <h3>Phone Number</h3>
+                                </div>
+                                <div class="form-group">
+                                    <div class="phone-input-container">
+                                        <div class="country-code">
+                                            <span class="flag">🇰🇪</span>
+                                            <span>+254</span>
+                                        </div>
+                                        <input type="tel" id="phone" class="form-input" required>
+                                        <label for="phone" class="floating-label">Phone Number</label>
+                                    </div>
+                                    <div class="validation-check"></div>
+                                    <div class="error-message" id="phone-error"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Academic Information -->
+                        <div class="form-section-group">
+                            <div class="section-header">
+                                <div class="section-icon academic-icon">🏫</div>
+                                <h3>Academic Information</h3>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <select id="faculty" class="form-select" required>
+                                        <option value=""></option>
+                                        <option value="computing">School of Computing and Informatics</option>
+                                        <option value="arts">Faculty of Arts and Social Sciences</option>
+                                        <option value="education">School of Education</option>
+                                        <option value="sciences">Faculty of Sciences</option>
+                                        <option value="economics">School of Business and Economics</option>
+                                        <option value="nursing">School of Nursing</option>
+                                    </select>
+                                    <label for="faculty" class="floating-label">School/Faculty</label>
+                                    <div class="validation-check"></div>
+                                </div>
+
+                                <div class="form-group">
+                                    <select id="year" class="form-select" required>
+                                        <option value=""></option>
+                                        <option value="1">First Year</option>
+                                        <option value="2">Second Year</option>
+                                        <option value="3">Third Year</option>
+                                        <option value="4">Fourth Year</option>
+                                    </select>
+                                    <label for="year" class="floating-label">Year of Study</label>
+                                    <div class="validation-check"></div>
+                                </div>
+                            </div>
+
+                            <div class="form-group full-width">
+                                <select id="course" class="form-select" required>
+                                    <option value=""></option>
+                                    <option value="computer-science">Computer Science</option>
+                                    <option value="information-technology">Information Technology</option>
+                                    <option value="business-admin">Business Administration</option>
+                                    <option value="economics">Economics</option>
+                                    <option value="education-arts">Education Arts</option>
+                                    <option value="nursing">Nursing</option>
+                                    <option value="education-sciences">Education Sciences</option>
+                                </select>
+                                <label for="course" class="floating-label">Course/Program</label>
+                                <div class="validation-check"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 2: Photo Upload -->
+                    <div class="form-step" data-step="2">
+                        <h2 class="step-title">Profile Photo</h2>
+                        <p class="step-description">Upload a clear photo for identity verification</p>
+                        
+                        <div class="photo-upload-section">
+                            <div class="photo-upload-area" id="photo-upload-area">
+                                <div class="upload-placeholder">
+                                    <div class="camera-icon">📸</div>
+                                    <p class="upload-text">Drag photo here or click to browse</p>
+                                    <p class="upload-subtext">Recommended: Square photo, 2MB max</p>
+                                </div>
+                                <div class="photo-preview" style="display: none;">
+                                    <img id="photo-preview-img" src="" alt="Profile Preview">
+                                    <div class="photo-actions">
+                                        <button class="action-btn crop-btn">✂️ Crop</button>
+                                        <button class="action-btn rotate-btn">🔄 Rotate</button>
+                                        <button class="action-btn remove-btn">🗑️ Remove</button>
+                                    </div>
+                                </div>
+                                <input type="file" id="photo-input" accept="image/*" style="display: none;">
+                            </div>
+                            
+                            <button class="camera-button" id="camera-btn">
+                                <span class="camera-icon">📷</span>
+                                Take Photo Now
+                            </button>
+                            
+                            <div class="photo-requirements">
+                                <h4>Photo Requirements:</h4>
+                                <ul>
+                                    <li>Clear, recent headshot</li>
+                                    <li>Face clearly visible</li>
+                                    <li>No filters or heavy editing</li>
+                                    <li>File size under 2MB</li>
+                                    <li>JPG, PNG, or WebP format</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 3: Security -->
+                    <div class="form-step" data-step="3">
+                        <h2 class="step-title">Account Security</h2>
+                        <p class="step-description">Create a strong password to protect your voting account</p>
+                        
+                        <div class="security-section">
+                            <div class="form-section-group">
+                                <div class="section-header">
+                                    <div class="section-icon lock-icon">🔒</div>
+                                    <h3>Password Creation</h3>
+                                </div>
+                                
+                                <div class="form-group full-width">
+                                    <div class="password-input-container">
+                                        <input type="password" id="password" class="form-input" required>
+                                        <label for="password" class="floating-label">Create Password</label>
+                                        <button class="toggle-password" type="button">👁️</button>
+                                    </div>
+                                    
+                                    <div class="password-strength">
+                                        <div class="strength-bar">
+                                            <div class="strength-fill" data-strength="0"></div>
+                                        </div>
+                                        <div class="strength-text">Password strength: <span id="strength-label">Very Weak</span></div>
+                                    </div>
+                                    
+                                    <div class="password-requirements">
+                                        <div class="requirement" data-requirement="length">
+                                            <span class="requirement-icon">❌</span>
+                                            <span>At least 8 characters</span>
+                                        </div>
+                                        <div class="requirement" data-requirement="uppercase">
+                                            <span class="requirement-icon">❌</span>
+                                            <span>One uppercase letter</span>
+                                        </div>
+                                        <div class="requirement" data-requirement="number">
+                                            <span class="requirement-icon">❌</span>
+                                            <span>One number</span>
+                                        </div>
+                                        <div class="requirement" data-requirement="special">
+                                            <span class="requirement-icon">❌</span>
+                                            <span>One special character</span>
+                                        </div>
+                                    </div> 
+                                    <div class="error-message" id="password-error"></div>
+                                </div>
+                            </div>
+
+                            <div class="form-section-group">
+                                <div class="section-header">
+                                    <div class="section-icon check-icon">✅</div>
+                                    <h3>Confirm Password</h3>
+                                </div>
+                                
+                                <div class="form-group full-width">
+                                    <div class="password-input-container">
+                                        <input type="password" id="confirm-password" class="form-input" required>
+                                        <label for="confirm-password" class="floating-label">Confirm Password</label>
+                                        <button class="toggle-password" type="button">👁️</button>
+                                    </div>
+                                    <div class="password-match" id="password-match" style="display: none;">
+                                        <span class="match-icon">✅</span>
+                                        <span>Passwords match</span>
+                                    </div>
+                                    <div class="error-message" id="confirm-password-error"></div>
+                                </div>
+                            </div>
+
+                            <div class="verification-options">
+                                <h4>Verification Options</h4>
+                                <div class="verification-buttons">
+                                    <button class="verification-btn email-verification" id="email-verify-btn">
+                                        <span class="btn-icon">📧</span>
+                                        Send Email Verification
+                                    </button>
+                                    <button class="verification-btn sms-verification" id="sms-verify-btn">
+                                        <span class="btn-icon">💬</span>
+                                        Send SMS Code
+                                    </button>
+                                </div>
+                                
+                                <div class="two-factor-option">
+                                    <input type="checkbox" id="two-factor" class="toggle-switch">
+                                    <label for="two-factor">
+                                        <span class="toggle-label">Enable Two-Factor Authentication</span>
+                                        <span class="toggle-description">Extra security with authenticator app</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 4: Terms & Complete -->
+                    <div class="form-step" data-step="4">
+                        <h2 class="step-title">Terms & Agreement</h2>
+                        <p class="step-description">Review and accept the terms to complete your registration</p>
+                        
+                        <div class="terms-section">
+                            <div class="terms-agreements">
+                                <div class="agreement-item">
+                                    <input type="checkbox" id="terms" class="agreement-checkbox" required>
+                                    <label for="terms" class="agreement-label">
+                                        <span class="agreement-icon">📋</span>
+                                        <div class="agreement-text">
+                                            <strong>Terms of Service</strong>
+                                            <span>I agree to the KIBU-eVote Terms of Service</span>
+                                        </div>
+                                    </label>
+                                    <button class="view-terms-btn" data-terms="tos">View</button>
+                                </div>
+                                
+                                <div class="agreement-item">
+                                    <input type="checkbox" id="privacy" class="agreement-checkbox" required>
+                                    <label for="privacy" class="agreement-label">
+                                        <span class="agreement-icon">📜</span>
+                                        <div class="agreement-text">
+                                            <strong>Privacy Policy</strong>
+                                            <span>I agree to the Privacy Policy and data handling</span>
+                                        </div>
+                                    </label>
+                                    <button class="view-terms-btn" data-terms="privacy">View</button>
+                                </div>
+                                
+                                <div class="agreement-item">
+                                    <input type="checkbox" id="voting-guidelines" class="agreement-checkbox" required>
+                                    <label for="voting-guidelines" class="agreement-label">
+                                        <span class="agreement-icon">🗳️</span>
+                                        <div class="agreement-text">
+                                            <strong>Voting Guidelines</strong>
+                                            <span>I agree to follow KIBU voting rules and conduct</span>
+                                        </div>
+                                    </label>
+                                    <button class="view-terms-btn" data-terms="guidelines">View</button>
+                                </div>
+                            </div>
+                            
+                            <div class="verification-methods">
+                                <h4>Choose Verification Method</h4>
+                                <div class="verification-options">
+                                    <label class="verification-option">
+                                        <input type="radio" name="verification" value="email" checked>
+                                        <span class="verification-label">
+                                            <span class="verification-icon">📧</span>
+                                            <span>Email Verification</span>
+                                        </span>
+                                    </label>
+                                    <label class="verification-option">
+                                        <input type="radio" name="verification" value="sms">
+                                        <span class="verification-label">
+                                            <span class="verification-icon">💬</span>
+                                            <span>SMS Verification</span>
+                                        </span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Form Navigation -->
+                    <div class="form-navigation">
+                        <div class="progress-info">
+                            <span class="completion-text">25% Complete</span>
+                            <div class="completion-bar">
+                                <div class="completion-fill" style="width: 25%"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="navigation-buttons">
+                            <button class="nav-btn secondary-btn" id="save-draft-btn">
+                                💾 Save Draft
+                            </button>
+                            <button class="nav-btn secondary-btn" id="clear-form-btn">
+                                🔄 Start Over
+                            </button>
+                            <button class="nav-btn primary-btn" id="next-step-btn">
+                                Continue to Next Step →
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Side - Inspiration Panel (30%) -->
+        <div class="inspiration-section">
+            <div class="inspiration-content">
+                <!-- Hero Visuals -->
+                <div class="hero-visuals">
+                    <div class="floating-shapes">
+                        <div class="shape shape-1"></div>
+                        <div class="shape shape-2"></div>
+                        <div class="shape shape-3"></div>
+                        <div class="blockchain-cube">🔗</div>
+                        <div class="democratic-symbol">🗳️</div>
+                        <div class="justice-symbol">⚖️</div>
+                    </div>
+                </div>
+
+                <!-- Motivational Content -->
+                <div class="motivational-content">
+                    <div class="statistics-card">
+                        <div class="stat-item">
+                            <div class="stat-number" data-count="8500">0</div>
+                            <div class="stat-label">KIBU Students Registered</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-progress">
+                                <div class="progress-circle" data-progress="92">
+                                    <span>92%</span>
+                                </div>
+                            </div>
+                            <div class="stat-label">Shape University Future</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="security-badge">
+                                <div class="shield-icon">🛡️</div>
+                                <span>Secure & Anonymous</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Trust Elements -->
+                    <div class="trust-elements">
+                        <div class="security-badges">
+                            <div class="badge">🔒 Blockchain Secured</div>
+                            <div class="badge">✅ KIBU Verified</div>
+                            <div class="badge">📜 ISO Certified</div>
+                        </div>
+
+                        <div class="endorsement-card">
+                            <div class="endorsement-content">
+                                <div class="quote">"KIBU-eVote ensures every student's voice is heard securely and transparently."</div>
+                                <div class="endorser">
+                                    <div class="endorser-avatar">👨‍💼</div>
+                                    <div class="endorser-info">
+                                        <div class="endorser-name">Dr. James Mwangi</div>
+                                        <div class="endorser-title">Director of ICT, KIBU</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="testimonials">
+                            <div class="testimonial">
+                                <div class="student-avatar">👩‍🎓</div>
+                                <div class="testimonial-content">
+                                    <div class="testimonial-text">"Voting was so easy and secure!"</div>
+                                    <div class="student-name">- Sarah, 3rd Year CS</div>
+                                </div>
+                            </div>
+                            <div class="testimonial">
+                                <div class="student-avatar">👨‍🎓</div>
+                                <div class="testimonial-content">
+                                    <div class="testimonial-text">"Love the blockchain verification!"</div>
+                                    <div class="student-name">- Mike, 2nd Year Business</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div class="success-modal" id="success-modal">
+        <div class="modal-content">
+            <div class="success-animation">
+                <div class="confetti"></div>
+                <div class="confetti"></div>
+                <div class="confetti"></div>
+                <div class="success-icon">🎉</div>
+            </div>
+            <h2>Welcome to KIBU Digital Democracy!</h2>
+            <p>Your account has been created successfully. Check your email for verification.</p>
+            <div class="success-actions">
+                <button class="action-btn primary-btn" id="verify-now-btn">Verify Now</button>
+                <button class="action-btn secondary-btn" id="go-dashboard-btn">Go to Dashboard</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Help Chat Bubble -->
+    <div class="help-chat-bubble" id="help-chat">
+        <div class="chat-icon">💬</div>
+        <div class="chat-tooltip">Need assistance? Click here!</div>
+    </div>
+
+    <script src="js/auth.js"></script>
+</body>
+</html>
+
+
+
+
+
+
+
+

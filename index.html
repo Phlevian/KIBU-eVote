@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KIBU Blockchain Voting System - Digital Democracy</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&family=Poppins:wght@400;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Animate.css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    
+    <!-- External CSS -->
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/landing.css">
+</head>
+<body>
+    <!-- Particle Background -->
+    <div class="particles" id="particles"></div>
+
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="nav-container">
+             <a href="index.html" class="logo" aria-label="KIBU eVote Home">
+    <img src="logo.jpg" alt="KIBU eVote Logo" class="logo-img">
+    <span class="logo-text">KIBU eVote</span>
+</a>
+
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="#home"><i class="fas fa-home"></i> Home</a></li>
+                <li><a href="#features"><i class="fas fa-box-ballot"></i> Features</a></li>
+                <li><a href="#how-it-works"><i class="fas fa-lightbulb"></i> How It Works</a></li>
+                <li><a href="#security"><i class="fas fa-shield-alt"></i> Security</a></li>
+                <li><a href="#contact"><i class="fas fa-headset"></i> Support</a></li>
+                <li><a href="login.html" class="btn-login"><i class="fas fa-rocket"></i> Login / Register</a></li>
+            </ul>
+            <div class="mobile-menu-toggle" id="mobileToggle">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content animate_animated animate_fadeIn">
+            <div class="hero-text">
+                <h1 class="animate_animated animate_bounceInDown">VOTE FOR KIBU'S FUTURE</h1>
+                <p class="animate_animated animatefadeInUp animate_delay-1s">
+                    Join the digital democracy revolution at Kibabii University with our secure blockchain voting platform. Your voice matters, and we make it count!
+                </p>
+                <div class="hero-buttons animate_animated animatefadeInUp animate_delay-2s">
+                    <a href="voting.html" class="btn-primary">
+                        <i class="fas fa-vote-yea"></i> START VOTING NOW
+                    </a>
+                    <a href="#how-it-works" class="btn-secondary">
+                        <i class="fas fa-play-circle"></i> WATCH DEMO
+                    </a>
+                </div>
+            </div>
+            <div class="hero-visual animate_animated animatefadeInRight animate_delay-1s">
+                <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=800&h=600&fit=crop" alt="KIBU Students Voting" class="hero-image">
+                <div class="floating-element element-1"><i class="fas fa-shield-alt"></i></div>
+                <div class="floating-element element-2"><i class="fas fa-cube"></i></div>
+                <div class="floating-element element-3"><i class="fas fa-mobile-alt"></i></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="features">
+        <div class="section-title fade-in">
+            <h2>Why Choose KIBU eVote?</h2>
+            <p>Experience the future of democratic participation with cutting-edge technology</p>
+        </div>
+        <div class="features-grid">
+            <div class="feature-card security fade-in">
+                <i class="fas fa-lock-alt feature-icon"></i>
+                <h3>MILITARY-GRADE SECURITY</h3>
+                <p>Every vote is protected by advanced blockchain encryption technology with 256-bit security. Your vote is tamper-proof and completely secure from any external threats.</p>
+            </div>
+            <div class="feature-card mobile fade-in">
+                <i class="fas fa-mobile-screen-button feature-icon"></i>
+                <h3>VOTE ANYWHERE, ANYTIME</h3>
+                <p>Mobile-first design lets you vote from your smartphone, tablet, or computer. Plus, offline voting stations ensure everyone can participate, regardless of internet access.</p>
+            </div>
+            <div class="feature-card transparency fade-in">
+                <i class="fas fa-chart-line feature-icon"></i>
+                <h3>INSTANT TRANSPARENT RESULTS</h3>
+                <p>Watch live results as they come in and verify your vote with blockchain proof. Complete transparency ensures trust in the democratic process at every step.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="how-it-works" id="how-it-works">
+        <div class="section-title fade-in">
+            <h2>How It Works</h2>
+            <p>Four simple steps to make your voice heard</p>
+        </div>
+        <div class="steps-container">
+            <div class="step fade-in">
+                <div class="step-circle">
+                    <i class="fas fa-user-check"></i>
+                    <div class="step-number">1</div>
+                </div>
+                <h3>Register & Verify</h3>
+                <p>Sign up using your KIBU student ID. Quick verification ensures only eligible students can vote.</p>
+            </div>
+            <div class="step fade-in">
+                <div class="step-circle">
+                    <i class="fas fa-hand-pointer"></i>
+                    <div class="step-number">2</div>
+                </div>
+                <h3>Cast Your Vote</h3>
+                <p>Browse candidates, read their manifestos, and select your preferred choices in each category.</p>
+            </div>
+            <div class="step fade-in">
+                <div class="step-circle">
+                    <i class="fas fa-link"></i>
+                    <div class="step-number">3</div>
+                </div>
+                <h3>Blockchain Security</h3>
+                <p>Your vote is encrypted and recorded on an immutable blockchain ledger for maximum security.</p>
+            </div>
+            <div class="step fade-in">
+                <div class="step-circle">
+                    <i class="fas fa-trophy"></i>
+                    <div class="step-number">4</div>
+                </div>
+                <h3>View Results</h3>
+                <p>Access real-time results and verify your vote was counted using your unique blockchain receipt.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats" id="security">
+        <div class="section-title fade-in">
+            <h2 style="color: white;">Trusted by KIBU Community</h2>
+            <p style="color: rgba(255,255,255,0.9);">Numbers that prove our excellence</p>
+        </div>
+        <div class="stats-grid">
+            <div class="stat-card fade-in">
+                <i class="fas fa-users stat-icon"></i>
+                <div class="stat-number">10,000+</div>
+                <div class="stat-label">KIBU Students Ready</div>
+            </div>
+            <div class="stat-card fade-in">
+                <i class="fas fa-server stat-icon"></i>
+                <div class="stat-number">99.9%</div>
+                <div class="stat-label">System Uptime</div>
+            </div>
+            <div class="stat-card fade-in">
+                <i class="fas fa-shield-check stat-icon"></i>
+                <div class="stat-number">256-bit</div>
+                <div class="stat-label">Military Encryption</div>
+            </div>
+            <div class="stat-card fade-in">
+                <i class="fas fa-clock stat-icon"></i>
+                <div class="stat-number">Real-time</div>
+                <div class="stat-label">Blockchain Verification</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta" id="contact">
+        <div class="cta-content fade-in">
+            <h2>Ready to Make Your Voice Heard?</h2>
+            <p>Join thousands of KIBU students in shaping the future of our university through secure, transparent, and accessible digital voting.</p>
+            <div class="cta-buttons">
+                <a href="signup.html" class="btn-primary">
+                    <i class="fas fa-user-plus"></i> CREATE ACCOUNT
+                </a>
+                <a href="login.html" class="btn-secondary">
+                    <i class="fas fa-sign-in-alt"></i> LOGIN NOW
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+   <!-- Footer -->
+<footer>
+    <div class="footer-content">
+        <!-- About Section -->
+        <div class="footer-section">
+            <h3>KIBU eVote</h3>
+            <p>Empowering democratic participation through blockchain technology at Kibabii University.</p>
+            <div class="social-links">
+                <!-- Facebook -->
+                <a href="https://www.facebook.com/KibabiiUniversity" target="_blank" rel="noopener noreferrer">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+                <!-- Twitter (X) -->
+                <a href="https://x.com/KibabiiUni" target="_blank" rel="noopener noreferrer">
+                    <i class="fab fa-twitter"></i>
+                </a>
+                <!-- YouTube -->
+                <a href="https://www.youtube.com/@thekibabiiuniversitynotifi7962" target="_blank" rel="noopener noreferrer">
+                    <i class="fab fa-youtube"></i>
+                </a>
+            </div>
+        </div>
+
+        <!-- Quick Links -->
+        <div class="footer-section">
+            <h3>Quick Links</h3>
+            <ul>
+                <li><a href="#home"><i class="fas fa-chevron-right"></i> Home</a></li>
+                <li><a href="#features"><i class="fas fa-chevron-right"></i> Features</a></li>
+                <li><a href="#how-it-works"><i class="fas fa-chevron-right"></i> How It Works</a></li>
+                <li><a href="results.html"><i class="fas fa-chevron-right"></i> Results</a></li>
+            </ul>
+        </div>
+
+        <!-- Support -->
+        <div class="footer-section">
+            <h3>Support</h3>
+            <ul>
+                <li><a href="#"><i class="fas fa-chevron-right"></i> Help Center</a></li>
+                <li><a href="#"><i class="fas fa-chevron-right"></i> FAQs</a></li>
+                <li><a href="#"><i class="fas fa-chevron-right"></i> Contact Us</a></li>
+                <li><a href="#"><i class="fas fa-chevron-right"></i> Privacy Policy</a></li>
+            </ul>
+        </div>
+
+        <!-- Contact Info -->
+        <div class="footer-section">
+            <h3>Contact Info</h3>
+            <ul>
+                <li><i class="fas fa-map-marker-alt"></i> Kibabii University</li>
+                <li><i class="fas fa-envelope"></i> voting@kibu.ac.ke</li>
+                <li><i class="fas fa-phone"></i> +254 720 673 261</li>
+                <li><i class="fas fa-clock"></i> 24/7 Support</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Bottom Footer -->
+    <div class="footer-bottom">
+        <p>&copy; 2025 KIBU eVote. All rights reserved. Made with <i class="fas fa-heart" style="color: #FF5E5B;"></i> for KIBU Students</p>
+    </div>
+</footer>
+
+
+    <!-- External JavaScript -->
+    <script src="js/main.js"></script>
+    <script src="js/landing.js"></script>
+</body>
+</html>

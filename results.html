@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Election Results - KIBU Blockchain Voting</title>
+    <link rel="stylesheet" href="css/results.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+   
+</head>
+<body>
+    <div class="container">
+        <!-- Header Section -->
+        <header class="results-header">
+            <div class="header-content">
+                <h1>Student Council Election Results 2025</h1>
+                <div class="status-badge">🏆 FINAL RESULTS</div>
+                <div class="header-details">
+                    <p class="announcement-date">Results announced: March 17, 2025 at 10:00 AM</p>
+                    <p class="participation">Total votes: 8,247 students (87% turnout)</p>
+                    <p class="verification">✅ All results verified on blockchain</p>
+                </div>
+            </div>
+        </header>
+
+        <!-- Winner Announcements -->
+        <section class="winners-section">
+            <h2>Your New Student Leaders</h2>
+            <div class="winners-grid">
+                <!-- President Winner -->
+                <div class="winner-card president-winner">
+                    <div class="winner-badge">WINNER 🏆</div>
+                    <div class="winner-photo">
+                        <div class="photo-placeholder">SW</div>
+                    </div>
+                    <div class="winner-details">
+                        <h3 class="winner-name">SARAH WANJIKU</h3>
+                        <p class="winner-title">Student Council President 2025-2026</p>
+                        <p class="winner-votes">3,247 votes (65.4%)</p>
+                        <p class="winner-course">Business Administration - Year 3</p>
+                    </div>
+                    <div class="celebration-particles"></div>
+                </div>
+
+                <!-- Other Winners -->
+                <div class="winner-card">
+                    <div class="winner-photo small">
+                        <div class="photo-placeholder">JK</div>
+                    </div>
+                    <div class="winner-details">
+                        <h4 class="winner-name">James Kiprotich</h4>
+                        <p class="winner-title">Vice President</p>
+                        <p class="winner-votes">2,156 votes (58.2%)</p>
+                    </div>
+                </div>
+
+                <div class="winner-card">
+                    <div class="winner-photo small">
+                        <div class="photo-placeholder">GA</div>
+                    </div>
+                    <div class="winner-details">
+                        <h4 class="winner-name">Grace Akinyi</h4>
+                        <p class="winner-title">Secretary</p>
+                        <p class="winner-votes">2,891 votes (71.3%)</p>
+                    </div>
+                </div>
+
+                <div class="winner-card">
+                    <div class="winner-photo small">
+                        <div class="photo-placeholder">MO</div>
+                    </div>
+                    <div class="winner-details">
+                        <h4 class="winner-name">Michael Ochieng</h4>
+                        <p class="winner-title">Treasurer</p>
+                        <p class="winner-votes">1,987 votes (52.4%)</p>
+                    </div>
+                </div>
+
+                <div class="winner-card">
+                    <div class="winner-photo small">
+                        <div class="photo-placeholder">LN</div>
+                    </div>
+                    <div class="winner-details">
+                        <h4 class="winner-name">Linda Njeri</h4>
+                        <p class="winner-title">Sports Representative</p>
+                        <p class="winner-votes">2,634 votes (67.8%)</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Statistics Dashboard -->
+        <section class="stats-dashboard">
+            <h2>Election Statistics</h2>
+            <div class="stats-grid">
+                <div class="stat-card blue">
+                    <div class="stat-icon">🗳</div>
+                    <div class="stat-number">8,247</div>
+                    <div class="stat-label">Students Voted</div>
+                    <div class="stat-detail">87% turnout</div>
+                </div>
+
+                <div class="stat-card green">
+                    <div class="stat-icon">🔗</div>
+                    <div class="stat-number">100%</div>
+                    <div class="stat-label">Votes Verified</div>
+                    <div class="stat-detail">All on blockchain</div>
+                </div>
+
+                <div class="stat-card orange">
+                    <div class="stat-icon">⏰</div>
+                    <div class="stat-number">7</div>
+                    <div class="stat-label">Days Open</div>
+                    <div class="stat-detail">March 10-17</div>
+                </div>
+
+                <div class="stat-card purple">
+                    <div class="stat-icon">📈</div>
+                    <div class="stat-number">2,341</div>
+                    <div class="stat-label">Votes on Final Day</div>
+                    <div class="stat-detail">28% of total</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Detailed Results Section -->
+        <section class="detailed-results">
+            <h2>Detailed Results Breakdown</h2>
+            <div class="position-results-card">
+                <div class="position-header">
+                    <span>👑</span>
+                    <h3>Student Council President</h3>
+                </div>
+                <div class="results-content">
+                    <div class="chart-container">
+                        <canvas id="presidentChart"></canvas>
+                    </div>
+                    <div class="results-breakdown">
+                        <h4>Vote Breakdown</h4>
+                        <div class="candidate-result winner">
+                            <span class="candidate-name">Sarah Wanjiku</span>
+                            <span class="vote-count">3,247 votes (65.4%)</span>
+                            <span class="status-badge">✅ WINNER</span>
+                        </div>
+                        <div class="candidate-result">
+                            <span class="candidate-name">James Kiprotich</span>
+                            <span class="vote-count">1,221 votes (24.6%)</span>
+                        </div>
+                        <div class="candidate-result">
+                            <span class="candidate-name">Grace Akinyi</span>
+                            <span class="vote-count">487 votes (9.8%)</span>
+                        </div>
+                        <div class="candidate-result abstain">
+                            <span class="candidate-name">Abstentions</span>
+                            <span class="vote-count">12 votes (0.2%)</span>
+                        </div>
+                        <div class="total-votes">
+                            Total Votes: 4,967 students
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Faculty Breakdown Section -->
+        <section class="faculty-breakdown">
+            <div class="card">
+                <div class="card-header">
+                    <span>📊</span>
+                    <h3>Results by Faculty</h3>
+                </div>
+                <div class="chart-container">
+                    <canvas id="facultyChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- Historical Comparison -->
+        <section class="historical-comparison">
+            <div class="card">
+                <div class="card-header">
+                    <span>📈</span>
+                    <h3>Turnout Comparison</h3>
+                </div>
+                <div class="chart-container">
+                    <canvas id="turnoutChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- Action Buttons -->
+        <section class="action-buttons">
+            <button class="action-btn primary">🔍 Verify My Vote on Blockchain</button>
+            <button class="action-btn secondary">📅 See Other Election Results</button>
+            <button class="action-btn secondary">📱 Share Election Results</button>
+            <a href="dashboard.html" class="back-link">← Back to Dashboard</a>
+        </section>
+    </div>
+
+    <!-- Chart.js library -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- Custom JS -->
+    <script src="js/results.js"></script>
+</body>
+</html>
+

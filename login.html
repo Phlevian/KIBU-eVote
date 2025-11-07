@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - KIBU Digital Democracy</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/login.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body class="login-page">
+    <!-- Background with KIBU Campus Image and Gradient Overlay -->
+    <div class="login-background">
+        <div class="background-overlay"></div>
+    </div>
+
+    <!-- Header Section -->
+    <header class="login-header">
+        <div class="header-container">
+            <div class="logo-section">
+                  <div class="logo">
+                        <img src="./assets/images/logo.jpg" alt="KIBU Digital Democracy" class="logo-image">
+                        <span class="logo-text">Digital Democracy</span>
+                    </div>
+                <h1 class="system-title">KIBU Digital Democracy</h1>
+            </div>
+            <div class="security-status">
+                <div class="status-indicator online">
+                    <div class="status-dot"></div>
+                    <span>All Systems Secure</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Login Card -->
+    <main class="login-container">
+        <div class="login-card">
+            <!-- Card Header -->
+            <div class="card-header">
+                <h2>Welcome Back</h2>
+                <p>Login to access your voting dashboard</p>
+            </div>
+
+            <!-- Login Form -->
+            <form class="login-form" id="login-form">
+                <!-- Student Registration Number Field -->
+                <div class="form-group">
+                    <label for="reg-number" class="form-label">
+                        <span class="label-icon">🆔</span>
+                        KIBU Registration Number
+                    </label>
+                    <div class="input-container">
+                        <input 
+                            type="text" 
+                            id="reg-number" 
+                            class="form-input"
+                            placeholder="e.g., BIT/0019/23"
+                            required
+                            pattern="[A-Z]{2,4}\/\d{4}\/\d{2}"
+                            title="Format: CourseCode/Number/Year (e.g., BIT/0019/23)"
+                        >
+                        <div class="input-helper">Format: CourseCode/Number/Year (e.g., BIT/0019/23)</div>
+                        <div class="error-message" id="reg-error"></div>
+                    </div>
+                </div>
+
+                <!-- Password Field -->
+                <div class="form-group">
+                    <label for="password" class="form-label">
+                        <span class="label-icon">🔒</span>
+                        Password
+                    </label>
+                    <div class="input-container">
+                        <input 
+                            type="password" 
+                            id="password" 
+                            class="form-input"
+                            placeholder="Enter your password"
+                            required
+                            minlength="8"
+                        >
+                        <button type="button" class="toggle-password" id="toggle-password">
+                            <span class="eye-icon">👁️</span>
+                        </button>
+                        <div class="error-message" id="password-error"></div>
+                    </div>
+                </div>
+
+                <!-- Remember Device & Forgot Password -->
+                <div class="form-options">
+                    <label class="checkbox-container">
+                        <input type="checkbox" id="remember-device">
+                        <span class="checkmark"></span>
+                        <span class="checkbox-label">Remember for 30 days</span>
+                    </label>
+                    <a href="#" class="forgot-password">Forgot Password?</a>
+                </div>
+
+                <!-- Primary Action Button -->
+                <button type="submit" class="login-btn primary-btn">
+                    <span class="btn-text">LOGIN TO VOTE</span>
+                    <span class="btn-icon">→</span>
+                </button>
+
+                <!-- Alternative Login Methods -->
+                <div class="alternative-login">
+                    <div class="divider">
+                        <span>Or login with</span>
+                    </div>
+                    
+                    <div class="alt-methods">
+                        <button type="button" class="alt-login-btn biometric" id="biometric-login">
+                            <span class="method-icon">👆</span>
+                            <span class="method-text">Biometric</span>
+                        </button>
+                        
+                        <button type="button" class="alt-login-btn qr" id="qr-login">
+                            <span class="method-icon">📱</span>
+                            <span class="method-text">QR Code</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Create Account Link -->
+                <div class="create-account">
+                    <p>Don't have an account? <a href="signup.html" class="signup-link">Create Account</a></p>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <!-- Footer Section -->
+    <footer class="login-footer">
+        <div class="footer-container">
+            <div class="footer-section">
+                <div class="system-status">
+                    <span class="status-badge online">
+                        <span class="status-dot"></span>
+                        All systems online ✅
+                    </span>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <a href="#" class="support-link">Need help? Contact KIBU IT</a>
+            </div>
+            
+            <div class="footer-section">
+                <div class="election-status">
+                    <span class="election-badge">
+                        <span class="election-icon">🗳️</span>
+                        Student Elections: <strong>3 days left</strong>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- QR Code Modal -->
+    <div class="modal" id="qr-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Scan QR Code to Login</h3>
+                <button class="close-modal" id="close-qr-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="qr-container">
+                    <div class="qr-placeholder">
+                        <div class="qr-icon">📱</div>
+                        <p>QR Code Scanner</p>
+                        <p class="qr-hint">Open KIBU-eVote app and scan this code</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Biometric Modal -->
+    <div class="modal" id="biometric-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Biometric Authentication</h3>
+                <button class="close-modal" id="close-biometric-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="biometric-container">
+                    <div class="fingerprint-icon">👆</div>
+                    <p>Place your finger on the sensor</p>
+                    <div class="biometric-loading">
+                        <div class="loading-spinner"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/login.js"></script>
+</body>
+</html>

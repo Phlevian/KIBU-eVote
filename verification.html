@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Verify Your Account - KIBU Digital Democracy</title>
+    <link rel="stylesheet" href="css/verification.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="verification-container">
+        <!-- Left Panel - Verification Form -->
+        <div class="verification-form-section">
+            <!-- Header -->
+            <div class="verification-header">
+                <div class="logo-container">
+                    <div class="kibu-logo">
+                        <img src="assets/images/logo.jpg" alt="KIBU Digital Democracy" class="logo-image">
+                        <span class="logo-text">Digital Democracy</span>
+                    </div>
+                    <div class="system-name">KIBU Account Verification</div>
+                </div>
+                <button class="help-button">
+                    <span class="help-icon">🆘</span>
+                    <span class="help-text">Help</span>
+                </button>
+            </div>
+
+            <!-- Verification Content -->
+            <div class="verification-content">
+                <div class="verification-card">
+                    <!-- Success Message -->
+                    <div class="success-indicator">
+                        <div class="success-icon">✅</div>
+                        <h1>Account Created Successfully!</h1>
+                        <p>We've sent a verification code to your email address</p>
+                    </div>
+
+                    <!-- Progress Steps -->
+                    <div class="verification-steps">
+                        <div class="step active" data-step="1">
+                            <div class="step-number">1</div>
+                            <div class="step-info">
+                                <div class="step-title">Email Verification</div>
+                                <div class="step-description">Enter the 6-digit code sent to your email</div>
+                            </div>
+                        </div>
+                        <div class="step" data-step="2">
+                            <div class="step-number">2</div>
+                            <div class="step-info">
+                                <div class="step-title">Account Activation</div>
+                                <div class="step-description">Complete your profile setup</div>
+                            </div>
+                        </div>
+                        <div class="step" data-step="3">
+                            <div class="step-number">3</div>
+                            <div class="step-info">
+                                <div class="step-title">Ready to Vote</div>
+                                <div class="step-description">Access the voting dashboard</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Verification Code Input -->
+                    <div class="verification-input-section">
+                        <h2>Enter Verification Code</h2>
+                        <p class="instruction-text">We've sent a 6-digit verification code to:</p>
+                        <div class="email-display" id="user-email">user@example.com</div>
+                        
+                        <div class="code-input-container">
+                            <div class="code-inputs">
+                                <input type="text" class="code-input" maxlength="1" data-index="0">
+                                <input type="text" class="code-input" maxlength="1" data-index="1">
+                                <input type="text" class="code-input" maxlength="1" data-index="2">
+                                <input type="text" class="code-input" maxlength="1" data-index="3">
+                                <input type="text" class="code-input" maxlength="1" data-index="4">
+                                <input type="text" class="code-input" maxlength="1" data-index="5">
+                            </div>
+                            <div class="input-error" id="code-error"></div>
+                        </div>
+
+                        <!-- Resend Code Section -->
+                        <div class="resend-section">
+                            <p>Didn't receive the code?</p>
+                            <button class="resend-btn" id="resend-btn" disabled>
+                                Resend Code <span id="countdown">(60s)</span>
+                            </button>
+                        </div>
+
+                        <!-- Alternative Verification Methods -->
+                        <div class="alternative-methods">
+                            <div class="method-divider">
+                                <span>Or verify using</span>
+                            </div>
+                            <div class="method-buttons">
+                                <button class="method-btn" id="sms-method-btn">
+                                    <span class="method-icon">📱</span>
+                                    SMS Verification
+                                </button>
+                                <button class="method-btn" id="backup-method-btn">
+                                    <span class="method-icon">🔑</span>
+                                    Backup Codes
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Action Buttons -->
+                    <div class="verification-actions">
+                        <button class="action-btn secondary-btn" id="back-to-login-btn">
+                            ← Back to Login
+                        </button>
+                        <button class="action-btn primary-btn" id="verify-btn" disabled>
+                            Verify & Continue →
+                        </button>
+                    </div>
+                </div>
+
+                <!-- SMS Verification Modal -->
+                <div class="modal" id="sms-modal">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3>SMS Verification</h3>
+                            <button class="close-modal" id="close-sms-modal">&times;</button>
+                        </div>
+                        <div class="modal-body">
+                            <p>We'll send a verification code to your registered phone number:</p>
+                            <div class="phone-display" id="user-phone">+254 XXX XXX XXX</div>
+                            <button class="action-btn primary-btn full-width" id="send-sms-btn">
+                                Send SMS Code
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Backup Codes Modal -->
+                <div class="modal" id="backup-modal">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h3>Backup Verification Codes</h3>
+                            <button class="close-modal" id="close-backup-modal">&times;</button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Use one of your backup codes to verify your account:</p>
+                            <div class="backup-codes-list">
+                                <div class="backup-code-item">
+                                    <span class="code">A1B2C3</span>
+                                    <span class="status">Available</span>
+                                </div>
+                                <div class="backup-code-item">
+                                    <span class="code">D4E5F6</span>
+                                    <span class="status">Available</span>
+                                </div>
+                                <div class="backup-code-item">
+                                    <span class="code">G7H8I9</span>
+                                    <span class="status">Available</span>
+                                </div>
+                            </div>
+                            <input type="text" class="backup-code-input" placeholder="Enter backup code" id="backup-code-input">
+                            <button class="action-btn primary-btn full-width" id="use-backup-btn">
+                                Use Backup Code
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Panel - Inspiration & Information -->
+        <div class="verification-info-section">
+            <div class="info-content">
+                <!-- Security Visualization -->
+                <div class="security-visual">
+                    <div class="shield-animation">
+                        <div class="shield-icon">🛡️</div>
+                        <div class="protection-ring"></div>
+                        <div class="protection-ring"></div>
+                    </div>
+                </div>
+
+                <!-- Security Information -->
+                <div class="security-info">
+                    <h2>Your Security Matters</h2>
+                    <div class="security-features">
+                        <div class="feature">
+                            <div class="feature-icon">🔒</div>
+                            <div class="feature-text">
+                                <strong>End-to-End Encryption</strong>
+                                <span>All votes are encrypted for maximum security</span>
+                            </div>
+                        </div>
+                        <div class="feature">
+                            <div class="feature-icon">👤</div>
+                            <div class="feature-text">
+                                <strong>Anonymous Voting</strong>
+                                <span>Your identity remains confidential</span>
+                            </div>
+                        </div>
+                        <div class="feature">
+                            <div class="feature-icon">📊</div>
+                            <div class="feature-text">
+                                <strong>Transparent Results</strong>
+                                <span>Verified results with blockchain technology</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Statistics -->
+                <div class="verification-stats">
+                    <div class="stat-card">
+                        <div class="stat-number">98%</div>
+                        <div class="stat-label">Successful Verifications</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number">45s</div>
+                        <div class="stat-label">Average Verification Time</div>
+                    </div>
+                </div>
+
+                <!-- Testimonials -->
+                <div class="verification-testimonials">
+                    <div class="testimonial">
+                        <div class="testimonial-content">
+                            "The verification process was quick and secure. I felt confident my account was protected."
+                        </div>
+                        <div class="testimonial-author">
+                            <div class="author-avatar">👩‍🎓</div>
+                            <div class="author-info">
+                                <div class="author-name">Sarah M.</div>
+                                <div class="author-role">3rd Year Computer Science</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Help Resources -->
+                <div class="help-resources">
+                    <h3>Need Help?</h3>
+                    <div class="resource-links">
+                        <a href="#" class="resource-link">
+                            <span class="link-icon">📧</span>
+                            Contact Support
+                        </a>
+                        <a href="#" class="resource-link">
+                            <span class="link-icon">📖</span>
+                            Verification Guide
+                        </a>
+                        <a href="#" class="resource-link">
+                            <span class="link-icon">🔗</span>
+                            Troubleshooting
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Modal -->
+    <div class="success-modal" id="success-modal">
+        <div class="modal-content success-content">
+            <div class="success-animation">
+                <div class="confetti"></div>
+                <div class="confetti"></div>
+                <div class="confetti"></div>
+                <div class="success-checkmark">✓</div>
+            </div>
+            <h2>Verification Successful!</h2>
+            <p>Your account has been verified and is now ready to use.</p>
+            <div class="next-steps">
+                <div class="step-completed">
+                    <span class="step-icon">✅</span>
+                    <span>Email verified successfully</span>
+                </div>
+                <div class="step-completed">
+                    <span class="step-icon">✅</span>
+                    <span>Account activated</span>
+                </div>
+                <div class="step-completed">
+                    <span class="step-icon">🔄</span>
+                    <span>Redirecting to dashboard...</span>
+                </div>
+            </div>
+            <div class="success-actions">
+                <button class="action-btn primary-btn" id="go-dashboard-btn">
+                    Go to Dashboard Now
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/verification.js"></script>
+</body>
+</html>

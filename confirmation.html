@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vote Confirmed - KIBU Blockchain Voting</title>
+    <link rel="stylesheet" href="css/confirmation.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <!-- Success Hero Section -->
+        <section class="success-hero">
+            <div class="checkmark-container">
+                <div class="checkmark">✅</div>
+                <div class="checkmark-circle"></div>
+            </div>
+            <h1>YOUR VOTE HAS BEEN RECORDED!</h1>
+            <p class="timestamp">Submitted on March 15, 2025 at 2:45 PM</p>
+        </section>
+
+        <!-- Transaction Details Card -->
+        <section class="card transaction-card">
+            <div class="card-header">
+                <span>🔗</span> Blockchain Transaction Receipt
+            </div>
+            <div class="transaction-info">
+                <div class="info-group">
+                    <label>Transaction ID</label>
+                    <div class="transaction-id-container">
+                        <span class="transaction-id" id="transactionId">0x7d8e9f2a3b4c5d6e7f8g9h0i1j2k3l4m</span>
+                        <button class="copy-btn" id="copyBtn">📋 Copy ID</button>
+                    </div>
+                    <div class="qr-code">
+                        <div class="qr-placeholder">QR Code</div>
+                        <p>Scan to view on mobile</p>
+                    </div>
+                </div>
+                <div class="info-group">
+                    <div class="info-item">
+                        <label>Block Number</label>
+                        <p class="value">#247,891</p>
+                    </div>
+                    <div class="info-item">
+                        <label>Confirmation Status</label>
+                        <p class="status-badge">✅ CONFIRMED on KIBU Blockchain</p>
+                    </div>
+                    <div class="info-item">
+                        <label>Verification Time</label>
+                        <p class="value">Verified in 3.2 seconds</p>
+                    </div>
+                    <div class="info-item">
+                        <label>Transaction Fee</label>
+                        <p class="value">₹0.00 (Free for KIBU students)</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Vote Summary Section -->
+        <section class="card vote-summary-card">
+            <div class="card-header">
+                <span>📊</span> Vote Summary - Student Council Elections 2025
+            </div>
+            <div class="vote-breakdown">
+                <!-- Position 1: Chairperson -->
+                <div class="vote-item">
+                    <div class="position-icon">👑</div>
+                    <div class="vote-details">
+                        <div class="position">Chairperson</div>
+                        <div class="candidate-name">Sarah Wanjiku</div>
+                        <div class="candidate-platform">Improve campus facilities and student services</div>
+                    </div>
+                    <div class="vote-status">✅</div>
+                </div>
+
+                <!-- Position 2: Vice Chairperson -->
+                <div class="vote-item">
+                    <div class="position-icon">👥</div>
+                    <div class="vote-details">
+                        <div class="position">Vice Chairperson</div>
+                        <div class="candidate-name">Michael Ochieng</div>
+                        <div class="candidate-platform">Student rights and advocacy</div>
+                    </div>
+                    <div class="vote-status">✅</div>
+                </div>
+
+                <!-- Position 3: Secretary General -->
+                <div class="vote-item">
+                    <div class="position-icon">📝</div>
+                    <div class="vote-details">
+                        <div class="position">Secretary General</div>
+                        <div class="candidate-name">David Kimani</div>
+                        <div class="candidate-platform">Transparent communication and record keeping</div>
+                    </div>
+                    <div class="vote-status">✅</div>
+                </div>
+
+                <!-- Position 4: Treasurer -->
+                <div class="vote-item">
+                    <div class="position-icon">💰</div>
+                    <div class="vote-details">
+                        <div class="position">Treasurer</div>
+                        <div class="candidate-name">Brian Otieno</div>
+                        <div class="candidate-platform">Financial transparency and accountability</div>
+                    </div>
+                    <div class="vote-status">✅</div>
+                </div>
+
+                <!-- Position 5: Academic Secretary -->
+                <div class="vote-item">
+                    <div class="position-icon">📚</div>
+                    <div class="vote-details">
+                        <div class="position">Academic Secretary</div>
+                        <div class="candidate-name">Peter Maina</div>
+                        <div class="candidate-platform">Improved library resources and study spaces</div>
+                    </div>
+                    <div class="vote-status">✅</div>
+                </div>
+
+                <!-- Position 6: Accommodation & Security Secretary -->
+                <div class="vote-item">
+                    <div class="position-icon">🏠</div>
+                    <div class="vote-details">
+                        <div class="position">Accommodation & Security Secretary</div>
+                        <div class="candidate-name">Robert Mwangi</div>
+                        <div class="candidate-platform">Enhanced campus security and student safety</div>
+                    </div>
+                    <div class="vote-status">✅</div>
+                </div>
+
+                <!-- Position 7: Special Interests Secretary -->
+                <div class="vote-item">
+                    <div class="position-icon">🎭</div>
+                    <div class="vote-details">
+                        <div class="position">Special Interests Secretary</div>
+                        <div class="candidate-name">Daniel Omolo</div>
+                        <div class="candidate-platform">Support for clubs and extracurricular activities</div>
+                    </div>
+                    <div class="vote-status">✅</div>
+                </div>
+
+                <!-- Position 8: FASS – Academic Nominee -->
+                <div class="vote-item">
+                    <div class="position-icon">🎓</div>
+                    <div class="vote-details">
+                        <div class="position">FASS – Academic Nominee</div>
+                        <div class="candidate-name">John Kamau</div>
+                        <div class="candidate-platform">Enhanced academic resources for FASS</div>
+                    </div>
+                    <div class="vote-status">✅</div>
+                </div>
+
+                <!-- Position 9: FASS – Female Nominee -->
+                <div class="vote-item">
+                    <div class="position-icon">👩</div>
+                    <div class="vote-details">
+                        <div class="position">FASS – Female Nominee</div>
+                        <div class="candidate-name">Cynthia Adhiambo</div>
+                        <div class="candidate-platform">Women empowerment and gender equality</div>
+                    </div>
+                    <div class="vote-status">✅</div>
+                </div>
+
+                <!-- Position 10: FASS – Male Nominee -->
+                <div class="vote-item">
+                    <div class="position-icon">👨</div>
+                    <div class="vote-details">
+                        <div class="position">FASS – Male Nominee</div>
+                        <div class="candidate-name">Samuel Gitau</div>
+                        <div class="candidate-platform">Male student advocacy and support</div>
+                    </div>
+                    <div class="vote-status">✅</div>
+                </div>
+
+                <!-- Position 11: Evening & Weekend Nominee -->
+                <div class="vote-item">
+                    <div class="position-icon">🌙</div>
+                    <div class="vote-details">
+                        <div class="position">Evening & Weekend Nominee</div>
+                        <div class="candidate-name">Pauline Achieng</div>
+                        <div class="candidate-platform">Better scheduling and resources for evening students</div>
+                    </div>
+                    <div class="vote-status">✅</div>
+                </div>
+
+                <!-- Position 12: Part-Time Nominee -->
+                <div class="vote-item">
+                    <div class="position-icon">⏱️</div>
+                    <div class="vote-details">
+                        <div class="position">Part-Time Nominee</div>
+                        <div class="candidate-name">Nancy Wambui</div>
+                        <div class="candidate-platform">Flexible academic policies for part-time students</div>
+                    </div>
+                    <div class="vote-status">✅</div>
+                </div>
+
+                <!-- Position 13: Postgraduate Nominee -->
+                <div class="vote-item">
+                    <div class="position-icon">🎓</div>
+                    <div class="vote-details">
+                        <div class="position">Postgraduate Nominee</div>
+                        <div class="candidate-name">Dr. Elizabeth Mwangi</div>
+                        <div class="candidate-platform">Enhanced research facilities and funding</div>
+                    </div>
+                    <div class="vote-status">✅</div>
+                </div>
+            </div>
+            <div class="security-badge">
+                <span>🛡</span>
+                <span>All votes encrypted and anonymized</span>
+            </div>
+        </section>
+
+        <!-- Action Buttons Section -->
+        <section class="action-buttons">
+            <button class="action-btn download-btn">
+                <span>📄</span> DOWNLOAD PDF RECEIPT
+            </button>
+            <button class="action-btn email-btn">
+                <span>📧</span> EMAIL RECEIPT TO ME
+            </button>
+            <button class="action-btn verify-btn">
+                <span>🔍</span> VERIFY ON BLOCKCHAIN
+            </button>
+        </section>
+
+        <!-- Verification Instructions -->
+        <section class="card verification-card">
+            <div class="card-header">
+                <span>🔍</span> Verify Your Vote Independently
+            </div>
+            <ol class="verification-steps">
+                <li>Copy your Transaction ID above</li>
+                <li>Visit KIBU Blockchain Explorer</li>
+                <li>Paste ID to see your vote on the blockchain</li>
+                <li>Your vote details are encrypted for privacy</li>
+            </ol>
+            <button class="explorer-btn">Open Blockchain Explorer</button>
+        </section>
+
+        <!-- Next Steps Section -->
+        <section class="card next-steps-card">
+            <div class="card-header">
+                <span>⏭</span> What's Next?
+            </div>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-date">Today</div>
+                    <div class="timeline-content">Your vote is recorded and counted</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">Tomorrow</div>
+                    <div class="timeline-content">Voting period closes at 11:59 PM</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">March 17</div>
+                    <div class="timeline-content">Results announced at 10:00 AM</div>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-date">March 18</div>
+                    <div class="timeline-content">New student leaders take office</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Security & Privacy Info -->
+        <section class="card privacy-card">
+            <div class="card-header">
+                <span>🔒</span> Your Privacy is Protected
+            </div>
+            <ul class="privacy-list">
+                <li>✅ Your vote choices are encrypted and anonymous</li>
+                <li>✅ Only you have access to this receipt</li>
+                <li>✅ Blockchain ensures vote integrity</li>
+                <li>✅ No one can see how you voted</li>
+            </ul>
+            <a href="#" class="info-link">Learn more about our security</a>
+        </section>
+
+        <!-- Social Sharing (Optional) -->
+        <section class="card sharing-card">
+            <div class="card-header">
+                <span>🎉</span> Share Your Participation
+            </div>
+            <div class="share-message">
+                "I just voted in KIBU's digital democracy! 🗳 #KIBUVotes2025 #DigitalDemocracy"
+            </div>
+            <div class="share-buttons">
+                <button class="share-btn whatsapp">📱 Share on WhatsApp</button>
+                <button class="share-btn facebook">📘 Share on Facebook</button>
+                <button class="share-btn twitter">🐦 Share on Twitter</button>
+            </div>
+            <p class="share-note">Only shares that you voted, not your choices</p>
+        </section>
+
+        <!-- Footer Actions -->
+        <footer class="footer-actions">
+            <div class="footer-links">
+                <a href="dashboard.html" class="footer-link">See other active elections</a>
+                <a href="dashboard.html" class="footer-link">← Back to Dashboard</a>
+            </div>
+            <div class="footer-utilities">
+                <a href="#" class="utility-link" onclick="window.print()">🖨 Print this page</a>
+                <a href="#" class="utility-link report">Report a problem</a>
+            </div>
+        </footer>
+    </div>
+<script src="js/confirmation.js"></script>
+
+</body>
+</html>
