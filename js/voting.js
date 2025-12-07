@@ -333,7 +333,8 @@ document.addEventListener('DOMContentLoaded', function() {
         highContrastToggle: document.getElementById('high-contrast-toggle'),
         textSizeToggle: document.getElementById('text-size-toggle'),
         viewReceipt: document.getElementById('view-receipt'),
-        backToDashboard: document.getElementById('back-to-dashboard')
+        backToDashboard: document.getElementById('back-to-dashboard'),
+        themeToggle: document.getElementById('theme-toggle')
     };
 
     // Initialize the voting interface
@@ -348,6 +349,9 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         try {
+            // Initialize theme
+            initTheme();
+            
             // Initialize components
             createPositionIndicators();
             loadSavedSelections();
@@ -364,11 +368,49 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
+    // Initialize theme from localStorage
+    function initTheme() {
+        const savedTheme = localStorage.getItem('kibuVotingTheme');
+        const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        
+        if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+            setDarkTheme();
+        } else {
+            setLightTheme();
+        }
+    }
+
+    // Set dark theme
+    function setDarkTheme() {
+        document.body.classList.remove('light-theme');
+        document.body.classList.add('dark-theme');
+        elements.themeToggle.innerHTML = '<i class="fas fa-sun"></i><span class="theme-text">Light Mode</span>';
+        localStorage.setItem('kibuVotingTheme', 'dark');
+    }
+
+    // Set light theme
+    function setLightTheme() {
+        document.body.classList.remove('dark-theme');
+        document.body.classList.add('light-theme');
+        elements.themeToggle.innerHTML = '<i class="fas fa-moon"></i><span class="theme-text">Dark Mode</span>';
+        localStorage.setItem('kibuVotingTheme', 'light');
+    }
+
+    // Toggle theme
+    function toggleTheme() {
+        if (document.body.classList.contains('dark-theme')) {
+            setLightTheme();
+        } else {
+            setDarkTheme();
+        }
+    }
+
     // Validate required DOM elements
     function validateDOMElements() {
         const required = [
             'positionTitle', 'positionDescription', 'candidatesContainer', 
-            'abstainOption', 'prevButton', 'nextButton', 'positionIndicators'
+            'abstainOption', 'prevButton', 'nextButton', 'positionIndicators',
+            'themeToggle'
         ];
         
         for (const key of required) {
@@ -958,7 +1000,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 // Hide status after 3 seconds
                 setTimeout(() => {
                     elements.autoSaveStatus.textContent = 'Draft saved automatically';
-                    elements.autoSaveStatus.style.color = 'var(--text-muted)';
                 }, 3000);
             }
         } catch (error) {
@@ -1013,16 +1054,9 @@ document.addEventListener('DOMContentLoaded', function() {
             elements.autoSaveStatus.textContent = 'Draft saved successfully!';
             elements.autoSaveStatus.style.color = 'var(--accent-teal)';
             
-            // Add animation
-            elements.autoSaveStatus.classList.add('pulse');
-            setTimeout(() => {
-                elements.autoSaveStatus.classList.remove('pulse');
-            }, 1000);
-            
             // Reset after 3 seconds
             setTimeout(() => {
                 elements.autoSaveStatus.textContent = 'Draft saved automatically';
-                elements.autoSaveStatus.style.color = 'var(--text-muted)';
             }, 3000);
         }
     }
@@ -1166,6 +1200,9 @@ document.addEventListener('DOMContentLoaded', function() {
     function setupEventListeners() {
         console.log('Setting up event listeners...');
         
+        // Theme toggle
+        elements.themeToggle.addEventListener('click', toggleTheme);
+        
         // Navigation buttons
         elements.nextButton.addEventListener('click', nextPosition);
         elements.prevButton.addEventListener('click', prevPosition);
@@ -1233,7 +1270,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function updateConnectionStatus(online) {
         if (online) {
             elements.connectionStatus.innerHTML = '<i class="fas fa-wifi"></i><span>Connected</span>';
-            elements.connectionStatus.className = 'connection-status connected';
+            elements.connectionStatus.className = 'connection-status';
         } else {
             elements.connectionStatus.innerHTML = '<i class="fas fa-wifi-slash"></i><span>Offline</span>';
             elements.connectionStatus.className = 'connection-status offline';
@@ -1247,53 +1284,40 @@ document.addEventListener('DOMContentLoaded', function() {
 // Add some CSS for the new elements
 const additionalCSS = `
 .recovery-message {
-    background: linear-gradient(135deg, #e8f5e8, #ffffff);
-    border: 1px solid var(--success-green);
+    background: linear-gradient(135deg, var(--success-green), var(--accent-teal));
+    color: white;
     border-radius: 8px;
     padding: 10px 15px;
     margin: 10px 0;
     display: flex;
     align-items: center;
     gap: 10px;
-    color: var(--success-green);
     font-weight: 600;
+    box-shadow: var(--shadow-sm);
 }
 
 .error-message {
-    background: linear-gradient(135deg, #ffe8e8, #ffffff);
-    border: 1px solid var(--error-red);
+    background: linear-gradient(135deg, var(--error-red), #ff6b6b);
+    color: white;
     border-radius: 8px;
     padding: 15px;
     margin: 10px 0;
     display: flex;
     align-items: center;
     gap: 10px;
-    color: var(--error-red);
     font-weight: 600;
-}
-
-.pulse {
-    animation: pulse 0.5s ease-in-out;
-}
-
-@keyframes pulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.05); }
-    100% { transform: scale(1); }
-}
-
-.connection-status.offline {
-    background: var(--error-red) !important;
+    box-shadow: var(--shadow-sm);
 }
 
 .session-expired-modal {
     text-align: center;
     padding: 40px;
+    max-width: 400px;
 }
 
 .session-expired-animation {
     font-size: 4rem;
-    color: var(--bright-orange);
+    color: var(--warning-orange);
     margin-bottom: 20px;
     animation: pulse 2s infinite;
 }
@@ -1303,7 +1327,7 @@ const additionalCSS = `
 }
 
 .renew-session {
-    background: var(--electric-blue);
+    background: var(--accent-blue);
     color: white;
     border: none;
     padding: 12px 24px;
@@ -1314,25 +1338,18 @@ const additionalCSS = `
     align-items: center;
     gap: 8px;
     margin: 0 auto;
+    transition: all 0.3s ease;
 }
 
-.high-contrast {
-    --light-gray: #000000;
-    --white: #000000;
-    --dark-text: #FFFFFF;
-    filter: contrast(200%);
+.renew-session:hover {
+    background: var(--primary-blue);
+    transform: translateY(-2px);
 }
 
-.large-text {
-    font-size: 120%;
-}
-
-.large-text .candidate-name {
-    font-size: 1.3rem;
-}
-
-.large-text .position-name {
-    font-size: 1.2rem;
+@keyframes pulse {
+    0% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.1); opacity: 0.8; }
+    100% { transform: scale(1); opacity: 1; }
 }
 `;
 

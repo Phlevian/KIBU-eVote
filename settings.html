@@ -1,0 +1,1142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Settings - KIBU-eVote</title>
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/settings.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="settings-page">
+    <!-- Header -->
+    <header class="settings-header">
+        <div class="header-container">
+            <div class="logo-section">
+                <a href="dashboard.html" class="back-btn">
+                    <i class="fas fa-arrow-left"></i>
+                    <span>Back to Dashboard</span>
+                </a>
+                <div class="header-title">
+                    <h1><i class="fas fa-cog"></i> Settings</h1>
+                    <p class="subtitle">Manage your account and preferences</p>
+                </div>
+            </div>
+            
+            <div class="header-controls">
+                <div class="user-profile">
+                    <div class="avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="user-info">
+                        <span class="username" id="current-username">John Doe</span>
+                        <span class="user-role">Student Voter</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="settings-container">
+        <div class="settings-layout">
+            <!-- Sidebar Navigation -->
+            <aside class="settings-sidebar">
+                <nav class="settings-nav">
+                    <ul class="nav-list">
+                        <li class="nav-item active" data-section="account">
+                            <i class="fas fa-user-circle"></i>
+                            <span>Account</span>
+                            <i class="fas fa-chevron-right arrow"></i>
+                        </li>
+                        <li class="nav-item" data-section="security">
+                            <i class="fas fa-shield-alt"></i>
+                            <span>Security</span>
+                            <i class="fas fa-chevron-right arrow"></i>
+                        </li>
+                        <li class="nav-item" data-section="privacy">
+                            <i class="fas fa-lock"></i>
+                            <span>Privacy</span>
+                            <i class="fas fa-chevron-right arrow"></i>
+                        </li>
+                        <li class="nav-item" data-section="notifications">
+                            <i class="fas fa-bell"></i>
+                            <span>Notifications</span>
+                            <i class="fas fa-chevron-right arrow"></i>
+                        </li>
+                        <li class="nav-item" data-section="appearance">
+                            <i class="fas fa-palette"></i>
+                            <span>Appearance</span>
+                            <i class="fas fa-chevron-right arrow"></i>
+                        </li>
+                        <li class="nav-item" data-section="blockchain">
+                            <i class="fas fa-link"></i>
+                            <span>Blockchain</span>
+                            <i class="fas fa-chevron-right arrow"></i>
+                        </li>
+                        <li class="nav-item" data-section="about">
+                            <i class="fas fa-info-circle"></i>
+                            <span>About</span>
+                            <i class="fas fa-chevron-right arrow"></i>
+                        </li>
+                    </ul>
+                </nav>
+                
+                <div class="sidebar-footer">
+                    <div class="system-status">
+                        <div class="status-indicator online">
+                            <div class="status-dot"></div>
+                            <span>All Systems Operational</span>
+                        </div>
+                    </div>
+                    <div class="version-info">
+                        <span>v2.1.0</span>
+                        <span class="build">Build #2103</span>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Main Settings Panel -->
+            <div class="settings-main">
+                <!-- Account Settings Section -->
+                <section class="settings-section active" id="account-section">
+                    <div class="section-header">
+                        <h2><i class="fas fa-user-circle"></i> Account Settings</h2>
+                        <p class="section-description">Manage your personal information and account details</p>
+                    </div>
+
+                    <div class="settings-content">
+                        <!-- Profile Picture -->
+                        <div class="settings-card">
+                            <div class="card-header">
+                                <h3>Profile Picture</h3>
+                                <p class="card-subtitle">Update your profile image</p>
+                            </div>
+                            <div class="card-body">
+                                <div class="profile-picture-container">
+                                    <div class="profile-avatar" id="profile-avatar">
+                                        <i class="fas fa-user"></i>
+                                        <div class="avatar-overlay">
+                                            <i class="fas fa-camera"></i>
+                                        </div>
+                                    </div>
+                                    <div class="profile-actions">
+                                        <button class="btn-secondary" id="upload-photo">
+                                            <i class="fas fa-upload"></i> Upload Photo
+                                        </button>
+                                        <button class="btn-secondary" id="remove-photo">
+                                            <i class="fas fa-trash"></i> Remove
+                                        </button>
+                                        <input type="file" id="photo-upload" accept="image/*" style="display: none;">
+                                    </div>
+                                    <p class="helper-text">Recommended: Square image, at least 400x400px. Max 5MB.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Personal Information -->
+                        <div class="settings-card">
+                            <div class="card-header">
+                                <h3>Personal Information</h3>
+                                <p class="card-subtitle">Update your personal details</p>
+                            </div>
+                            <div class="card-body">
+                                <form class="settings-form" id="personal-info-form">
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label for="full-name">Full Name</label>
+                                            <input type="text" id="full-name" class="form-input" 
+                                                   placeholder="Enter your full name" value="Efedha Phlevian">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="student-id">KIBU Registration Number</label>
+                                            <input type="text" id="student-id" class="form-input" 
+                                                   placeholder="BIT/0019/23" value="BIT/0019/23" readonly>
+                                            <div class="input-helper">This cannot be changed</div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label for="email">Email Address</label>
+                                            <input type="email" id="email" class="form-input" 
+                                                   placeholder="student@kibu.ac.ke" value="efedha.phlevian@kibu.ac.ke">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="phone">Phone Number</label>
+                                            <input type="tel" id="phone" class="form-input" 
+                                                   placeholder="+254 7XX XXX XXX" value="+254 712 345 678">
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label for="faculty">Faculty</label>
+                                            <select id="faculty" class="form-select">
+                                                <option value="computing">Faculty of Computing & Informatics</option>
+                                                <option value="business">Faculty of Business & Economics</option>
+                                                <option value="education">Faculty of Education & Social Sciences</option>
+                                                <option value="science">Faculty of Pure & Applied Sciences</option>
+                                                <option value="engineering">Faculty of Engineering</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="course">Course</label>
+                                            <input type="text" id="course" class="form-input" 
+                                                   placeholder="Your course" value="Bachelor of Information Technology">
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-actions">
+                                        <button type="submit" class="btn-primary">
+                                            <i class="fas fa-save"></i> Save Changes
+                                        </button>
+                                        <button type="button" class="btn-secondary" id="reset-personal">
+                                            Reset
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                        <!-- Account Preferences -->
+                        <div class="settings-card">
+                            <div class="card-header">
+                                <h3>Account Preferences</h3>
+                                <p class="card-subtitle">Customize your account experience</p>
+                            </div>
+                            <div class="card-body">
+                                <div class="preferences-grid">
+                                    <div class="preference-item">
+                                        <div class="preference-info">
+                                            <h4>Language</h4>
+                                            <p>Choose your preferred language</p>
+                                        </div>
+                                        <select class="form-select" id="language">
+                                            <option value="en">English</option>
+                                            <option value="sw">Swahili</option>
+                                            <option value="fr">French</option>
+                                        </select>
+                                    </div>
+                                    
+                                    <div class="preference-item">
+                                        <div class="preference-info">
+                                            <h4>Time Zone</h4>
+                                            <p>Set your local time zone</p>
+                                        </div>
+                                        <select class="form-select" id="timezone">
+                                            <option value="Africa/Nairobi">East Africa Time (GMT+3)</option>
+                                            <option value="UTC">UTC</option>
+                                            <option value="America/New_York">Eastern Time</option>
+                                        </select>
+                                    </div>
+                                    
+                                    <div class="preference-item">
+                                        <div class="preference-info">
+                                            <h4>Date Format</h4>
+                                            <p>Choose how dates are displayed</p>
+                                        </div>
+                                        <select class="form-select" id="date-format">
+                                            <option value="DD/MM/YYYY">DD/MM/YYYY</option>
+                                            <option value="MM/DD/YYYY">MM/DD/YYYY</option>
+                                            <option value="YYYY-MM-DD">YYYY-MM-DD</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Security Settings Section -->
+                <section class="settings-section" id="security-section">
+                    <div class="section-header">
+                        <h2><i class="fas fa-shield-alt"></i> Security Settings</h2>
+                        <p class="section-description">Manage your account security and authentication</p>
+                    </div>
+
+                    <div class="settings-content">
+                        <!-- Password Change -->
+                        <div class="settings-card">
+                            <div class="card-header">
+                                <h3>Password</h3>
+                                <p class="card-subtitle">Change your password</p>
+                            </div>
+                            <div class="card-body">
+                                <form class="settings-form" id="password-form">
+                                    <div class="form-group">
+                                        <label for="current-password">Current Password</label>
+                                        <div class="password-input">
+                                            <input type="password" id="current-password" class="form-input" 
+                                                   placeholder="Enter current password">
+                                            <button type="button" class="toggle-password" data-target="current-password">
+                                                <i class="fas fa-eye"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="new-password">New Password</label>
+                                        <div class="password-input">
+                                            <input type="password" id="new-password" class="form-input" 
+                                                   placeholder="Enter new password" minlength="8">
+                                            <button type="button" class="toggle-password" data-target="new-password">
+                                                <i class="fas fa-eye"></i>
+                                            </button>
+                                        </div>
+                                        <div class="password-strength">
+                                            <div class="strength-bar">
+                                                <div class="strength-fill" id="password-strength-fill"></div>
+                                            </div>
+                                            <span class="strength-text" id="password-strength-text">Weak</span>
+                                        </div>
+                                        <div class="password-requirements">
+                                            <p>Password must contain:</p>
+                                            <ul>
+                                                <li class="requirement" data-requirement="length">At least 8 characters</li>
+                                                <li class="requirement" data-requirement="uppercase">One uppercase letter</li>
+                                                <li class="requirement" data-requirement="lowercase">One lowercase letter</li>
+                                                <li class="requirement" data-requirement="number">One number</li>
+                                                <li class="requirement" data-requirement="special">One special character</li>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-group">
+                                        <label for="confirm-password">Confirm New Password</label>
+                                        <div class="password-input">
+                                            <input type="password" id="confirm-password" class="form-input" 
+                                                   placeholder="Confirm new password">
+                                            <button type="button" class="toggle-password" data-target="confirm-password">
+                                                <i class="fas fa-eye"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="form-actions">
+                                        <button type="submit" class="btn-primary">
+                                            <i class="fas fa-key"></i> Change Password
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                        <!-- Two-Factor Authentication -->
+                        <div class="settings-card">
+                            <div class="card-header">
+                                <h3>Two-Factor Authentication</h3>
+                                <p class="card-subtitle">Add an extra layer of security to your account</p>
+                            </div>
+                            <div class="card-body">
+                                <div class="two-factor-status">
+                                    <div class="status-info">
+                                        <i class="fas fa-shield-check" style="color: #4CAF50;"></i>
+                                        <div>
+                                            <h4>2FA is enabled</h4>
+                                            <p>Two-factor authentication is currently active on your account</p>
+                                        </div>
+                                    </div>
+                                    <button class="btn-secondary" id="disable-2fa">
+                                        <i class="fas fa-times"></i> Disable 2FA
+                                    </button>
+                                </div>
+                                
+                                <div class="two-factor-methods">
+                                    <h4>Authentication Methods</h4>
+                                    <div class="methods-list">
+                                        <div class="method-item active">
+                                            <div class="method-icon">
+                                                <i class="fas fa-mobile-alt"></i>
+                                            </div>
+                                            <div class="method-info">
+                                                <h5>Authenticator App</h5>
+                                                <p>Use Google Authenticator or similar apps</p>
+                                            </div>
+                                            <div class="method-status">
+                                                <span class="badge active">Active</span>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="method-item">
+                                            <div class="method-icon">
+                                                <i class="fas fa-sms"></i>
+                                            </div>
+                                            <div class="method-info">
+                                                <h5>SMS Verification</h5>
+                                                <p>Receive codes via text message</p>
+                                            </div>
+                                            <div class="method-status">
+                                                <button class="btn-secondary btn-small">Enable</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Session Management -->
+                        <div class="settings-card">
+                            <div class="card-header">
+                                <h3>Active Sessions</h3>
+                                <p class="card-subtitle">Manage your logged-in devices</p>
+                            </div>
+                            <div class="card-body">
+                                <div class="sessions-list">
+                                    <div class="session-item current">
+                                        <div class="session-info">
+                                            <i class="fas fa-laptop"></i>
+                                            <div>
+                                                <h5>Current Session</h5>
+                                                <p>Chrome on Windows • Nairobi, Kenya</p>
+                                                <span class="session-time">Active now</span>
+                                            </div>
+                                        </div>
+                                        <span class="session-badge current">Current</span>
+                                    </div>
+                                    
+                                    <div class="session-item">
+                                        <div class="session-info">
+                                            <i class="fas fa-mobile-alt"></i>
+                                            <div>
+                                                <h5>Mobile Device</h5>
+                                                <p>Safari on iPhone • Nairobi, Kenya</p>
+                                                <span class="session-time">2 hours ago</span>
+                                            </div>
+                                        </div>
+                                        <button class="btn-secondary btn-small">Logout</button>
+                                    </div>
+                                </div>
+                                
+                                <div class="session-actions">
+                                    <button class="btn-secondary" id="logout-all">
+                                        <i class="fas fa-sign-out-alt"></i> Logout from all devices
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Privacy Settings Section -->
+                <section class="settings-section" id="privacy-section">
+                    <div class="section-header">
+                        <h2><i class="fas fa-lock"></i> Privacy Settings</h2>
+                        <p class="section-description">Control your privacy and data sharing</p>
+                    </div>
+
+                    <div class="settings-content">
+                        <!-- Privacy Controls -->
+                        <div class="settings-card">
+                            <div class="card-header">
+                                <h3>Privacy Controls</h3>
+                                <p class="card-subtitle">Manage who can see your information</p>
+                            </div>
+                            <div class="card-body">
+                                <div class="privacy-options">
+                                    <div class="privacy-option">
+                                        <div class="option-info">
+                                            <h4>Profile Visibility</h4>
+                                            <p>Control who can see your profile information</p>
+                                        </div>
+                                        <select class="form-select" id="profile-visibility">
+                                            <option value="public">Everyone</option>
+                                            <option value="students">KIBU Students Only</option>
+                                            <option value="private">Only Me</option>
+                                        </select>
+                                    </div>
+                                    
+                                    <div class="privacy-option">
+                                        <div class="option-info">
+                                            <h4>Voting History</h4>
+                                            <p>Choose who can see your voting history</p>
+                                        </div>
+                                        <div class="toggle-switch">
+                                            <input type="checkbox" id="voting-history-toggle" checked>
+                                            <label for="voting-history-toggle"></label>
+                                            <span class="toggle-label">Make voting history anonymous</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="privacy-option">
+                                        <div class="option-info">
+                                            <h4>Activity Feed</h4>
+                                            <p>Show your voting activity to others</p>
+                                        </div>
+                                        <div class="toggle-switch">
+                                            <input type="checkbox" id="activity-feed-toggle">
+                                            <label for="activity-feed-toggle"></label>
+                                            <span class="toggle-label">Hide my activity</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Data Management -->
+                        <div class="settings-card">
+                            <div class="card-header">
+                                <h3>Data Management</h3>
+                                <p class="card-subtitle">Control your data and privacy</p>
+                            </div>
+                            <div class="card-body">
+                                <div class="data-options">
+                                    <div class="data-option">
+                                        <div class="option-info">
+                                            <h4>Download Your Data</h4>
+                                            <p>Request a copy of all your data from KIBU-eVote</p>
+                                        </div>
+                                        <button class="btn-secondary">
+                                            <i class="fas fa-download"></i> Request Data
+                                        </button>
+                                    </div>
+                                    
+                                    <div class="data-option warning">
+                                        <div class="option-info">
+                                            <h4>Clear Voting History</h4>
+                                            <p>Remove all your voting history from our servers</p>
+                                            <p class="warning-text">This action cannot be undone</p>
+                                        </div>
+                                        <button class="btn-warning" id="clear-history">
+                                            <i class="fas fa-trash"></i> Clear History
+                                        </button>
+                                    </div>
+                                    
+                                    <div class="data-option danger">
+                                        <div class="option-info">
+                                            <h4>Delete Account</h4>
+                                            <p>Permanently delete your KIBU-eVote account</p>
+                                            <p class="danger-text">This will remove all your data permanently</p>
+                                        </div>
+                                        <button class="btn-danger" id="delete-account">
+                                            <i class="fas fa-user-slash"></i> Delete Account
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Notifications Section -->
+                <section class="settings-section" id="notifications-section">
+                    <div class="section-header">
+                        <h2><i class="fas fa-bell"></i> Notification Settings</h2>
+                        <p class="section-description">Manage how and when you receive notifications</p>
+                    </div>
+
+                    <div class="settings-content">
+                        <!-- Notification Preferences -->
+                        <div class="settings-card">
+                            <div class="card-header">
+                                <h3>Notification Preferences</h3>
+                                <p class="card-subtitle">Choose what notifications you receive</p>
+                            </div>
+                            <div class="card-body">
+                                <div class="notification-category">
+                                    <h4>Election Notifications</h4>
+                                    <div class="notification-options">
+                                        <div class="notification-option">
+                                            <div class="option-info">
+                                                <h5>New Elections</h5>
+                                                <p>Notify me when new elections are announced</p>
+                                            </div>
+                                            <div class="toggle-switch">
+                                                <input type="checkbox" id="new-elections-toggle" checked>
+                                                <label for="new-elections-toggle"></label>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="notification-option">
+                                            <div class="option-info">
+                                                <h5>Election Reminders</h5>
+                                                <p>Remind me before elections close</p>
+                                            </div>
+                                            <div class="toggle-switch">
+                                                <input type="checkbox" id="election-reminders-toggle" checked>
+                                                <label for="election-reminders-toggle"></label>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="notification-option">
+                                            <div class="option-info">
+                                                <h5>Results Announcements</h5>
+                                                <p>Notify me when election results are published</p>
+                                            </div>
+                                            <div class="toggle-switch">
+                                                <input type="checkbox" id="results-toggle" checked>
+                                                <label for="results-toggle"></label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="notification-category">
+                                    <h4>Security Notifications</h4>
+                                    <div class="notification-options">
+                                        <div class="notification-option">
+                                            <div class="option-info">
+                                                <h5>Login Alerts</h5>
+                                                <p>Notify me when someone logs into my account</p>
+                                            </div>
+                                            <div class="toggle-switch">
+                                                <input type="checkbox" id="login-alerts-toggle" checked>
+                                                <label for="login-alerts-toggle"></label>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="notification-option">
+                                            <div class="option-info">
+                                                <h5>Password Changes</h5>
+                                                <p>Alert me when my password is changed</p>
+                                            </div>
+                                            <div class="toggle-switch">
+                                                <input type="checkbox" id="password-change-toggle" checked>
+                                                <label for="password-change-toggle"></label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="notification-category">
+                                    <h4>System Updates</h4>
+                                    <div class="notification-options">
+                                        <div class="notification-option">
+                                            <div class="option-info">
+                                                <h5>Maintenance Alerts</h5>
+                                                <p>Notify me about system maintenance</p>
+                                            </div>
+                                            <div class="toggle-switch">
+                                                <input type="checkbox" id="maintenance-toggle">
+                                                <label for="maintenance-toggle"></label>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="notification-option">
+                                            <div class="option-info">
+                                                <h5>Feature Updates</h5>
+                                                <p>Inform me about new features</p>
+                                            </div>
+                                            <div class="toggle-switch">
+                                                <input type="checkbox" id="feature-updates-toggle" checked>
+                                                <label for="feature-updates-toggle"></label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Delivery Methods -->
+                        <div class="settings-card">
+                            <div class="card-header">
+                                <h3>Delivery Methods</h3>
+                                <p class="card-subtitle">Choose how you receive notifications</p>
+                            </div>
+                            <div class="card-body">
+                                <div class="delivery-methods">
+                                    <div class="delivery-option">
+                                        <div class="option-info">
+                                            <i class="fas fa-envelope"></i>
+                                            <div>
+                                                <h4>Email Notifications</h4>
+                                                <p>Receive notifications via email</p>
+                                            </div>
+                                        </div>
+                                        <div class="toggle-switch">
+                                            <input type="checkbox" id="email-notifications-toggle" checked>
+                                            <label for="email-notifications-toggle"></label>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="delivery-option">
+                                        <div class="option-info">
+                                            <i class="fas fa-mobile-alt"></i>
+                                            <div>
+                                                <h4>Push Notifications</h4>
+                                                <p>Receive push notifications on your device</p>
+                                            </div>
+                                        </div>
+                                        <div class="toggle-switch">
+                                            <input type="checkbox" id="push-notifications-toggle" checked>
+                                            <label for="push-notifications-toggle"></label>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="delivery-option">
+                                        <div class="option-info">
+                                            <i class="fas fa-sms"></i>
+                                            <div>
+                                                <h4>SMS Notifications</h4>
+                                                <p>Receive text message notifications</p>
+                                            </div>
+                                        </div>
+                                        <div class="toggle-switch">
+                                            <input type="checkbox" id="sms-notifications-toggle">
+                                            <label for="sms-notifications-toggle"></label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Appearance Section -->
+                <section class="settings-section" id="appearance-section">
+                    <div class="section-header">
+                        <h2><i class="fas fa-palette"></i> Appearance Settings</h2>
+                        <p class="section-description">Customize how KIBU-eVote looks and feels</p>
+                    </div>
+
+                    <div class="settings-content">
+                        <!-- Theme Selection -->
+                        <div class="settings-card">
+                            <div class="card-header">
+                                <h3>Theme</h3>
+                                <p class="card-subtitle">Choose your preferred theme</p>
+                            </div>
+                            <div class="card-body">
+                                <div class="theme-selection">
+                                    <div class="theme-option active" data-theme="dark">
+                                        <div class="theme-preview dark-theme">
+                                            <div class="preview-header"></div>
+                                            <div class="preview-content"></div>
+                                            <div class="preview-sidebar"></div>
+                                        </div>
+                                        <h4>Dark Theme</h4>
+                                        <p>Default system theme</p>
+                                    </div>
+                                    
+                                    <div class="theme-option" data-theme="light">
+                                        <div class="theme-preview light-theme">
+                                            <div class="preview-header"></div>
+                                            <div class="preview-content"></div>
+                                            <div class="preview-sidebar"></div>
+                                        </div>
+                                        <h4>Light Theme</h4>
+                                        <p>Bright and clean interface</p>
+                                    </div>
+                                    
+                                    <div class="theme-option" data-theme="auto">
+                                        <div class="theme-preview auto-theme">
+                                            <div class="preview-header"></div>
+                                            <div class="preview-content"></div>
+                                            <div class="preview-sidebar"></div>
+                                        </div>
+                                        <h4>Auto</h4>
+                                        <p>Follows system preference</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Accent Color -->
+                        <div class="settings-card">
+                            <div class="card-header">
+                                <h3>Accent Color</h3>
+                                <p class="card-subtitle">Choose your preferred accent color</p>
+                            </div>
+                            <div class="card-body">
+                                <div class="color-selection">
+                                    <div class="color-option active" data-color="blue" style="--color: #0080FF;">
+                                        <div class="color-circle"></div>
+                                        <span>Electric Blue</span>
+                                    </div>
+                                    <div class="color-option" data-color="purple" style="--color: #8A2BE2;">
+                                        <div class="color-circle"></div>
+                                        <span>Vibrant Purple</span>
+                                    </div>
+                                    <div class="color-option" data-color="green" style="--color: #00C851;">
+                                        <div class="color-circle"></div>
+                                        <span>Deep Emerald</span>
+                                    </div>
+                                    <div class="color-option" data-color="orange" style="--color: #FF6B35;">
+                                        <div class="color-circle"></div>
+                                        <span>Bright Orange</span>
+                                    </div>
+                                    <div class="color-option" data-color="pink" style="--color: #FF5E5B;">
+                                        <div class="color-circle"></div>
+                                        <span>Coral Pink</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Font Size -->
+                        <div class="settings-card">
+                            <div class="card-header">
+                                <h3>Font Size</h3>
+                                <p class="card-subtitle">Adjust the text size</p>
+                            </div>
+                            <div class="card-body">
+                                <div class="font-size-control">
+                                    <span class="font-size-label">Small</span>
+                                    <input type="range" id="font-size-slider" min="12" max="18" value="14" step="1">
+                                    <span class="font-size-label">Large</span>
+                                </div>
+                                <div class="font-size-preview">
+                                    <p id="font-preview" style="font-size: 14px;">
+                                        This is how text will appear with your selected font size.
+                                        Adjust the slider to find the most comfortable reading experience.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Animation Preferences -->
+                        <div class="settings-card">
+                            <div class="card-header">
+                                <h3>Animations</h3>
+                                <p class="card-subtitle">Control interface animations</p>
+                            </div>
+                            <div class="card-body">
+                                <div class="animation-options">
+                                    <div class="animation-option">
+                                        <div class="option-info">
+                                            <h4>Reduce Motion</h4>
+                                            <p>Minimize animations and transitions</p>
+                                        </div>
+                                        <div class="toggle-switch">
+                                            <input type="checkbox" id="reduce-motion-toggle">
+                                            <label for="reduce-motion-toggle"></label>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="animation-option">
+                                        <div class="option-info">
+                                            <h4>Smooth Scrolling</h4>
+                                            <p>Enable smooth scrolling effects</p>
+                                        </div>
+                                        <div class="toggle-switch">
+                                            <input type="checkbox" id="smooth-scrolling-toggle" checked>
+                                            <label for="smooth-scrolling-toggle"></label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Blockchain Section -->
+                <section class="settings-section" id="blockchain-section">
+                    <div class="section-header">
+                        <h2><i class="fas fa-link"></i> Blockchain Settings</h2>
+                        <p class="section-description">Manage your blockchain preferences and verification</p>
+                    </div>
+
+                    <div class="settings-content">
+                        <!-- Blockchain Verification -->
+                        <div class="settings-card">
+                            <div class="card-header">
+                                <h3>Blockchain Verification</h3>
+                                <p class="card-subtitle">Verify your votes on the blockchain</p>
+                            </div>
+                            <div class="card-body">
+                                <div class="blockchain-status">
+                                    <div class="status-item">
+                                        <i class="fas fa-check-circle" style="color: #4CAF50;"></i>
+                                        <div>
+                                            <h4>Blockchain Connected</h4>
+                                            <p>Your votes are being recorded on the KIBU blockchain</p>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="status-item">
+                                        <i class="fas fa-shield-alt" style="color: #0080FF;"></i>
+                                        <div>
+                                            <h4>Vote Integrity</h4>
+                                            <p>All your votes are cryptographically secured</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="verification-actions">
+                                    <button class="btn-primary" id="verify-votes">
+                                        <i class="fas fa-search"></i> Verify All Votes
+                                    </button>
+                                    <button class="btn-secondary" id="view-transactions">
+                                        <i class="fas fa-external-link-alt"></i> View Blockchain Explorer
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Transaction History -->
+                        <div class="settings-card">
+                            <div class="card-header">
+                                <h3>Recent Transactions</h3>
+                                <p class="card-subtitle">Your recent blockchain transactions</p>
+                            </div>
+                            <div class="card-body">
+                                <div class="transactions-list">
+                                    <div class="transaction-item">
+                                        <div class="transaction-icon">
+                                            <i class="fas fa-vote-yea"></i>
+                                        </div>
+                                        <div class="transaction-details">
+                                            <h5>Student Council Election</h5>
+                                            <p>Transaction ID: 0x4a3b2c1d...e5f6</p>
+                                            <span class="transaction-time">2 hours ago</span>
+                                        </div>
+                                        <div class="transaction-status">
+                                            <span class="badge confirmed">Confirmed</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="transaction-item">
+                                        <div class="transaction-icon">
+                                            <i class="fas fa-vote-yea"></i>
+                                        </div>
+                                        <div class="transaction-details">
+                                            <h5>Sports Captain Election</h5>
+                                            <p>Transaction ID: 0x7b8c9d0e...1a2b</p>
+                                            <span class="transaction-time">1 day ago</span>
+                                        </div>
+                                        <div class="transaction-status">
+                                            <span class="badge confirmed">Confirmed</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="transaction-item">
+                                        <div class="transaction-icon">
+                                            <i class="fas fa-vote-yea"></i>
+                                        </div>
+                                        <div class="transaction-details">
+                                            <h5>Faculty Representative</h5>
+                                            <p>Transaction ID: 0x3c4d5e6f...7a8b</p>
+                                            <span class="transaction-time">3 days ago</span>
+                                        </div>
+                                        <div class="transaction-status">
+                                            <span class="badge confirmed">Confirmed</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Blockchain Preferences -->
+                        <div class="settings-card">
+                            <div class="card-header">
+                                <h3>Blockchain Preferences</h3>
+                                <p class="card-subtitle">Customize your blockchain experience</p>
+                            </div>
+                            <div class="card-body">
+                                <div class="blockchain-options">
+                                    <div class="blockchain-option">
+                                        <div class="option-info">
+                                            <h4>Automatic Verification</h4>
+                                            <p>Automatically verify votes after casting</p>
+                                        </div>
+                                        <div class="toggle-switch">
+                                            <input type="checkbox" id="auto-verify-toggle" checked>
+                                            <label for="auto-verify-toggle"></label>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="blockchain-option">
+                                        <div class="option-info">
+                                            <h4>Transaction Notifications</h4>
+                                            <p>Notify me when my vote is confirmed on blockchain</p>
+                                        </div>
+                                        <div class="toggle-switch">
+                                            <input type="checkbox" id="transaction-notify-toggle" checked>
+                                            <label for="transaction-notify-toggle"></label>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="blockchain-option">
+                                        <div class="option-info">
+                                            <h4>Gas Fee Optimization</h4>
+                                            <p>Automatically optimize transaction fees</p>
+                                        </div>
+                                        <div class="toggle-switch">
+                                            <input type="checkbox" id="gas-fee-toggle" checked>
+                                            <label for="gas-fee-toggle"></label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- About Section -->
+                <section class="settings-section" id="about-section">
+                    <div class="section-header">
+                        <h2><i class="fas fa-info-circle"></i> About KIBU-eVote</h2>
+                        <p class="section-description">Learn more about the voting system</p>
+                    </div>
+
+                    <div class="settings-content">
+                        <!-- App Information -->
+                        <div class="settings-card">
+                            <div class="card-header">
+                                <h3>Application Information</h3>
+                                <p class="card-subtitle">Details about KIBU-eVote</p>
+                            </div>
+                            <div class="card-body">
+                                <div class="app-info">
+                                    <div class="info-item">
+                                        <span class="info-label">Version</span>
+                                        <span class="info-value">2.1.0</span>
+                                    </div>
+                                    <div class="info-item">
+                                        <span class="info-label">Build Number</span>
+                                        <span class="info-value">#2103</span>
+                                    </div>
+                                    <div class="info-item">
+                                        <span class="info-label">Release Date</span>
+                                        <span class="info-value">October 15, 2023</span>
+                                    </div>
+                                    <div class="info-item">
+                                        <span class="info-label">Developer</span>
+                                        <span class="info-value">KIBU ICT Department</span>
+                                    </div>
+                                    <div class="info-item">
+                                        <span class="info-label">Blockchain Network</span>
+                                        <span class="info-value">KIBU Chain v1.2</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Support -->
+                        <div class="settings-card">
+                            <div class="card-header">
+                                <h3>Support & Help</h3>
+                                <p class="card-subtitle">Get help with KIBU-eVote</p>
+                            </div>
+                            <div class="card-body">
+                                <div class="support-options">
+                                    <a href="#" class="support-option">
+                                        <i class="fas fa-question-circle"></i>
+                                        <div>
+                                            <h4>Help Center</h4>
+                                            <p>Browse help articles and FAQs</p>
+                                        </div>
+                                        <i class="fas fa-chevron-right"></i>
+                                    </a>
+                                    
+                                    <a href="#" class="support-option">
+                                        <i class="fas fa-envelope"></i>
+                                        <div>
+                                            <h4>Contact Support</h4>
+                                            <p>Email the KIBU ICT Department</p>
+                                        </div>
+                                        <i class="fas fa-chevron-right"></i>
+                                    </a>
+                                    
+                                    <a href="#" class="support-option">
+                                        <i class="fas fa-file-alt"></i>
+                                        <div>
+                                            <h4>Terms of Service</h4>
+                                            <p>Read the terms and conditions</p>
+                                        </div>
+                                        <i class="fas fa-chevron-right"></i>
+                                    </a>
+                                    
+                                    <a href="#" class="support-option">
+                                        <i class="fas fa-shield-alt"></i>
+                                        <div>
+                                            <h4>Privacy Policy</h4>
+                                            <p>Learn how we protect your data</p>
+                                        </div>
+                                        <i class="fas fa-chevron-right"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- System Status -->
+                        <div class="settings-card">
+                            <div class="card-header">
+                                <h3>System Status</h3>
+                                <p class="card-subtitle">Check the status of KIBU-eVote services</p>
+                            </div>
+                            <div class="card-body">
+                                <div class="system-status-grid">
+                                    <div class="status-card online">
+                                        <i class="fas fa-server"></i>
+                                        <h4>Voting System</h4>
+                                        <p>Operational</p>
+                                    </div>
+                                    
+                                    <div class="status-card online">
+                                        <i class="fas fa-link"></i>
+                                        <h4>Blockchain Network</h4>
+                                        <p>Operational</p>
+                                    </div>
+                                    
+                                    <div class="status-card online">
+                                        <i class="fas fa-database"></i>
+                                        <h4>Database</h4>
+                                        <p>Operational</p>
+                                    </div>
+                                    
+                                    <div class="status-card online">
+                                        <i class="fas fa-user-shield"></i>
+                                        <h4>Authentication</h4>
+                                        <p>Operational</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="system-check">
+                                    <button class="btn-secondary" id="check-status">
+                                        <i class="fas fa-sync-alt"></i> Check System Status
+                                    </button>
+                                    <span class="last-checked">Last checked: Just now</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="settings-footer">
+        <div class="footer-container">
+            <div class="footer-section">
+                <p>© 2025 KIBU-eVote. All rights reserved.</p>
+            </div>
+            <div class="footer-section">
+                <p>Kibabii University • Bungoma, Kenya</p>
+            </div>
+            <div class="footer-section">
+                <p>For support: <a href="mailto:voting@kibu.ac.ke">voting@kibu.ac.ke</a></p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Confirmation Modal -->
+    <div class="modal" id="confirmation-modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="modal-title">Confirm Action</h3>
+                <button class="close-modal" id="close-modal">&times;</button>
+            </div>
+            <div class="modal-body">
+                <p id="modal-message">Are you sure you want to perform this action?</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary" id="modal-cancel">Cancel</button>
+                <button class="btn-primary" id="modal-confirm">Confirm</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Toast -->
+    <div class="toast" id="success-toast">
+        <div class="toast-content">
+            <i class="fas fa-check-circle"></i>
+            <span class="toast-message">Settings saved successfully!</span>
+        </div>
+    </div>
+
+    <script src="js/settings.js"></script>
+</body>
+</html>
