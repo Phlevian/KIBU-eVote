@@ -14,7 +14,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // Connect to MongoDB
-mongoose.connect(process.env.MONGODB_URI || 'mongodb+srv://efedhaphlevian_db_user:0dOaLv5p2rnsX5nR@cluster0.2nkucab.mongodb.net/kibu-evote?retryWrites=true&w=majority')
+mongoose.connect(process.env.MONGODB_URI)
 .then(() => {
     console.log('✅ Connected to MongoDB successfully');
 })
@@ -24,10 +24,18 @@ mongoose.connect(process.env.MONGODB_URI || 'mongodb+srv://efedhaphlevian_db_use
 
 // Import Routes
 const authRoutes = require('./routes/authRoutes');
-
+const electionRoutes = require('./routes/electionRoutes');
+const voteRoutes = require('./routes/voteRoutes');
+const resultsRoutes = require('./routes/resultsRoutes');
+const positionRoutes = require('./routes/positionRoutes');
+const candidateRoutes = require('./routes/candidateRoutes');
 // Use Routes
 app.use('/api/auth', authRoutes);
-
+app.use('/api/elections', electionRoutes);
+app.use('/api/votes', voteRoutes);
+app.use('/api/results', resultsRoutes);
+app.use('/api/positions', positionRoutes);
+app.use('/api/candidates', candidateRoutes);
 // Root route
 app.get('/', (req, res) => {
     res.json({
@@ -36,11 +44,10 @@ app.get('/', (req, res) => {
         version: '1.0.0',
         endpoints: {
             auth: '/api/auth',
-            students: '/api/students',
             elections: '/api/elections',
-            candidates: '/api/candidates',
             votes: '/api/votes',
-            results: '/api/results'
+            results: '/api/results' ,
+            candidates: '/api/candidates'
         }
     });
 });
@@ -57,15 +64,18 @@ app.get('/health', (req, res) => {
 
 // 404 handler
 app.use((req, res) => {
+    console.log('❌ 404 - Route not found:', req.method, req.url);
     res.status(404).json({
         success: false,
-        message: 'Route not found'
+        message: 'Route not found',
+        requestedUrl: req.url,
+        method: req.method
     });
 });
 
 // Error handler
 app.use((err, req, res, next) => {
-    console.error(err.stack);
+    console.error('❌ Error:', err.stack);
     res.status(500).json({
         success: false,
         message: 'Internal server error',

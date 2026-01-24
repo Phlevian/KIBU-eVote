@@ -8,17 +8,16 @@ const {
     updatePassword,
     updateProfile
 } = require('../controllers/authController');
-
+const { protect } = require('../middleware/authMiddleware');
 
 // Public routes
 router.post('/signup', signup);
 router.post('/login', login);
 
-// Protected routes (will add middleware later)
-router.get('/me', getMe);
-router.post('/logout', logout);
-router.put('/update-password', updatePassword);
-router.put('/update-profile', updateProfile);
-
+// Protected routes - ADD protect middleware
+router.get('/me', protect, getMe);
+router.post('/logout', protect, logout);
+router.put('/update-password', protect, updatePassword);
+router.put('/update-profile', protect, updateProfile);
 
 module.exports = router;
