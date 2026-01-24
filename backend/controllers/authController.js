@@ -83,6 +83,7 @@ exports.signup = async (req, res) => {
     }
 };
 
+
 // @desc    Login student
 // @route   POST /api/auth/login
 // @access  Public
@@ -143,6 +144,75 @@ exports.login = async (req, res) => {
         res.status(500).json({
             success: false,
             message: 'Login failed',
+            error: process.env.NODE_ENV === 'development' ? error.message : undefined
+        });
+    }
+};
+// @desc    Update student profile
+// @route   PUT /api/auth/update-profile
+// @access  Private
+exports.updateProfile = async (req, res) => {
+    try {
+        const {
+            firstName,
+            middleName,
+            lastName,
+            phone,
+            faculty,
+            course,
+            yearOfStudy,
+            profilePhoto
+        } = req.body;
+
+        // Find student
+        const student = await Student.findById(req.student.id);
+
+        if (!student) {
+            return res.status(404).json({
+                success: false,
+                message: 'Student not found'
+            });
+        }
+
+        // Update fields if provided
+        if (firstName !== undefined) student.firstName = firstName;
+        if (middleName !== undefined) student.middleName = middleName;
+        if (lastName !== undefined) student.lastName = lastName;
+        if (phone !== undefined) student.phone = phone;
+        if (faculty !== undefined) student.faculty = faculty;
+        if (course !== undefined) student.course = course;
+        if (yearOfStudy !== undefined) student.yearOfStudy = yearOfStudy;
+        if (profilePhoto !== undefined) student.profilePhoto = profilePhoto;
+
+        // Save updated student
+        await student.save();
+
+        res.status(200).json({
+            success: true,
+            message: 'Profile updated successfully',
+            data: {
+                student: {
+                    id: student._id,
+                    firstName: student.firstName,
+                    middleName: student.middleName,
+                    lastName: student.lastName,
+                    registrationNumber: student.registrationNumber,
+                    email: student.email,
+                    phone: student.phone,
+                    faculty: student.faculty,
+                    course: student.course,
+                    yearOfStudy: student.yearOfStudy,
+                    profilePhoto: student.profilePhoto,
+                    role: student.role,
+                    isVerified: student.isVerified,
+                    createdAt: student.createdAt
+                }
+            }
+        });
+    } catch (error) {
+        res.status(500).json({
+            success: false,
+            message: 'Profile update failed',
             error: process.env.NODE_ENV === 'development' ? error.message : undefined
         });
     }

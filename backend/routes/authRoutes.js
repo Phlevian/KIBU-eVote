@@ -5,8 +5,10 @@ const {
     login,
     getMe,
     logout,
-    updatePassword
+    updatePassword,
+    updateProfile
 } = require('../controllers/authController');
+
 
 // Public routes
 router.post('/signup', signup);
@@ -16,5 +18,7 @@ router.post('/login', login);
 router.get('/me', getMe);
 router.post('/logout', logout);
 router.put('/update-password', updatePassword);
+router.put('/update-profile', updateProfile);
+
 
 module.exports = router;

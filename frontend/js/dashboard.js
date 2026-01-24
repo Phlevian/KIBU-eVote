@@ -5,17 +5,281 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function initDashboard() {
-    // Initialize all dashboard components
+    // First check authentication
+    checkAuthentication();
+    
+    // Then initialize all dashboard components
+    initUserProfile();
     initCountdownTimer();
     initMobileMenu();
     initCardInteractions();
     initNotificationSystem();
     initVotingActions();
+    initRealTimeUpdates();
+}
+
+// Authentication Check
+function checkAuthentication() {
+    const token = localStorage.getItem('kibu_token');
+    const userData = localStorage.getItem('kibu_user');
+    
+    if (!token || !userData) {
+        // Redirect to login if not authenticated
+        window.location.href = 'login.html';
+        return;
+    }
+    
+    return JSON.parse(userData);
+}
+// Add this function to dashboard.js
+function initProfileCardNavigation() {
+    const studentCard = document.getElementById('student-card');
+    const userInfo = document.querySelector('.user-info');
+    
+    // Make student card clickable
+    if (studentCard) {
+        studentCard.style.cursor = 'pointer';
+        studentCard.addEventListener('click', function() {
+            window.location.href = 'profile.html';
+        });
+        
+        // Add hover effect
+        studentCard.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateY(-5px)';
+            this.style.boxShadow = '0 10px 30px rgba(0, 0, 0, 0.2)';
+        });
+        
+        studentCard.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateY(0)';
+            this.style.boxShadow = 'var(--shadow-md)';
+        });
+    }
+    
+    // Make header user info clickable too
+    if (userInfo) {
+        userInfo.style.cursor = 'pointer';
+        userInfo.addEventListener('click', function() {
+            window.location.href = 'profile.html';
+        });
+        
+        userInfo.addEventListener('mouseenter', function() {
+            this.style.backgroundColor = 'rgba(0, 0, 0, 0.05)';
+        });
+        
+        userInfo.addEventListener('mouseleave', function() {
+            this.style.backgroundColor = '';
+        });
+    }
+}
+
+// Load and Display User Profile
+function initUserProfile() {
+    const userData = checkAuthentication();
+    
+    if (!userData) {
+        console.log('No user data found');
+        return;
+    }
+    
+    // Extract user information
+    const firstName = userData.firstName || '';
+    const lastName = userData.lastName || '';
+    const registrationNumber = userData.registrationNumber || '';
+    const email = userData.email || '';
+    const faculty = userData.faculty || '';
+    const yearOfStudy = userData.yearOfStudy || '';
+    const fullName = `${firstName} ${lastName}`;
+    
+    // Update header user info
+    const userNameElement = document.getElementById('user-name');
+    const userRegElement = document.getElementById('user-reg-number');
+    const userAvatarElement = document.getElementById('user-avatar');
+    
+    if (userNameElement) userNameElement.textContent = fullName;
+    if (userRegElement) userRegElement.textContent = registrationNumber || 'KIBU/---/--';
+    
+    // Get user initial for avatar
+    const initial = getInitials(firstName, lastName);
+    updateUserAvatar(initial, userAvatarElement);
+    
+    // Update sidebar student card
+    const studentNameElement = document.getElementById('student-name');
+    const studentFacultyElement = document.getElementById('student-faculty');
+    const studentYearElement = document.getElementById('student-year');
+    const studentAvatarElement = document.getElementById('student-avatar-img');
+    
+    if (studentNameElement) studentNameElement.textContent = fullName;
+    if (studentFacultyElement) studentFacultyElement.textContent = faculty || '---';
+    if (studentYearElement) studentYearElement.textContent = `Year ${yearOfStudy}` || 'Year --';
+    
+    // Update student avatar with initial
+    updateUserAvatar(initial, studentAvatarElement);
+    
+    // Update welcome title with user's first name
+    const welcomeTitle = document.getElementById('welcome-title');
+    if (welcomeTitle) {
+        const currentHour = new Date().getHours();
+        let greeting = '';
+        
+        if (currentHour < 12) greeting = 'Good morning';
+        else if (currentHour < 18) greeting = 'Good afternoon';
+        else greeting = 'Good evening';
+        
+        welcomeTitle.textContent = `${greeting}, ${firstName}!`;
+    }
+    
+    // Initialize logout functionality
+    initLogout();
+
+    initProfileCardNavigation();
+    
+    // Fetch additional user data from server if needed
+    fetchUserDetails();
+}
+
+// Get user initials from name
+function getInitials(firstName, lastName) {
+    if (!firstName && !lastName) return 'U';
+    
+    const firstInitial = firstName ? firstName.charAt(0).toUpperCase() : '';
+    const lastInitial = lastName ? lastName.charAt(0).toUpperCase() : '';
+    
+    return firstInitial + lastInitial || 'U';
+}
+
+// Update user avatar with initial
+function updateUserAvatar(initial, avatarElement) {
+    if (!avatarElement) return;
+    
+    // Check if avatar has src attribute (image)
+    if (avatarElement.hasAttribute('src')) {
+        // If no avatar image exists, create a colored circle with initial
+        avatarElement.style.display = 'none';
+        
+        // Create a div with initial
+        const avatarContainer = avatarElement.parentElement;
+        if (!avatarContainer.querySelector('.avatar-initial')) {
+            const initialDiv = document.createElement('div');
+            initialDiv.className = 'avatar-initial';
+            initialDiv.textContent = initial;
+            initialDiv.style.cssText = `
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                color: white;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-weight: bold;
+                font-size: 16px;
+            `;
+            avatarContainer.appendChild(initialDiv);
+        }
+    }
+}
+
+// Fetch additional user details from server
+async function fetchUserDetails() {
+    const token = localStorage.getItem('kibu_token');
+    
+    if (!token) return;
+    
+    try {
+        const response = await fetch('http://localhost:5000/api/auth/me', {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            }
+        });
+        
+        if (response.ok) {
+            const data = await response.json();
+            
+            if (data.success && data.data.student) {
+                const student = data.data.student;
+                
+                // Update localStorage with complete user data
+                localStorage.setItem('kibu_user', JSON.stringify(student));
+                
+                // Update UI with any additional fields
+                updateAdditionalUserInfo(student);
+            }
+        }
+    } catch (error) {
+        console.log('Could not fetch additional user details:', error);
+        // Silently fail - we already have basic info from localStorage
+    }
+}
+
+// Update additional user information
+function updateAdditionalUserInfo(student) {
+    // Update course if available
+    const courseElement = document.querySelector('.student-course');
+    if (courseElement && student.course) {
+        courseElement.textContent = student.course;
+    }
+    
+    // Update phone if available
+    const phoneElement = document.querySelector('.student-phone');
+    if (phoneElement && student.phone) {
+        phoneElement.textContent = student.phone;
+    }
+    
+    // Update verification status
+    const verificationElement = document.querySelector('.verification-status');
+    if (verificationElement) {
+        verificationElement.textContent = student.isVerified ? 'Verified ✓' : 'Not Verified';
+        verificationElement.style.color = student.isVerified ? '#4CAF50' : '#FF9800';
+    }
+}
+
+// Initialize Logout Functionality
+function initLogout() {
+    const logoutBtn = document.getElementById('logout-btn');
+    
+    if (logoutBtn) {
+        logoutBtn.addEventListener('click', async function(e) {
+            e.preventDefault();
+            
+            // Show confirmation
+            if (confirm('Are you sure you want to logout?')) {
+                const token = localStorage.getItem('kibu_token');
+                
+                try {
+                    // Call logout API
+                    const response = await fetch('http://localhost:5000/api/auth/logout', {
+                        method: 'POST',
+                        headers: {
+                            'Authorization': `Bearer ${token}`,
+                            'Content-Type': 'application/json'
+                        }
+                    });
+                    
+                    // Clear local storage regardless of API response
+                    localStorage.removeItem('kibu_token');
+                    localStorage.removeItem('kibu_user');
+                    
+                    // Redirect to login page
+                    window.location.href = 'login.html';
+                    
+                } catch (error) {
+                    // Even if API fails, clear local storage and redirect
+                    localStorage.removeItem('kibu_token');
+                    localStorage.removeItem('kibu_user');
+                    window.location.href = 'login.html';
+                }
+            }
+        });
+    }
 }
 
 // Countdown Timer Functionality
 function initCountdownTimer() {
     const countdownElement = document.getElementById('countdown-timer');
+    
+    if (!countdownElement) return;
     
     // Set the target date (2 days from now for demo)
     const targetDate = new Date();
@@ -48,6 +312,8 @@ function initCountdownTimer() {
 function initMobileMenu() {
     const mobileMenuBtn = document.getElementById('mobileMenuBtn');
     const sidebar = document.querySelector('.sidebar');
+    
+    if (!mobileMenuBtn || !sidebar) return;
     
     mobileMenuBtn.addEventListener('click', function() {
         sidebar.classList.toggle('mobile-open');
@@ -96,13 +362,13 @@ function initCardInteractions() {
     const buttons = document.querySelectorAll('.card-button, .cta-button, .action-card');
     
     buttons.forEach(button => {
-        button.addEventListener('click', function() {
+        button.addEventListener('click', function(e) {
             // Add ripple effect
             const ripple = document.createElement('span');
             const rect = this.getBoundingClientRect();
             const size = Math.max(rect.width, rect.height);
-            const x = event.clientX - rect.left - size / 2;
-            const y = event.clientY - rect.top - size / 2;
+            const x = e.clientX - rect.left - size / 2;
+            const y = e.clientY - rect.top - size / 2;
             
             ripple.style.cssText = `
                 position: absolute;
@@ -132,6 +398,8 @@ function initCardInteractions() {
 function initNotificationSystem() {
     const notificationBell = document.querySelector('.notification-bell');
     const notificationBadge = document.querySelector('.notification-badge');
+    
+    if (!notificationBell || !notificationBadge) return;
     
     notificationBell.addEventListener('click', function() {
         // Show notification popup (simulated)
@@ -241,12 +509,13 @@ function showNotificationPopup() {
     
     // Remove popup when clicking outside
     setTimeout(() => {
-        document.addEventListener('click', function closePopup(e) {
+        const clickHandler = function(e) {
             if (!popup.contains(e.target) && e.target !== document.querySelector('.notification-bell')) {
                 popup.remove();
-                document.removeEventListener('click', closePopup);
+                document.removeEventListener('click', clickHandler);
             }
-        });
+        };
+        document.addEventListener('click', clickHandler);
     }, 100);
 }
 
@@ -259,6 +528,13 @@ function initVotingActions() {
         button.addEventListener('click', function() {
             const card = this.closest('.election-card');
             const electionName = card.querySelector('.card-title').textContent;
+            
+            // Check if user is authenticated
+            const token = localStorage.getItem('kibu_token');
+            if (!token) {
+                window.location.href = 'login.html';
+                return;
+            }
             
             // Show loading state
             const originalText = this.textContent;
@@ -285,6 +561,13 @@ function initVotingActions() {
     actionCards.forEach(card => {
         card.addEventListener('click', function() {
             const action = this.querySelector('h3').textContent;
+            
+            // Check if user is authenticated
+            const token = localStorage.getItem('kibu_token');
+            if (!token) {
+                window.location.href = 'login.html';
+                return;
+            }
             
             // Add click feedback
             this.style.transform = 'scale(0.95)';
@@ -343,6 +626,10 @@ function showSuccessMessage(message) {
 
 // Modal Systems
 function showVerificationModal() {
+    // Get user data for verification
+    const userData = JSON.parse(localStorage.getItem('kibu_user') || '{}');
+    const regNumber = userData.registrationNumber || '';
+    
     const modal = document.createElement('div');
     modal.className = 'modal-overlay';
     modal.style.cssText = `
@@ -378,6 +665,7 @@ function showVerificationModal() {
                 margin: 1.5rem 0;
                 font-family: monospace;
             ">
+                <div><strong>Student ID:</strong> ${regNumber}</div>
                 <div><strong>Transaction ID:</strong> 0x7d9e...c4a2</div>
                 <div><strong>Block:</strong> #184729</div>
                 <div><strong>Timestamp:</strong> ${new Date().toLocaleString()}</div>
@@ -526,6 +814,21 @@ dashboardStyles.textContent = `
             transform: scale(1);
         }
     }
+    
+    /* Avatar initial styles */
+    .user-avatar .avatar-initial,
+    .student-avatar .avatar-initial {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-weight: bold;
+        font-size: 16px;
+    }
 `;
 document.head.appendChild(dashboardStyles);
 
@@ -535,20 +838,189 @@ function initRealTimeUpdates() {
     setInterval(() => {
         const voteCountElement = document.querySelector('.welcome-stats .stat-number');
         if (voteCountElement) {
-            const currentCount = parseInt(voteCountElement.textContent.replace(',', ''));
+            const currentCount = parseInt(voteCountElement.textContent.replace(',', '')) || 0;
             const newCount = currentCount + Math.floor(Math.random() * 10);
             voteCountElement.textContent = newCount.toLocaleString();
         }
         
         // Update today's votes in system status
-        const todayVotesElement = document.querySelector('.system-status-card .status-item:last-child span');
-        if (todayVotesElement && todayVotesElement.textContent.includes('Today\'s votes')) {
-            const currentVotes = parseInt(todayVotesElement.textContent.match(/\d+/)[0]);
+        const todayVotesElement = document.querySelector('.system-status-card .status-value');
+        if (todayVotesElement) {
+            const currentVotes = parseInt(todayVotesElement.textContent.replace(',', '')) || 8247;
             const newVotes = currentVotes + Math.floor(Math.random() * 5);
-            todayVotesElement.textContent = `Today's votes: ${newVotes.toLocaleString()}`;
+            todayVotesElement.textContent = newVotes.toLocaleString();
         }
+        
+        // Update sidebar stats
+        const votesCountElement = document.getElementById('votes-count');
+        if (votesCountElement) {
+            const currentVotes = parseInt(votesCountElement.textContent) || 0;
+            votesCountElement.textContent = (currentVotes + Math.floor(Math.random() * 3)).toString();
+        }
+        
+        const participationElement = document.getElementById('participation-rate');
+        if (participationElement) {
+            const currentRate = parseFloat(participationElement.textContent) || 0;
+            const newRate = Math.min(100, currentRate + Math.random() * 2).toFixed(1);
+            participationElement.textContent = `${newRate}%`;
+        }
+        
     }, 10000); // Update every 10 seconds
+    
+    // Initialize with random data
+    setTimeout(() => {
+        // Set initial random values
+        const voteCountElement = document.querySelector('.welcome-stats .stat-number');
+        if (voteCountElement) {
+            voteCountElement.textContent = (Math.floor(Math.random() * 100) + 50).toString();
+        }
+        
+        const votesCountElement = document.getElementById('votes-count');
+        if (votesCountElement) {
+            votesCountElement.textContent = (Math.floor(Math.random() * 1000) + 500).toString();
+        }
+        
+        const participationElement = document.getElementById('participation-rate');
+        if (participationElement) {
+            participationElement.textContent = `${(Math.random() * 30 + 65).toFixed(1)}%`;
+        }
+        
+        // Update voting activity timeline
+        updateVotingActivity();
+        
+        // Update deadlines timeline
+        updateDeadlines();
+        
+        // Update statistics
+        updateStatistics();
+        
+    }, 500);
 }
 
-// Initialize real-time updates
-initRealTimeUpdates();
+// Update Voting Activity Timeline
+function updateVotingActivity() {
+    const timeline = document.getElementById('voting-timeline');
+    if (!timeline) return;
+    
+    const activities = [
+        {
+            time: 'Today, 10:30 AM',
+            action: 'Voted for Student Council President',
+            icon: 'fas fa-vote-yea',
+            color: '#4CAF50'
+        },
+        {
+            time: 'Yesterday, 2:15 PM',
+            action: 'Verified your vote on blockchain',
+            icon: 'fas fa-shield-alt',
+            color: '#2196F3'
+        },
+        {
+            time: '3 days ago',
+            action: 'Participated in Club Elections',
+            icon: 'fas fa-users',
+            color: '#9C27B0'
+        },
+        {
+            time: '1 week ago',
+            action: 'Completed profile verification',
+            icon: 'fas fa-user-check',
+            color: '#FF9800'
+        }
+    ];
+    
+    timeline.innerHTML = '';
+    
+    activities.forEach(activity => {
+        const item = document.createElement('div');
+        item.className = 'timeline-item';
+        item.innerHTML = `
+            <div class="timeline-icon" style="background: ${activity.color}">
+                <i class="${activity.icon}"></i>
+            </div>
+            <div class="timeline-content">
+                <div class="timeline-time">${activity.time}</div>
+                <div class="timeline-action">${activity.action}</div>
+            </div>
+        `;
+        timeline.appendChild(item);
+    });
+}
+
+// Update Deadlines Timeline
+function updateDeadlines() {
+    const timeline = document.getElementById('deadlines-timeline');
+    if (!timeline) return;
+    
+    const deadlines = [
+        {
+            title: 'Student Council Elections',
+            time: 'Ends in 2 days',
+            icon: 'fas fa-crown',
+            color: '#FF5252',
+            urgent: true
+        },
+        {
+            title: 'Sports Captain Nominations',
+            time: 'Opens on Monday',
+            icon: 'fas fa-futbol',
+            color: '#2196F3',
+            urgent: false
+        },
+        {
+            title: 'Faculty Representative',
+            time: 'Next week',
+            icon: 'fas fa-user-tie',
+            color: '#4CAF50',
+            urgent: false
+        }
+    ];
+    
+    timeline.innerHTML = '';
+    
+    deadlines.forEach(deadline => {
+        const item = document.createElement('div');
+        item.className = 'deadline-item';
+        if (deadline.urgent) item.classList.add('urgent');
+        
+        item.innerHTML = `
+            <div class="deadline-icon" style="background: ${deadline.color}">
+                <i class="${deadline.icon}"></i>
+            </div>
+            <div class="deadline-content">
+                <div class="deadline-title">${deadline.title}</div>
+                <div class="deadline-time">${deadline.time}</div>
+            </div>
+        `;
+        timeline.appendChild(item);
+    });
+}
+
+// Update Statistics
+function updateStatistics() {
+    // Get user data to personalize stats
+    const userData = JSON.parse(localStorage.getItem('kibu_user') || '{}');
+    const yearOfStudy = parseInt(userData.yearOfStudy) || 1;
+    
+    // Generate personalized stats based on year of study
+    const baseElections = 3 + yearOfStudy; // More elections for senior students
+    const baseDays = 30 * yearOfStudy; // More days active for senior students
+    
+    document.getElementById('total-elections').textContent = baseElections;
+    document.getElementById('days-active').textContent = baseDays;
+    document.getElementById('participation-percent').textContent = `${Math.min(100, 70 + (yearOfStudy * 10))}%`;
+    document.getElementById('upcoming-count').textContent = '2'; // Always 2 upcoming
+}
+
+// Hide loading overlay when everything is loaded
+window.addEventListener('load', function() {
+    const loadingOverlay = document.getElementById('loading-overlay');
+    if (loadingOverlay) {
+        setTimeout(() => {
+            loadingOverlay.style.opacity = '0';
+            setTimeout(() => {
+                loadingOverlay.style.display = 'none';
+            }, 300);
+        }, 500);
+    }
+});

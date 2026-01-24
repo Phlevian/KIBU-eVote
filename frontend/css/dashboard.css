@@ -340,7 +340,7 @@ body {
 
 .nav-link:hover .nav-icon,
 .nav-link.active .nav-icon {
-    background: rgba(255, 255, 255, 0.2);
+    background:#cbd5e1;
     color: var(--white);
 }
 
@@ -1460,4 +1460,259 @@ body {
     .main-content {
         padding: 1rem;
     }
+}
+/* Add these styles to dashboard.css */
+.avatar-initial {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.timeline-item, .deadline-item {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 15px;
+    padding: 10px;
+    border-radius: 8px;
+    transition: background-color 0.3s;
+}
+
+.timeline-item:hover, .deadline-item:hover {
+    background-color: #f8f9fa;
+}
+
+.timeline-icon, .deadline-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    margin-right: 12px;
+    flex-shrink: 0;
+}
+
+.timeline-content, .deadline-content {
+    flex: 1;
+}
+
+.timeline-time, .deadline-time {
+    font-size: 12px;
+    color: #666;
+    margin-bottom: 4px;
+}
+
+.timeline-action, .deadline-title {
+    font-weight: 500;
+    color: #333;
+}
+
+.deadline-item.urgent .deadline-title {
+    color: #FF5252;
+    font-weight: 600;
+}
+
+.timeline-loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    color: #666;
+}
+
+.timeline-loading i {
+    margin-right: 10px;
+}
+
+/* Quick Vote Button Animation */
+.cta-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(0, 128, 255, 0.3);
+}
+
+/* Loading overlay */
+.loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.95);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    transition: opacity 0.3s;
+}
+
+.loading-content {
+    text-align: center;
+}
+
+.loading-spinner {
+    width: 50px;
+    height: 50px;
+    border: 3px solid #f3f3f3;
+    border-top: 3px solid #0080FF;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 20px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+/* Add these styles to dashboard.css */
+
+/* Make student card clickable */
+#student-card {
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+#student-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+}
+
+#student-card::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0) 100%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+}
+
+#student-card:hover::after {
+    opacity: 1;
+}
+
+/* Profile card click indicator */
+#student-card::before {
+    content: 'View Profile';
+    position: absolute;
+    bottom: -30px;
+    left: 0;
+    right: 0;
+    text-align: center;
+    color: var(--white);
+    font-size: 0.8rem;
+    font-weight: 600;
+    opacity: 0;
+    transition: all 0.3s ease;
+    z-index: 2;
+}
+
+#student-card:hover::before {
+    bottom: 10px;
+    opacity: 0.9;
+}
+
+/* Header user info clickable */
+.user-info {
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.user-info:hover {
+    background: var(--light-gray) !important;
+}
+
+.user-info:hover .user-name {
+    color: var(--accent-teal);
+}
+
+/* Add ripple effect to profile card */
+#student-card .student-avatar {
+    position: relative;
+    overflow: hidden;
+}
+
+#student-card .student-avatar::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    transform: translate(-50%, -50%);
+    transition: width 0.3s, height 0.3s;
+}
+
+#student-card:hover .student-avatar::after {
+    width: 100%;
+    height: 100%;
+}
+
+/* Make student info text stand out on hover */
+#student-card:hover .student-name {
+    transform: translateY(-2px);
+    display: inline-block;
+    transition: transform 0.3s ease;
+}
+
+#student-card:hover .student-faculty,
+#student-card:hover .student-year {
+    color: rgba(255, 255, 255, 0.9);
+}
+
+/* Mobile touch feedback */
+@media (max-width: 768px) {
+    #student-card:active {
+        transform: scale(0.98);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+    }
+    
+    .user-info:active {
+        background: var(--light-gray) !important;
+        transform: scale(0.95);
+    }
+}
+
+/* Add a subtle animation to indicate clickability */
+@keyframes subtlePulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.02); }
+}
+
+#student-card:hover .student-avatar {
+    animation: subtlePulse 2s infinite;
+}
+
+/* Add click indicator icon on hover */
+#student-card:hover .student-info::before {
+    content: '→';
+    position: absolute;
+    right: -20px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--white);
+    opacity: 0.7;
+    font-weight: bold;
+    transition: right 0.3s ease;
+}
+
+/* Make the student avatar pulse slightly on hover */
+#student-card:hover .student-avatar img,
+#student-card:hover .student-avatar .avatar-initial {
+    transform: scale(1.05);
+    transition: transform 0.3s ease;
 }
