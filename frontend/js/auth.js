@@ -3,29 +3,34 @@ class RegistrationSystem {
     constructor() {
         this.currentStep = 1;
         this.totalSteps = 4;
-        this.formData = {};
+        this.formData = {
+            profilePhoto: null
+        };
+        this.API_BASE_URL = 'http://localhost:5000/api/auth';
         this.init();
     }
 
     init() {
         this.bindEvents();
         this.updateProgress();
+        this.updateStepCounters();
         console.log("KIBU Registration System initialized");
     }
 
     bindEvents() {
         // Navigation buttons
         const nextStepBtn = document.getElementById('next-step-btn');
+        const prevStepBtn = document.getElementById('prev-step-btn');
+        
         if (nextStepBtn) {
             nextStepBtn.addEventListener('click', () => this.nextStep());
         }
-
-        // Save draft and clear form
-        const saveDraftBtn = document.getElementById('save-draft-btn');
-        if (saveDraftBtn) {
-            saveDraftBtn.addEventListener('click', () => this.saveDraft());
+        
+        if (prevStepBtn) {
+            prevStepBtn.addEventListener('click', () => this.previousStep());
         }
 
+        // Clear form
         const clearFormBtn = document.getElementById('clear-form-btn');
         if (clearFormBtn) {
             clearFormBtn.addEventListener('click', () => this.clearForm());
@@ -40,22 +45,22 @@ class RegistrationSystem {
         // Password events
         this.bindPasswordEvents();
         
-        // Verification events
-        this.bindVerificationEvents();
-        
         // Success modal events
         this.bindSuccessModalEvents();
         
         // Help chat
         this.bindHelpChat();
         
-        // Select element events - FIXED
+        // Select element events
         this.bindSelectEvents();
+
+        // Terms view buttons
+        this.bindTermsView();
     }
 
     bindFormValidation() {
         // Registration number validation
-        const regInput = document.getElementById('reg-number');
+        const regInput = document.getElementById('registrationNumber');
         if (regInput) {
             regInput.addEventListener('input', () => this.validateRegNumber());
             regInput.addEventListener('blur', () => this.validateRegNumber());
@@ -82,49 +87,26 @@ class RegistrationSystem {
         });
     }
 
-    // NEW METHOD: Bind select element events
     bindSelectEvents() {
         const selectElements = document.querySelectorAll('.form-select');
         selectElements.forEach(select => {
-            // Add change event listener for validation
             select.addEventListener('change', () => {
                 this.validateRequiredField(select);
                 this.updateSelectLabel(select);
             });
             
-            // Add focus event for styling
             select.addEventListener('focus', () => {
                 select.parentElement.classList.add('focused');
             });
             
-            // Add blur event for styling
             select.addEventListener('blur', () => {
                 select.parentElement.classList.remove('focused');
                 this.validateRequiredField(select);
                 this.updateSelectLabel(select);
             });
             
-            // Initialize label position
             this.updateSelectLabel(select);
         });
-    }
-
-    // NEW METHOD: Update select label position based on value
-    updateSelectLabel(select) {
-        const label = select.nextElementSibling;
-        if (label && label.classList.contains('floating-label')) {
-            if (select.value !== '') {
-                label.style.top = '-0.5rem';
-                label.style.fontSize = '0.8rem';
-                label.style.color = 'var(--accent-teal)';
-                label.style.fontWeight = '500';
-            } else {
-                label.style.top = '0.875rem';
-                label.style.fontSize = '0.95rem';
-                label.style.color = 'var(--text-light)';
-                label.style.fontWeight = '400';
-            }
-        }
     }
 
     bindPhotoUpload() {
@@ -165,11 +147,50 @@ class RegistrationSystem {
         if (cameraBtn) {
             cameraBtn.addEventListener('click', () => this.takePhoto());
         }
+
+        // Bind photo action buttons
+        this.bindPhotoActions();
+    }
+
+    bindPhotoActions() {
+        // These would be implemented in a real application
+        // For now, they just show notifications
+        const cropBtn = document.querySelector('.crop-btn');
+        const rotateBtn = document.querySelector('.rotate-btn');
+        const removeBtn = document.querySelector('.remove-btn');
+
+        if (cropBtn) {
+            cropBtn.addEventListener('click', () => {
+                this.showNotification('Crop functionality would be implemented here', 'info');
+            });
+        }
+
+        if (rotateBtn) {
+            rotateBtn.addEventListener('click', () => {
+                this.showNotification('Rotate functionality would be implemented here', 'info');
+            });
+        }
+
+        if (removeBtn) {
+            removeBtn.addEventListener('click', () => {
+                const uploadArea = document.getElementById('photo-upload-area');
+                const placeholder = uploadArea.querySelector('.upload-placeholder');
+                const preview = uploadArea.querySelector('.photo-preview');
+                
+                if (placeholder) placeholder.style.display = 'block';
+                if (preview) preview.style.display = 'none';
+                
+                this.formData.profilePhoto = null;
+                document.getElementById('photo-input').value = '';
+                
+                this.showNotification('Photo removed', 'success');
+            });
+        }
     }
 
     bindPasswordEvents() {
         const passwordInput = document.getElementById('password');
-        const confirmPasswordInput = document.getElementById('confirm-password');
+        const confirmPasswordInput = document.getElementById('confirmPassword');
         const toggleButtons = document.querySelectorAll('.toggle-password');
 
         if (passwordInput) {
@@ -187,40 +208,33 @@ class RegistrationSystem {
         toggleButtons.forEach(button => {
             button.addEventListener('click', (e) => {
                 const input = e.target.closest('.password-input-container').querySelector('input');
+                const icon = e.target.querySelector('i') || e.target;
+                
                 if (input.type === 'password') {
                     input.type = 'text';
-                    e.target.textContent = '🙈';
+                    icon.className = 'fas fa-eye-slash';
                 } else {
                     input.type = 'password';
-                    e.target.textContent = '👁️';
+                    icon.className = 'fas fa-eye';
                 }
             });
         });
     }
 
-    bindVerificationEvents() {
-        const emailVerifyBtn = document.getElementById('email-verify-btn');
-        const smsVerifyBtn = document.getElementById('sms-verify-btn');
-
-        if (emailVerifyBtn) {
-            emailVerifyBtn.addEventListener('click', () => this.sendEmailVerification());
-        }
-
-        if (smsVerifyBtn) {
-            smsVerifyBtn.addEventListener('click', () => this.sendSMSVerification());
-        }
-    }
-
     bindSuccessModalEvents() {
-        const verifyNowBtn = document.getElementById('verify-now-btn');
+        const goLoginBtn = document.getElementById('go-login-btn');
         const goDashboardBtn = document.getElementById('go-dashboard-btn');
 
-        if (verifyNowBtn) {
-            verifyNowBtn.addEventListener('click', () => this.verifyNow());
+        if (goLoginBtn) {
+            goLoginBtn.addEventListener('click', () => {
+                window.location.href = 'login.html';
+            });
         }
 
         if (goDashboardBtn) {
-            goDashboardBtn.addEventListener('click', () => this.goToDashboard());
+            goDashboardBtn.addEventListener('click', () => {
+                window.location.href = 'dashboard.html';
+            });
         }
     }
 
@@ -229,6 +243,16 @@ class RegistrationSystem {
         if (helpChat) {
             helpChat.addEventListener('click', () => this.showHelp());
         }
+    }
+
+    bindTermsView() {
+        const viewTermsBtns = document.querySelectorAll('.view-terms-btn');
+        viewTermsBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const termsType = btn.getAttribute('data-terms');
+                this.showNotification(`Viewing ${termsType} terms would open a modal`, 'info');
+            });
+        });
     }
 
     // Step Navigation
@@ -253,6 +277,8 @@ class RegistrationSystem {
             }
 
             this.updateProgress();
+            this.updateNavigationButtons();
+            this.updateStepCounters();
             this.saveFormData();
         } else {
             this.submitForm();
@@ -275,6 +301,29 @@ class RegistrationSystem {
             }
 
             this.updateProgress();
+            this.updateNavigationButtons();
+            this.updateStepCounters();
+        }
+    }
+
+    updateNavigationButtons() {
+        const prevBtn = document.getElementById('prev-step-btn');
+        const nextBtn = document.getElementById('next-step-btn');
+        
+        if (prevBtn) {
+            if (this.currentStep > 1) {
+                prevBtn.style.display = 'flex';
+            } else {
+                prevBtn.style.display = 'none';
+            }
+        }
+        
+        if (nextBtn) {
+            if (this.currentStep === this.totalSteps) {
+                nextBtn.innerHTML = 'Complete Registration <i class="fas fa-check"></i>';
+            } else {
+                nextBtn.innerHTML = 'Continue to Next Step <i class="fas fa-arrow-right"></i>';
+            }
         }
     }
 
@@ -285,8 +334,7 @@ class RegistrationSystem {
         const progressFill = document.querySelector('.progress-fill');
         const completionFill = document.querySelector('.completion-fill');
         const completionText = document.querySelector('.completion-text');
-        const stepText = document.querySelector('.step-text');
-
+        
         if (progressFill) {
             progressFill.style.width = `${progressPercentage}%`;
         }
@@ -296,6 +344,10 @@ class RegistrationSystem {
         if (completionText) {
             completionText.textContent = `${Math.round(progressPercentage)}% Complete`;
         }
+    }
+
+    updateStepCounters() {
+        const stepText = document.querySelector('.step-text');
         if (stepText) {
             stepText.textContent = `Step ${this.currentStep} of ${this.totalSteps}`;
         }
@@ -321,11 +373,22 @@ class RegistrationSystem {
         let isValid = true;
 
         // Required fields
-        const requiredFields = ['first-name', 'last-name', 'reg-number', 'email', 'phone', 'faculty', 'year', 'course'];
+        const requiredFields = [
+            'firstName',
+            'lastName',
+            'registrationNumber',
+            'email',
+            'phone',
+            'faculty',
+            'yearOfStudy',
+            'course'
+        ];
+        
         requiredFields.forEach(field => {
             const element = document.getElementById(field);
             if (element && !this.validateRequiredField(element)) {
                 isValid = false;
+                console.log(`Field ${field} is invalid or empty`);
             }
         });
 
@@ -338,12 +401,7 @@ class RegistrationSystem {
     }
 
     validateStep2() {
-        // Check if photo is uploaded
-        const photoInput = document.getElementById('photo-input');
-        if (photoInput && !photoInput.files.length) {
-            this.showNotification('Please upload a profile photo', 'error');
-            return false;
-        }
+        // Check if photo is uploaded (optional for now)
         return true;
     }
 
@@ -374,11 +432,15 @@ class RegistrationSystem {
     }
 
     validateRegNumber() {
-        const regInput = document.getElementById('reg-number');
+        const regInput = document.getElementById('registrationNumber');
         const errorElement = document.getElementById('reg-error');
-        const regNumber = regInput.value.trim();
         
-        // Regular expression for KIBU registration number format: CourseCode/Number/Year
+        if (!regInput) {
+            console.error('Registration number input not found');
+            return false;
+        }
+        
+        const regNumber = regInput.value.trim();
         const regPattern = /^[A-Z]{2,4}\/\d{4}\/\d{2}$/;
         
         if (!regNumber) {
@@ -391,15 +453,6 @@ class RegistrationSystem {
             return false;
         }
         
-        // Check if registration number is already registered
-        const existingUsers = JSON.parse(localStorage.getItem('kibu_users') || '[]');
-        const isDuplicate = existingUsers.some(user => user.regNumber === regNumber);
-        
-        if (isDuplicate) {
-            this.showError(regInput, errorElement, 'This registration number is already registered');
-            return false;
-        }
-        
         this.clearError(regInput, errorElement);
         return true;
     }
@@ -407,8 +460,13 @@ class RegistrationSystem {
     validateEmail() {
         const emailInput = document.getElementById('email');
         const errorElement = document.getElementById('email-error');
-        const email = emailInput.value.trim();
         
+        if (!emailInput) {
+            console.error('Email input not found');
+            return false;
+        }
+        
+        const email = emailInput.value.trim();
         const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         
         if (!email) {
@@ -421,15 +479,6 @@ class RegistrationSystem {
             return false;
         }
         
-        // Check if email is already registered
-        const existingUsers = JSON.parse(localStorage.getItem('kibu_users') || '[]');
-        const isDuplicate = existingUsers.some(user => user.email === email);
-        
-        if (isDuplicate) {
-            this.showError(emailInput, errorElement, 'This email is already registered');
-            return false;
-        }
-        
         this.clearError(emailInput, errorElement);
         return true;
     }
@@ -437,9 +486,14 @@ class RegistrationSystem {
     validatePhone() {
         const phoneInput = document.getElementById('phone');
         const errorElement = document.getElementById('phone-error');
-        const phone = phoneInput.value.trim();
         
-        const phonePattern = /^[0-9]{9}$/; // Kenyan phone number without country code
+        if (!phoneInput) {
+            console.error('Phone input not found');
+            return false;
+        }
+        
+        const phone = phoneInput.value.trim();
+        const phonePattern = /^[0-9]{9}$/;
         
         if (!phone) {
             this.showError(phoneInput, errorElement, 'Phone number is required');
@@ -458,6 +512,12 @@ class RegistrationSystem {
     validatePassword() {
         const passwordInput = document.getElementById('password');
         const errorElement = document.getElementById('password-error');
+        
+        if (!passwordInput) {
+            console.error('Password input not found');
+            return false;
+        }
+        
         const password = passwordInput.value;
         
         if (!password) {
@@ -477,12 +537,12 @@ class RegistrationSystem {
         Object.keys(requirements).forEach(req => {
             const requirementElement = document.querySelector(`[data-requirement="${req}"]`);
             if (requirementElement) {
-                const icon = requirementElement.querySelector('.requirement-icon');
+                const icon = requirementElement.querySelector('.requirement-icon i');
                 if (requirements[req]) {
-                    icon.textContent = '✅';
+                    icon.className = 'fas fa-check';
                     requirementElement.classList.add('met');
                 } else {
-                    icon.textContent = '❌';
+                    icon.className = 'fas fa-times';
                     requirementElement.classList.remove('met');
                 }
             }
@@ -528,8 +588,8 @@ class RegistrationSystem {
     }
 
     checkPasswordMatch() {
-        const password = document.getElementById('password').value;
-        const confirmPassword = document.getElementById('confirm-password').value;
+        const password = document.getElementById('password')?.value || '';
+        const confirmPassword = document.getElementById('confirmPassword')?.value || '';
         const matchElement = document.getElementById('password-match');
         const errorElement = document.getElementById('confirm-password-error');
         
@@ -556,6 +616,8 @@ class RegistrationSystem {
     }
 
     validateRequiredField(field) {
+        if (!field) return false;
+        
         const value = field.type === 'select-one' ? field.value : field.value.trim();
         if (!value) {
             field.classList.add('error');
@@ -586,6 +648,8 @@ class RegistrationSystem {
         const reader = new FileReader();
         reader.onload = (e) => {
             const uploadArea = document.getElementById('photo-upload-area');
+            if (!uploadArea) return;
+            
             const placeholder = uploadArea.querySelector('.upload-placeholder');
             const preview = uploadArea.querySelector('.photo-preview');
             const previewImg = document.getElementById('photo-preview-img');
@@ -600,63 +664,49 @@ class RegistrationSystem {
         reader.readAsDataURL(file);
 
         // Store file in form data
-        this.formData.photo = file;
+        this.formData.profilePhoto = file;
     }
 
     takePhoto() {
-        // This would access the device camera in a real implementation
         this.showNotification('Camera access would be requested here in a real implementation', 'info');
         
-        // For demo purposes, we'll simulate taking a photo after 2 seconds
         setTimeout(() => {
             this.showNotification('Photo captured successfully!', 'success');
             
             // Simulate adding a photo
             const uploadArea = document.getElementById('photo-upload-area');
+            if (!uploadArea) return;
+            
             const placeholder = uploadArea.querySelector('.upload-placeholder');
             const preview = uploadArea.querySelector('.photo-preview');
             
             if (placeholder) placeholder.style.display = 'none';
             if (preview) preview.style.display = 'block';
-            
-            // Store dummy photo data
-            this.formData.photo = 'camera_captured_photo';
         }, 2000);
     }
 
-    // Verification Methods
-    sendEmailVerification() {
-        const email = document.getElementById('email').value;
-        if (!email) {
-            this.showNotification('Please enter your email address first', 'error');
-            return;
-        }
-
-        this.showNotification(`Verification email sent to ${email}`, 'success');
+    saveFormData() {
+        // IMPORTANT: Ensure these IDs match exactly with your HTML form
+        this.formData = {
+            firstName: document.getElementById('firstName')?.value || '',
+            middleName: document.getElementById('middleName')?.value || '',
+            lastName: document.getElementById('lastName')?.value || '',
+            registrationNumber: document.getElementById('registrationNumber')?.value || '',
+            email: document.getElementById('email')?.value || '',
+            phone: document.getElementById('phone')?.value || '',
+            faculty: document.getElementById('faculty')?.value || '',
+            course: document.getElementById('course')?.value || '',
+            yearOfStudy: document.getElementById('yearOfStudy')?.value || '',
+            password: document.getElementById('password')?.value || '',
+            termsAccepted: document.getElementById('terms')?.checked || false,
+            privacyAccepted: document.getElementById('privacy')?.checked || false,
+            guidelinesAccepted: document.getElementById('voting-guidelines')?.checked || false
+        };
         
-        // Simulate email sending
-        setTimeout(() => {
-            this.showNotification('Email verification code: 123456', 'info');
-        }, 1500);
+        console.log('Saved form data:', this.formData);
     }
 
-    sendSMSVerification() {
-        const phone = document.getElementById('phone').value;
-        if (!phone) {
-            this.showNotification('Please enter your phone number first', 'error');
-            return;
-        }
-
-        this.showNotification(`SMS verification code sent to +254${phone}`, 'success');
-        
-        // Simulate SMS sending
-        setTimeout(() => {
-            this.showNotification('SMS verification code: 789012', 'info');
-        }, 1500);
-    }
-
-    // Form Submission
-    submitForm() {
+    async submitForm() {
         if (!this.validateCurrentStep()) {
             this.showNotification('Please fix all errors before submitting', 'error');
             return;
@@ -665,53 +715,59 @@ class RegistrationSystem {
         // Collect all form data
         this.saveFormData();
 
-        // Simulate API call
-        this.showNotification('Creating your account...', 'info');
+        // Show loading
+        this.showLoading(true);
 
-        setTimeout(() => {
-            // Save user to local storage (in a real app, this would be a server call)
-            const users = JSON.parse(localStorage.getItem('kibu_users') || '[]');
-            users.push(this.formData);
-            localStorage.setItem('kibu_users', JSON.stringify(users));
+        try {
+            // Prepare JSON data
+            const jsonData = {
+                firstName: this.formData.firstName,
+                middleName: this.formData.middleName,
+                lastName: this.formData.lastName,
+                registrationNumber: this.formData.registrationNumber,
+                email: this.formData.email,
+                phone: this.formData.phone,
+                faculty: this.formData.faculty,
+                course: this.formData.course,
+                yearOfStudy: parseInt(this.formData.yearOfStudy) || 0, // Make sure this is a number
+                password: this.formData.password,
+                profilePhoto: ""  // You might handle photo upload separately
+            };
+
+            console.log('Sending data:', JSON.stringify(jsonData, null, 2));
+
+            // Send to backend API as JSON
+            const response = await fetch(`${this.API_BASE_URL}/signup`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(jsonData)
+            });
+
+            const result = await response.json();
+            console.log('Server response:', JSON.stringify(result, null, 2));
+
+            if (!response.ok) {
+                throw new Error(result.message || 'Registration failed');
+            }
 
             // Show success modal
             this.showSuccessModal();
-        }, 2000);
-    }
+            
+            // Store token in localStorage
+            if (result.data && result.data.token) {
+                localStorage.setItem('kibu_token', result.data.token);
+                localStorage.setItem('kibu_user', JSON.stringify(result.data.student));
+            }
 
-    saveFormData() {
-        // Collect data from all steps
-        this.formData = {
-            // Step 1 data
-            firstName: document.getElementById('first-name').value,
-            middleName: document.getElementById('middle-name').value,
-            lastName: document.getElementById('last-name').value,
-            regNumber: document.getElementById('reg-number').value,
-            email: document.getElementById('email').value,
-            phone: document.getElementById('phone').value,
-            faculty: document.getElementById('faculty').value,
-            year: document.getElementById('year').value,
-            course: document.getElementById('course').value,
-            
-            // Step 3 data
-            password: document.getElementById('password').value,
-            twoFactor: document.getElementById('two-factor').checked,
-            
-            // Step 4 data
-            termsAccepted: document.getElementById('terms').checked,
-            privacyAccepted: document.getElementById('privacy').checked,
-            guidelinesAccepted: document.getElementById('voting-guidelines').checked,
-            verificationMethod: document.querySelector('input[name="verification"]:checked').value,
-            
-            // Timestamp
-            registeredAt: new Date().toISOString()
-        };
-    }
-
-    saveDraft() {
-        this.saveFormData();
-        localStorage.setItem('kibu_registration_draft', JSON.stringify(this.formData));
-        this.showNotification('Registration draft saved successfully', 'success');
+        } catch (error) {
+            this.showNotification(error.message || 'Registration failed. Please try again.', 'error');
+            console.error('Registration error:', error);
+            console.error('Full error details:', error);
+        } finally {
+            this.showLoading(false);
+        }
     }
 
     clearForm() {
@@ -730,25 +786,20 @@ class RegistrationSystem {
                     
                     // Clear validation states
                     input.classList.remove('error');
-                    
-                    // Clear error messages
-                    const errorElement = document.getElementById(`${input.id}-error`);
-                    if (errorElement) {
-                        errorElement.textContent = '';
-                        errorElement.style.display = 'none';
-                    }
                 }
             });
             
-            // Reset checkboxes and radio buttons
+            // Clear error messages
+            const errorElements = document.querySelectorAll('.error-message');
+            errorElements.forEach(el => {
+                el.textContent = '';
+                el.style.display = 'none';
+            });
+            
+            // Reset checkboxes
             const checkboxes = document.querySelectorAll('input[type="checkbox"]');
             checkboxes.forEach(checkbox => {
                 checkbox.checked = false;
-            });
-            
-            const radios = document.querySelectorAll('input[type="radio"]');
-            radios.forEach(radio => {
-                radio.checked = radio.value === 'email'; // Set email as default
             });
             
             // Reset to step 1
@@ -759,20 +810,18 @@ class RegistrationSystem {
             
             this.currentStep = 1;
             this.updateProgress();
-            this.formData = {};
+            this.updateNavigationButtons();
+            this.updateStepCounters();
+            this.formData = { profilePhoto: null };
             
             // Clear photo preview
             const uploadArea = document.getElementById('photo-upload-area');
-            const placeholder = uploadArea.querySelector('.upload-placeholder');
-            const preview = uploadArea.querySelector('.photo-preview');
-            
-            if (placeholder) placeholder.style.display = 'block';
-            if (preview) preview.style.display = 'none';
-            
-            // Reset file input
-            const photoInput = document.getElementById('photo-input');
-            if (photoInput) {
-                photoInput.value = '';
+            if (uploadArea) {
+                const placeholder = uploadArea.querySelector('.upload-placeholder');
+                const preview = uploadArea.querySelector('.photo-preview');
+                
+                if (placeholder) placeholder.style.display = 'block';
+                if (preview) preview.style.display = 'none';
             }
             
             this.showNotification('Form cleared successfully', 'success');
@@ -783,27 +832,8 @@ class RegistrationSystem {
     showSuccessModal() {
         const modal = document.getElementById('success-modal');
         if (modal) {
-            modal.style.display = 'flex';
-            setTimeout(() => {
-                modal.style.opacity = '1';
-            }, 10);
+            modal.classList.add('active');
         }
-    }
-
-    verifyNow() {
-        this.showNotification('Redirecting to verification page...', 'info');
-        // In a real app, this would redirect to verification page
-        setTimeout(() => {
-            window.location.href = 'verification.html';
-        }, 1500);
-    }
-
-    goToDashboard() {
-        this.showNotification('Welcome to your dashboard!', 'success');
-        // In a real app, this would redirect to dashboard
-        setTimeout(() => {
-            window.location.href = 'dashboard.html';
-        }, 1500);
     }
 
     showHelp() {
@@ -812,6 +842,8 @@ class RegistrationSystem {
 
     // Utility Methods
     showError(input, errorElement, message) {
+        if (!input) return;
+        
         input.classList.add('error');
         if (errorElement) {
             errorElement.textContent = message;
@@ -820,10 +852,42 @@ class RegistrationSystem {
     }
 
     clearError(input, errorElement) {
+        if (!input) return;
+        
         input.classList.remove('error');
         if (errorElement) {
             errorElement.textContent = '';
             errorElement.style.display = 'none';
+        }
+    }
+
+    updateSelectLabel(select) {
+        if (!select) return;
+        
+        const label = select.nextElementSibling;
+        if (label && label.classList.contains('floating-label')) {
+            if (select.value !== '') {
+                label.style.top = '-0.5rem';
+                label.style.fontSize = '0.8rem';
+                label.style.color = 'var(--accent-teal)';
+                label.style.fontWeight = '500';
+            } else {
+                label.style.top = '0.875rem';
+                label.style.fontSize = '0.95rem';
+                label.style.color = 'var(--text-light)';
+                label.style.fontWeight = '400';
+            }
+        }
+    }
+
+    showLoading(show) {
+        const loadingOverlay = document.getElementById('loading-overlay');
+        if (loadingOverlay) {
+            if (show) {
+                loadingOverlay.classList.add('active');
+            } else {
+                loadingOverlay.classList.remove('active');
+            }
         }
     }
 

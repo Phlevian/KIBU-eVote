@@ -1,4 +1,22 @@
-/* CSS Variables */
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+   font-family:'Outfit', sans-serif !important;
+}
+.fa,
+.fas,
+.far,
+.fab,
+.fa-solid,
+.fa-regular,
+.fa-brands,
+i {
+  font-family: "Font Awesome 6 Free", "Font Awesome 6 Brands" !important;
+}
+
 :root {
     --victory-gold: #FFD700;
     --electric-blue: #0080FF;
@@ -13,19 +31,13 @@
     --accent-teal: #008080;
 }
 
-/* Base Styles */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
 
 body {
-    font-family: 'Inter', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background: var(--white);
     color: var(--dark-text);
     line-height: 1.6;
     min-height: 100vh;
+    font-family: 'Outfit', sans-serif !important;
 }
 
 .container {

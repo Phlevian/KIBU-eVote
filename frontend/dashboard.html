@@ -6,6 +6,7 @@
     <title>Dashboard - KIBU Digital Democracy</title>
     <link rel="stylesheet" href="css/dashboard.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="dashboard-container">
@@ -15,13 +16,18 @@
                 <div class="header-left">
                     <div class="logo">
                         <img src="assets/images/logo.jpg" alt="KIBU Digital Democracy" class="logo-image">
-                        <span class="logo-text">Digital Democracy Dashboard</span>
+                        <div class="logo-text">
+                            <span class="main-text">Digital Democracy</span>
+                            <span class="sub-text">Student Voting Platform</span>
+                        </div>
                     </div>
                 </div>
                 
                 <div class="header-center">
                     <div class="countdown-timer">
-                        <div class="timer-icon">⏰</div>
+                        <div class="timer-icon">
+                            <i class="fas fa-clock"></i>
+                        </div>
                         <div class="timer-content">
                             <div class="timer-label">VOTING ENDS IN:</div>
                             <div class="timer-display" id="countdown-timer">2 days 14:32:45</div>
@@ -31,20 +37,20 @@
                 
                 <div class="header-right">
                     <div class="user-profile">
-                        <div class="notification-bell">
+                        <div class="notification-bell" id="notification-bell">
                             <i class="fas fa-bell"></i>
                             <span class="notification-badge">3</span>
                         </div>
-                        <div class="user-info">
+                        <div class="user-info" id="user-info">
                             <div class="user-avatar">
-                                <img src="assets/images/student-avatar.jpg" alt="Student Avatar">
+                                <img src="assets/images/default-avatar.jpg" alt="Student Avatar" id="user-avatar">
                             </div>
                             <div class="user-details">
-                                <span class="user-name">Sarah Johnson</span>
-                                <span class="user-id">KIBU/2023/001234</span>
+                                <span class="user-name" id="user-name">Loading...</span>
+                                <span class="user-id" id="user-reg-number">KIBU/---/--</span>
                             </div>
                         </div>
-                        <button class="logout-btn">
+                        <button class="logout-btn" id="logout-btn">
                             <i class="fas fa-sign-out-alt"></i>
                         </button>
                     </div>
@@ -55,66 +61,109 @@
         <div class="dashboard-body">
             <!-- Left Sidebar -->
             <nav class="sidebar">
+                <div class="sidebar-header">
+                    <h3 class="sidebar-title">Navigation</h3>
+                </div>
+                
                 <ul class="nav-menu">
                     <li class="nav-item active">
                         <a href="#" class="nav-link">
-                            <span class="nav-icon">🏠</span>
+                            <div class="nav-icon">
+                                <i class="fas fa-home"></i>
+                            </div>
                             <span class="nav-text">Dashboard</span>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a href="voting.html" class="nav-link">
-                            <span class="nav-icon">🗳</span>
+                            <div class="nav-icon">
+                                <i class="fas fa-vote-yea"></i>
+                            </div>
                             <span class="nav-text">Vote Now</span>
-                            <span class="notification-dot"></span>
+                            <span class="nav-badge new">New</span>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a href="confirmation.html" class="nav-link">
-                            <span class="nav-icon">📊</span>
+                            <div class="nav-icon">
+                                <i class="fas fa-history"></i>
+                            </div>
                             <span class="nav-text">My Votes</span>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a href="results.html" class="nav-link">
-                            <span class="nav-icon">🏆</span>
+                            <div class="nav-icon">
+                                <i class="fas fa-chart-bar"></i>
+                            </div>
                             <span class="nav-text">Results</span>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a href="elections.html" class="nav-link">
-                            <span class="nav-icon">📅</span>
+                            <div class="nav-icon">
+                                <i class="fas fa-calendar-alt"></i>
+                            </div>
                             <span class="nav-text">Elections</span>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a href="settings.html" class="nav-link">
-                            <span class="nav-icon">⚙</span>
+                            <div class="nav-icon">
+                                <i class="fas fa-cog"></i>
+                            </div>
                             <span class="nav-text">Settings</span>
                         </a>
                     </li>
-                
                 </ul>
                 
-                <div class="sidebar-footer">
-                    <div class="student-card">
-                        <div class="student-avatar">
-                            <img src="assets/images/student-avatar.jpg" alt="Student Avatar">
+                <div class="sidebar-divider"></div>
+                
+                <!-- Quick Stats -->
+                <div class="sidebar-stats">
+                    <div class="stat-item">
+                        <div class="stat-icon">
+                            <i class="fas fa-check-circle"></i>
                         </div>
-                        <div class="student-info">
-                            <div class="student-name">Sarah Johnson</div>
-                            <div class="student-faculty">Computer Science</div>
+                        <div class="stat-content">
+                            <div class="stat-value" id="votes-count">0</div>
+                            <div class="stat-label">Total Votes</div>
                         </div>
                     </div>
-                    
-                    <div class="system-status">
-                        <div class="status-item">
-                            <span class="status-dot online"></span>
-                            <span>All systems online ✅</span>
+                    <div class="stat-item">
+                        <div class="stat-icon">
+                            <i class="fas fa-calendar-check"></i>
                         </div>
-                        <div class="stats-item">
-                            <span>You've voted in <strong>3/5</strong> elections</span>
+                        <div class="stat-content">
+                            <div class="stat-value" id="participation-rate">0%</div>
+                            <div class="stat-label">Participation</div>
                         </div>
+                    </div>
+                </div>
+                
+                <div class="sidebar-divider"></div>
+                
+                <!-- Student Profile Card -->
+                <div class="student-card" id="student-card">
+                    <div class="student-avatar">
+                        <img src="assets/images/default-avatar.jpg" alt="Student Avatar" id="student-avatar-img">
+                    </div>
+                    <div class="student-info">
+                        <div class="student-name" id="student-name">Loading...</div>
+                        <div class="student-faculty" id="student-faculty">---</div>
+                        <div class="student-year" id="student-year">Year --</div>
+                    </div>
+                </div>
+                
+                <!-- System Status -->
+                <div class="system-status">
+                    <div class="status-item">
+                        <span class="status-dot online"></span>
+                        <span>System: <strong>Online</strong></span>
+                    </div>
+                    <div class="status-item">
+                        <span class="status-dot secure"></span>
+                        <span>Security: <strong>Verified</strong></span>
                     </div>
                 </div>
             </nav>
@@ -125,17 +174,27 @@
                 <section class="welcome-section">
                     <div class="welcome-card">
                         <div class="welcome-content">
-                            <h1>Welcome back, Sarah!</h1>
-                            <p>Ready to shape KIBU's future? Your voice matters in every decision.</p>
-                            <button class="cta-button">
+                            <h1 id="welcome-title">Welcome back!</h1>
+                            <p>Your voice matters in shaping KIBU's future. Cast your vote in ongoing elections.</p>
+                            <button class="cta-button" id="quick-vote-btn">
+                                <i class="fas fa-vote-yea"></i>
                                 <span>VOTE NOW</span>
                                 <i class="fas fa-arrow-right"></i>
                             </button>
                         </div>
                         <div class="welcome-stats">
                             <div class="stat-badge">
-                                <span class="stat-number">8,247</span>
-                                <span class="stat-label">students voted today</span>
+                                <div class="stat-icon">
+                                    <i class="fas fa-users"></i>
+                                </div>
+                                <div class="stat-content">
+                                    <div class="stat-number" id="today-votes">0</div>
+                                    <div class="stat-label">students voted today</div>
+                                </div>
+                            </div>
+                            <div class="live-badge">
+                                <i class="fas fa-circle"></i>
+                                <span>Live</span>
                             </div>
                         </div>
                     </div>
@@ -143,48 +202,137 @@
 
                 <!-- Active Elections Section -->
                 <section class="elections-section">
-                    <h2 class="section-title">Active Elections</h2>
+                    <div class="section-header">
+                        <h2 class="section-title">
+                            <i class="fas fa-bullhorn"></i>
+                            Active Elections
+                        </h2>
+                        <a href="elections.html" class="view-all">
+                            View All
+                            <i class="fas fa-arrow-right"></i>
+                        </a>
+                    </div>
                     <div class="elections-grid">
                         <!-- Election Card 1 -->
                         <div class="election-card">
-                            <div class="card-border blue"></div>
-                            <div class="card-content">
-                                <div class="card-icon">👑</div>
-                                <h3 class="card-title">Student Council Elections</h3>
-                                <div class="status-badge open">VOTING OPEN</div>
-                                <div class="card-info">
-                                    <span>5 positions • 23 candidates • Ends in 2 days</span>
+                            <div class="card-header">
+                                <div class="card-icon">
+                                    <i class="fas fa-crown"></i>
                                 </div>
-                                <button class="card-button primary">VOTE NOW</button>
+                                <div class="card-status open">
+                                    <i class="fas fa-circle"></i>
+                                    VOTING OPEN
+                                </div>
                             </div>
+                            <h3 class="card-title">Student Council Elections</h3>
+                            <div class="card-info">
+                                <div class="info-item">
+                                    <i class="fas fa-briefcase"></i>
+                                    <span>5 positions</span>
+                                </div>
+                                <div class="info-item">
+                                    <i class="fas fa-user-friends"></i>
+                                    <span>23 candidates</span>
+                                </div>
+                                <div class="info-item">
+                                    <i class="fas fa-clock"></i>
+                                    <span>Ends in 2 days</span>
+                                </div>
+                            </div>
+                            <div class="card-progress">
+                                <div class="progress-label">
+                                    <span>Voter Turnout</span>
+                                    <span>68%</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 68%"></div>
+                                </div>
+                            </div>
+                            <button class="card-button primary" data-election="student-council">
+                                <i class="fas fa-vote-yea"></i>
+                                VOTE NOW
+                            </button>
                         </div>
 
                         <!-- Election Card 2 -->
                         <div class="election-card">
-                            <div class="card-border orange"></div>
-                            <div class="card-content">
-                                <div class="card-icon">⚽</div>
-                                <h3 class="card-title">Sports Captain Elections</h3>
-                                <div class="status-badge upcoming">STARTS MONDAY</div>
-                                <div class="card-info">
-                                    <span>8 positions • 16 candidates • Opens in 3 days</span>
+                            <div class="card-header">
+                                <div class="card-icon">
+                                    <i class="fas fa-futbol"></i>
                                 </div>
-                                <button class="card-button outlined">VIEW DETAILS</button>
+                                <div class="card-status upcoming">
+                                    <i class="fas fa-clock"></i>
+                                    STARTS MONDAY
+                                </div>
                             </div>
+                            <h3 class="card-title">Sports Captain Elections</h3>
+                            <div class="card-info">
+                                <div class="info-item">
+                                    <i class="fas fa-briefcase"></i>
+                                    <span>8 positions</span>
+                                </div>
+                                <div class="info-item">
+                                    <i class="fas fa-user-friends"></i>
+                                    <span>16 candidates</span>
+                                </div>
+                                <div class="info-item">
+                                    <i class="fas fa-clock"></i>
+                                    <span>Opens in 3 days</span>
+                                </div>
+                            </div>
+                            <div class="card-progress">
+                                <div class="progress-label">
+                                    <span>Nominations Closed</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 100%"></div>
+                                </div>
+                            </div>
+                            <button class="card-button outlined" data-election="sports-captain">
+                                <i class="fas fa-eye"></i>
+                                VIEW DETAILS
+                            </button>
                         </div>
 
                         <!-- Election Card 3 -->
                         <div class="election-card">
-                            <div class="card-border green"></div>
-                            <div class="card-content">
-                                <div class="card-icon">🎭</div>
-                                <h3 class="card-title">Club Leadership Votes</h3>
-                                <div class="status-badge completed">COMPLETED</div>
-                                <div class="card-info">
-                                    <span>12 positions • Results available</span>
+                            <div class="card-header">
+                                <div class="card-icon">
+                                    <i class="fas fa-theater-masks"></i>
                                 </div>
-                                <button class="card-button success">VIEW RESULTS</button>
+                                <div class="card-status completed">
+                                    <i class="fas fa-check-circle"></i>
+                                    COMPLETED
+                                </div>
                             </div>
+                            <h3 class="card-title">Club Leadership</h3>
+                            <div class="card-info">
+                                <div class="info-item">
+                                    <i class="fas fa-briefcase"></i>
+                                    <span>12 positions</span>
+                                </div>
+                                <div class="info-item">
+                                    <i class="fas fa-user-friends"></i>
+                                    <span>45 candidates</span>
+                                </div>
+                                <div class="info-item">
+                                    <i class="fas fa-check"></i>
+                                    <span>Results available</span>
+                                </div>
+                            </div>
+                            <div class="card-progress">
+                                <div class="progress-label">
+                                    <span>Final Results</span>
+                                    <span>100%</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 100%"></div>
+                                </div>
+                            </div>
+                            <button class="card-button success" data-election="club-leadership">
+                                <i class="fas fa-chart-bar"></i>
+                                VIEW RESULTS
+                            </button>
                         </div>
                     </div>
                 </section>
@@ -193,26 +341,39 @@
                 <div class="content-row">
                     <!-- Quick Actions -->
                     <section class="quick-actions-section">
-                        <h2 class="section-title">Quick Actions</h2>
+                        <div class="section-header">
+                            <h2 class="section-title">
+                                <i class="fas fa-bolt"></i>
+                                Quick Actions
+                            </h2>
+                        </div>
                         <div class="actions-grid">
-                            <div class="action-card">
-                                <div class="action-icon">📋</div>
+                            <div class="action-card" data-action="verify-vote">
+                                <div class="action-icon">
+                                    <i class="fas fa-shield-alt"></i>
+                                </div>
                                 <h3>Verify My Vote</h3>
                                 <p>Check blockchain confirmation</p>
                             </div>
-                            <div class="action-card">
-                                <div class="action-icon">📱</div>
+                            <div class="action-card" data-action="qr-code">
+                                <div class="action-icon">
+                                    <i class="fas fa-qrcode"></i>
+                                </div>
                                 <h3>Get QR Code</h3>
                                 <p>Quick vote from phone</p>
                             </div>
-                            <div class="action-card">
-                                <div class="action-icon">🔔</div>
+                            <div class="action-card" data-action="notifications">
+                                <div class="action-icon">
+                                    <i class="fas fa-bell"></i>
+                                </div>
                                 <h3>Notifications</h3>
                                 <p>3 new updates</p>
-                                <span class="notification-badge">3</span>
+                                <span class="action-badge">3</span>
                             </div>
-                            <div class="action-card">
-                                <div class="action-icon">📧</div>
+                            <div class="action-card" data-action="support">
+                                <div class="action-icon">
+                                    <i class="fas fa-headset"></i>
+                                </div>
                                 <h3>Contact Support</h3>
                                 <p>Need help voting?</p>
                             </div>
@@ -221,36 +382,22 @@
 
                     <!-- Voting Activity -->
                     <section class="activity-section">
-                        <h2 class="section-title">Your Voting Activity</h2>
+                        <div class="section-header">
+                            <h2 class="section-title">
+                                <i class="fas fa-history"></i>
+                                Your Voting Activity
+                            </h2>
+                            <a href="confirmation.html" class="view-all">
+                                View All
+                                <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
                         <div class="activity-card">
-                            <div class="activity-timeline">
-                                <div class="timeline-item completed">
-                                    <div class="timeline-icon">✅</div>
-                                    <div class="timeline-content">
-                                        <h4>Student Council</h4>
-                                        <p>Voted today at 2:30 PM</p>
-                                    </div>
-                                </div>
-                                <div class="timeline-item completed">
-                                    <div class="timeline-icon">✅</div>
-                                    <div class="timeline-content">
-                                        <h4>Library Committee</h4>
-                                        <p>Voted yesterday</p>
-                                    </div>
-                                </div>
-                                <div class="timeline-item upcoming">
-                                    <div class="timeline-icon">⏳</div>
-                                    <div class="timeline-content">
-                                        <h4>Sports Captain</h4>
-                                        <p>Voting opens Monday</p>
-                                    </div>
-                                </div>
-                                <div class="timeline-item completed">
-                                    <div class="timeline-icon">📊</div>
-                                    <div class="timeline-content">
-                                        <h4>Club Elections</h4>
-                                        <p>Results viewed</p>
-                                    </div>
+                            <div class="activity-timeline" id="voting-timeline">
+                                <!-- Timeline items will be populated by JavaScript -->
+                                <div class="timeline-loading">
+                                    <i class="fas fa-spinner fa-spin"></i>
+                                    <span>Loading voting activity...</span>
                                 </div>
                             </div>
                         </div>
@@ -261,34 +408,47 @@
                 <div class="content-row">
                     <!-- Statistics Dashboard -->
                     <section class="stats-section">
-                        <h2 class="section-title">Your Voting Statistics</h2>
+                        <div class="section-header">
+                            <h2 class="section-title">
+                                <i class="fas fa-chart-pie"></i>
+                                Your Voting Statistics
+                            </h2>
+                        </div>
                         <div class="stats-grid">
                             <div class="stat-card blue">
-                                <div class="stat-icon">🗳</div>
+                                <div class="stat-icon">
+                                    <i class="fas fa-vote-yea"></i>
+                                </div>
                                 <div class="stat-content">
-                                    <div class="stat-number">8</div>
+                                    <div class="stat-number" id="total-elections">0</div>
                                     <div class="stat-label">Elections Participated</div>
                                 </div>
                             </div>
                             <div class="stat-card orange">
-                                <div class="stat-icon">🔥</div>
+                                <div class="stat-icon">
+                                    <i class="fas fa-calendar-day"></i>
+                                </div>
                                 <div class="stat-content">
-                                    <div class="stat-number">15</div>
+                                    <div class="stat-number" id="days-active">0</div>
                                     <div class="stat-label">Days Active</div>
                                 </div>
                             </div>
                             <div class="stat-card green">
-                                <div class="stat-icon">📈</div>
+                                <div class="stat-icon">
+                                    <i class="fas fa-chart-line"></i>
+                                </div>
                                 <div class="stat-content">
-                                    <div class="stat-number">87%</div>
+                                    <div class="stat-number" id="participation-percent">0%</div>
                                     <div class="stat-label">Participation Rate</div>
                                 </div>
                             </div>
                             <div class="stat-card purple">
-                                <div class="stat-icon">⏰</div>
+                                <div class="stat-icon">
+                                    <i class="fas fa-hourglass-half"></i>
+                                </div>
                                 <div class="stat-content">
-                                    <div class="stat-number">3</div>
-                                    <div class="stat-label">Days Until Vote</div>
+                                    <div class="stat-number" id="upcoming-count">0</div>
+                                    <div class="stat-label">Upcoming Votes</div>
                                 </div>
                             </div>
                         </div>
@@ -296,29 +456,18 @@
 
                     <!-- Upcoming Deadlines -->
                     <section class="deadlines-section">
-                        <h2 class="section-title">Upcoming Deadlines</h2>
+                        <div class="section-header">
+                            <h2 class="section-title">
+                                <i class="fas fa-calendar-times"></i>
+                                Upcoming Deadlines
+                            </h2>
+                        </div>
                         <div class="deadlines-card">
-                            <div class="deadlines-timeline">
-                                <div class="deadline-item urgent">
-                                    <div class="deadline-dot"></div>
-                                    <div class="deadline-content">
-                                        <h4>Student Council voting ends</h4>
-                                        <p>2 days remaining</p>
-                                    </div>
-                                </div>
-                                <div class="deadline-item warning">
-                                    <div class="deadline-dot"></div>
-                                    <div class="deadline-content">
-                                        <h4>Sports Captain nominations close</h4>
-                                        <p>5 days remaining</p>
-                                    </div>
-                                </div>
-                                <div class="deadline-item normal">
-                                    <div class="deadline-dot"></div>
-                                    <div class="deadline-content">
-                                        <h4>Results announcement</h4>
-                                        <p>1 week remaining</p>
-                                    </div>
+                            <div class="deadlines-timeline" id="deadlines-timeline">
+                                <!-- Deadline items will be populated by JavaScript -->
+                                <div class="timeline-loading">
+                                    <i class="fas fa-spinner fa-spin"></i>
+                                    <span>Loading deadlines...</span>
                                 </div>
                             </div>
                         </div>
@@ -327,24 +476,62 @@
 
                 <!-- System Status -->
                 <section class="system-status-section">
-                    <h2 class="section-title">System Health</h2>
+                    <div class="section-header">
+                        <h2 class="section-title">
+                            <i class="fas fa-heartbeat"></i>
+                            System Health
+                        </h2>
+                    </div>
                     <div class="system-status-card">
-                        <div class="status-items">
-                            <div class="status-item">
-                                <span class="status-dot online"></span>
-                                <span>Blockchain Network: Online</span>
+                        <div class="status-grid">
+                            <div class="status-item online">
+                                <div class="status-icon">
+                                    <i class="fas fa-server"></i>
+                                </div>
+                                <div class="status-content">
+                                    <h4>Blockchain Network</h4>
+                                    <p>All nodes operational</p>
+                                </div>
+                                <div class="status-indicator">
+                                    <i class="fas fa-circle"></i>
+                                    <span>Online</span>
+                                </div>
                             </div>
-                            <div class="status-item">
-                                <span class="status-dot online"></span>
-                                <span>Vote Processing: Normal</span>
+                            <div class="status-item online">
+                                <div class="status-icon">
+                                    <i class="fas fa-database"></i>
+                                </div>
+                                <div class="status-content">
+                                    <h4>Vote Processing</h4>
+                                    <p>Real-time processing</p>
+                                </div>
+                                <div class="status-indicator">
+                                    <i class="fas fa-circle"></i>
+                                    <span>Normal</span>
+                                </div>
                             </div>
-                            <div class="status-item">
-                                <span class="status-dot online"></span>
-                                <span>Security: All systems secure</span>
+                            <div class="status-item online">
+                                <div class="status-icon">
+                                    <i class="fas fa-shield-alt"></i>
+                                </div>
+                                <div class="status-content">
+                                    <h4>Security System</h4>
+                                    <p>End-to-end encrypted</p>
+                                </div>
+                                <div class="status-indicator">
+                                    <i class="fas fa-circle"></i>
+                                    <span>Secure</span>
+                                </div>
                             </div>
-                            <div class="status-item">
-                                <span class="status-icon">📊</span>
-                                <span>Today's votes: 8,247</span>
+                            <div class="status-item stats">
+                                <div class="status-icon">
+                                    <i class="fas fa-chart-bar"></i>
+                                </div>
+                                <div class="status-content">
+                                    <h4>Today's Votes</h4>
+                                    <p>Real-time count</p>
+                                </div>
+                                <div class="status-value" id="real-time-votes">8,247</div>
                             </div>
                         </div>
                     </div>
@@ -357,6 +544,14 @@
     <button class="mobile-menu-btn" id="mobileMenuBtn">
         <i class="fas fa-bars"></i>
     </button>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loading-overlay">
+        <div class="loading-content">
+            <div class="loading-spinner"></div>
+            <p>Loading your dashboard...</p>
+        </div>
+    </div>
 
     <script src="js/dashboard.js"></script>
 </body>

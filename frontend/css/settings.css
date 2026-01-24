@@ -35,6 +35,17 @@
     gap: 2rem;
     flex: 1;
 }
+.fa,
+.fas,
+.far,
+.fab,
+.fa-solid,
+.fa-regular,
+.fa-brands,
+i {
+  font-family: "Font Awesome 6 Free", "Font Awesome 6 Brands" !important;
+}
+
 
 .back-btn {
     display: flex;

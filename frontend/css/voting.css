@@ -1,4 +1,22 @@
-/* CSS Variables for Professional Color Scheme */
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+   font-family:'Outfit', sans-serif !important;
+}
+.fa,
+.fas,
+.far,
+.fab,
+.fa-solid,
+.fa-regular,
+.fa-brands,
+i {
+  font-family: "Font Awesome 6 Free", "Font Awesome 6 Brands" !important;
+}
+
 :root {
     --primary-navy: #1e2a4a;
     --primary-blue: #2d3b5b;
@@ -43,21 +61,15 @@
     --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.5);
 }
 
-/* Base Styles */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
 body {
     background-color: var(--light-gray);
     color: var(--text-dark);
     min-height: 100vh;
     line-height: 1.6;
     transition: background-color 0.3s ease, color 0.3s ease;
+    font-family: 'Outfit', sans-serif !important;
 }
+
 
 body.light-theme {
     background-image: 

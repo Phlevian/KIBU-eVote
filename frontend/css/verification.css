@@ -1,4 +1,11 @@
-/* Verification System Styles */
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+   font-family:'Outfit', sans-serif !important;
+}
 :root {
     /* Color Palette */
     --primary-navy: #1a2238;
@@ -23,20 +30,24 @@
     --transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Base Styles */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-}
-
 body {
     background: var(--light-gray);
     color: var(--text-dark);
     line-height: 1.6;
     font-weight: 400;
+    font-family: 'Outfit', sans-serif !important;
 }
+.fa,
+.fas,
+.far,
+.fab,
+.fa-solid,
+.fa-regular,
+.fa-brands,
+i {
+  font-family: "Font Awesome 6 Free", "Font Awesome 6 Brands" !important;
+}
+
 
 .verification-container {
     display: flex;

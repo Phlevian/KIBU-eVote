@@ -1,12 +1,21 @@
-/* ===================================
-   KIBU eVote - Main Global Styles
-   =================================== */
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
 
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
+.fa,
+.fas,
+.far,
+.fab,
+.fa-solid,
+.fa-regular,
+.fa-brands,
+i {
+  font-family: "Font Awesome 6 Free", "Font Awesome 6 Brands" !important;
+}
+
 
 :root {
     /* Primary Colors */
@@ -34,7 +43,7 @@
 }
 
 body {
-    font-family: 'Inter', sans-serif;
+    font-family: 'Outfit', sans-serif !important;
     overflow-x: hidden;
     background: var(--white);
     line-height: 1.6;

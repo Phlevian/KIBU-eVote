@@ -1,4 +1,11 @@
-/* CSS Variables - Professional Color Scheme */
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+   font-family:'Outfit', sans-serif !important;
+}
 :root {
     --primary-blue: #2563eb;
     --secondary-blue: #1e40af;
@@ -26,20 +33,24 @@
     --border-radius-lg: 16px;
 }
 
-/* Base Styles */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
 body {
-    font-family: 'Inter', sans-serif;
     background-color: var(--off-white);
     color: var(--dark-gray);
     line-height: 1.6;
     min-height: 100vh;
+    font-family: 'Outfit', sans-serif !important;
 }
+.fa,
+.fas,
+.far,
+.fab,
+.fa-solid,
+.fa-regular,
+.fa-brands,
+i {
+  font-family: "Font Awesome 6 Free", "Font Awesome 6 Brands" !important;
+}
+
 
 /* Header Section */
 .election-header {

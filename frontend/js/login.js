@@ -1,15 +1,7 @@
 // KIBU Digital Democracy Login System
 class LoginSystem {
     constructor() {
-        // Sample valid users database (in a real system, this would be on a server)
-        this.validUsers = [
-            { regNumber: "BIT/0019/23", password: "password123", name: "John Doe", course: "BIT" },
-            { regNumber: "COM/0025/23", password: "password123", name: "Jane Smith", course: "Computer Science" },
-            { regNumber: "ENG/0034/22", password: "password123", name: "Mike Johnson", course: "Engineering" },
-            { regNumber: "BUS/0012/24", password: "password123", name: "Sarah Williams", course: "Business" },
-            { regNumber: "LAW/0008/23", password: "password123", name: "David Brown", course: "Law" }
-        ];
-        
+        this.API_BASE_URL = 'http://localhost:5000/api/auth';
         this.init();
     }
 
@@ -27,7 +19,7 @@ class LoginSystem {
         }
 
         // Toggle password visibility
-        const togglePassword = document.getElementById('toggle-password');
+        const togglePassword = document.querySelector('.toggle-password');
         if (togglePassword) {
             togglePassword.addEventListener('click', () => this.togglePasswordVisibility());
         }
@@ -43,32 +35,17 @@ class LoginSystem {
             qrLogin.addEventListener('click', () => this.showQRModal());
         }
 
-        // Modal close buttons
-        const closeQRModal = document.getElementById('close-qr-modal');
-        if (closeQRModal) {
-            closeQRModal.addEventListener('click', () => this.hideModal('qr-modal'));
+        // Forgot password
+        const forgotPassword = document.querySelector('.forgot-password');
+        if (forgotPassword) {
+            forgotPassword.addEventListener('click', (e) => {
+                e.preventDefault();
+                this.handleForgotPassword();
+            });
         }
-
-        const closeBiometricModal = document.getElementById('close-biometric-modal');
-        if (closeBiometricModal) {
-            closeBiometricModal.addEventListener('click', () => this.hideModal('biometric-modal'));
-        }
-
-        // Close modals when clicking outside
-        window.addEventListener('click', (e) => {
-            const qrModal = document.getElementById('qr-modal');
-            const biometricModal = document.getElementById('biometric-modal');
-            
-            if (e.target === qrModal) {
-                this.hideModal('qr-modal');
-            }
-            if (e.target === biometricModal) {
-                this.hideModal('biometric-modal');
-            }
-        });
 
         // Real-time validation
-        const regInput = document.getElementById('reg-number');
+        const regInput = document.getElementById('registrationNumber');
         if (regInput) {
             regInput.addEventListener('input', () => this.validateRegNumber());
         }
@@ -80,12 +57,12 @@ class LoginSystem {
     }
 
     // Handle login form submission
-    handleLogin(e) {
+    async handleLogin(e) {
         e.preventDefault();
         
-        const regNumber = document.getElementById('reg-number').value.trim();
+        const registrationNumber = document.getElementById('registrationNumber').value.trim();
         const password = document.getElementById('password').value;
-        const rememberMe = document.getElementById('remember-device').checked;
+        const rememberMe = document.getElementById('remember-me').checked;
         
         // Validate inputs
         const isRegValid = this.validateRegNumber();
@@ -96,32 +73,61 @@ class LoginSystem {
             return;
         }
         
-        // Check if user exists
-        const user = this.authenticateUser(regNumber, password);
+        // Show loading
+        this.showLoading(true);
         
-        if (user) {
+        try {
+            // Send login request to backend
+            const response = await fetch(`${this.API_BASE_URL}/login`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    registrationNumber,
+                    password
+                })
+            });
+
+            const result = await response.json();
+
+            if (!response.ok) {
+                throw new Error(result.message || 'Login failed');
+            }
+
             // Save login if remember me is checked
             if (rememberMe) {
-                this.saveLogin(regNumber);
+                this.saveLogin(registrationNumber);
             }
-            
-            // Show success and redirect
-            this.showNotification(`Welcome back, ${user.name}! Redirecting to dashboard...`, 'success');
-            
-            // Simulate login process
-            this.simulateLoginProcess(user);
-        } else {
-            this.showNotification('Invalid registration number or password', 'error');
+
+            // Store token and user data
+            if (result.data && result.data.token) {
+                localStorage.setItem('kibu_token', result.data.token);
+                localStorage.setItem('kibu_user', JSON.stringify(result.data.student));
+                
+                // Show success message
+                this.showNotification(`Welcome back, ${result.data.student.firstName}!`, 'success');
+                
+                // Redirect to dashboard after delay
+                setTimeout(() => {
+                    window.location.href = 'dashboard.html';
+                }, 1500);
+            }
+
+        } catch (error) {
+            this.showNotification(error.message || 'Invalid credentials. Please try again.', 'error');
+            console.error('Login error:', error);
+        } finally {
+            this.showLoading(false);
         }
     }
 
     // Validate registration number format
     validateRegNumber() {
-        const regInput = document.getElementById('reg-number');
+        const regInput = document.getElementById('registrationNumber');
         const errorElement = document.getElementById('reg-error');
         const regNumber = regInput.value.trim();
         
-        // Regular expression for KIBU registration number format: CourseCode/Number/Year
         const regPattern = /^[A-Z]{2,4}\/\d{4}\/\d{2}$/;
         
         if (!regNumber) {
@@ -158,96 +164,93 @@ class LoginSystem {
         return true;
     }
 
-    // Authenticate user against the database
-    authenticateUser(regNumber, password) {
-        return this.validUsers.find(user => 
-            user.regNumber === regNumber && user.password === password
-        );
-    }
-
     // Toggle password visibility
     togglePasswordVisibility() {
         const passwordInput = document.getElementById('password');
-        const eyeIcon = document.querySelector('.eye-icon');
+        const eyeIcon = document.querySelector('.toggle-password i');
         
         if (passwordInput.type === 'password') {
             passwordInput.type = 'text';
-            eyeIcon.textContent = '🙈';
+            eyeIcon.className = 'fas fa-eye-slash';
         } else {
             passwordInput.type = 'password';
-            eyeIcon.textContent = '👁️';
+            eyeIcon.className = 'fas fa-eye';
         }
     }
 
     // Show biometric modal
     showBiometricModal() {
-        this.showModal('biometric-modal');
+        this.showNotification('Biometric authentication would be implemented here', 'info');
         
         // Simulate biometric authentication
         setTimeout(() => {
-            // For demo purposes, auto-authenticate after 2 seconds
-            this.hideModal('biometric-modal');
-            this.showNotification('Biometric authentication successful!', 'success');
+            this.showNotification('Biometric authentication successful! Auto-filling credentials...', 'success');
             
-            // Auto-fill with a demo user for convenience
-            document.getElementById('reg-number').value = 'BIT/0019/23';
+            // For demo purposes, auto-fill with test credentials
+            document.getElementById('registrationNumber').value = 'BIT/0019/23';
             document.getElementById('password').value = 'password123';
         }, 2000);
     }
 
     // Show QR modal
     showQRModal() {
-        this.showModal('qr-modal');
+        this.showNotification('QR code login would be implemented here', 'info');
     }
 
-    // Show modal
-    showModal(modalId) {
-        const modal = document.getElementById(modalId);
-        if (modal) {
-            modal.style.display = 'flex';
-            setTimeout(() => {
-                modal.style.opacity = '1';
-            }, 10);
+    // Handle forgot password
+    handleForgotPassword() {
+        const registrationNumber = document.getElementById('registrationNumber').value.trim();
+        
+        if (!registrationNumber) {
+            this.showNotification('Please enter your registration number first', 'error');
+            return;
         }
-    }
-
-    // Hide modal
-    hideModal(modalId) {
-        const modal = document.getElementById(modalId);
-        if (modal) {
-            modal.style.opacity = '0';
-            setTimeout(() => {
-                modal.style.display = 'none';
-            }, 300);
-        }
+        
+        this.showNotification(`Password reset instructions would be sent to the email associated with ${registrationNumber}`, 'info');
     }
 
     // Check for saved login
     checkSavedLogin() {
         const savedRegNumber = localStorage.getItem('kibu_saved_reg');
         if (savedRegNumber) {
-            document.getElementById('reg-number').value = savedRegNumber;
-            document.getElementById('remember-device').checked = true;
+            document.getElementById('registrationNumber').value = savedRegNumber;
+            document.getElementById('remember-me').checked = true;
         }
     }
 
     // Save login information
-    saveLogin(regNumber) {
-        localStorage.setItem('kibu_saved_reg', regNumber);
+    saveLogin(registrationNumber) {
+        localStorage.setItem('kibu_saved_reg', registrationNumber);
     }
 
     // Show error message
     showError(input, errorElement, message) {
         input.classList.add('error');
-        errorElement.textContent = message;
-        errorElement.style.display = 'block';
+        if (errorElement) {
+            errorElement.textContent = message;
+            errorElement.style.display = 'block';
+        }
     }
 
     // Clear error message
     clearError(input, errorElement) {
         input.classList.remove('error');
-        errorElement.textContent = '';
-        errorElement.style.display = 'none';
+        if (errorElement) {
+            errorElement.textContent = '';
+            errorElement.style.display = 'none';
+        }
+    }
+
+    // Show loading
+    showLoading(show) {
+        const loadingOverlay = document.getElementById('loading-overlay');
+        if (loadingOverlay) {
+            if (show) {
+                loadingOverlay.classList.add('active');
+            } else {
+                loadingOverlay.classList.remove('active');
+            }
+        }
     }
 
     // Show notification
@@ -322,30 +325,6 @@ class LoginSystem {
             warning: '#FF9800'
         };
         return colors[type] || colors.info;
-    }
-
-    // Simulate login process
-    simulateLoginProcess(user) {
-        // Show loading state
-        const loginBtn = document.querySelector('.login-btn');
-        const originalText = loginBtn.innerHTML;
-        loginBtn.innerHTML = '<span class="btn-text">AUTHENTICATING...</span><span class="btn-icon">⏳</span>';
-        loginBtn.disabled = true;
-
-        // Simulate API call
-        setTimeout(() => {
-            // In a real application, you would redirect to the dashboard
-            // window.location.href = 'dashboard.html';
-            
-            // For demo purposes, show success message
-            this.showNotification(`Login successful! Welcome ${user.name} (${user.regNumber})`, 'success');
-            
-            // Reset button
-            loginBtn.innerHTML = originalText;
-            loginBtn.disabled = false;
-            
-            console.log(`User ${user.name} (${user.regNumber}) logged in successfully`);
-        }, 1500);
     }
 }
 

@@ -1,8 +1,11 @@
-/* ===================================
-   KIBU eVote - Modern Professional Design
-   =================================== */
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
 
-/* CSS Variables for Consistent Color Scheme */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+   font-family:'Outfit', sans-serif !important;
+}
 :root {
     --primary-navy: #1e2a4a;
     --primary-blue: #2d3b5b;
@@ -21,20 +24,26 @@
     --error: #ef4444;
 }
 
-/* Reset & Base Styles */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
+
 
 body {
-    font-family: 'Inter', sans-serif;
+    font-family: 'Outfit', sans-serif;
     line-height: 1.6;
     color: var(--text-dark);
     background-color: var(--light-gray);
     overflow-x: hidden;
 }
+.fa,
+.fas,
+.far,
+.fab,
+.fa-solid,
+.fa-regular,
+.fa-brands,
+i {
+  font-family: "Font Awesome 6 Free", "Font Awesome 6 Brands" !important;
+}
+
 
 /* Particle Background */
 .particles {

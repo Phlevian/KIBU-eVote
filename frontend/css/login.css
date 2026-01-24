@@ -1,9 +1,22 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Raleway:ital,wght@0,100..900;1,100..900&display=swap');
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "Inter", sans-serif;
+   font-family:'Outfit', sans-serif !important;
 }
+.fa,
+.fas,
+.far,
+.fab,
+.fa-solid,
+.fa-regular,
+.fa-brands,
+i {
+  font-family: "Font Awesome 6 Free", "Font Awesome 6 Brands" !important;
+}
+
 
 body.login-page {
   background: #0f0f1a;
@@ -808,4 +821,193 @@ body.login-page {
     padding: 1rem 1.2rem;
   }
 }
+/* Additional styles for login page */
+.login-page .auth-container {
+    min-height: 100vh;
+}
 
+.login-page .form-section {
+    flex: 0 0 50%;
+}
+
+.login-page .inspiration-section {
+    flex: 0 0 50%;
+}
+
+.form-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.checkbox-container {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+}
+
+.checkbox-container input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    accent-color: var(--accent-teal);
+}
+
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    color: var(--text-medium);
+}
+
+.checkmark {
+    width: 18px;
+    height: 18px;
+    border: 2px solid var(--medium-gray);
+    border-radius: 4px;
+    display: inline-block;
+    position: relative;
+}
+
+.checkbox-container input[type="checkbox"]:checked + .checkbox-label .checkmark {
+    background-color: var(--accent-teal);
+    border-color: var(--accent-teal);
+}
+
+.checkbox-container input[type="checkbox"]:checked + .checkbox-label .checkmark::after {
+    content: '';
+    position: absolute;
+    left: 5px;
+    top: 1px;
+    width: 6px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+}
+
+.forgot-password {
+    color: var(--accent-teal);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: var(--transition);
+}
+
+.forgot-password:hover {
+    color: #2a6d6e;
+    text-decoration: underline;
+}
+
+.alternative-login {
+    margin: 2rem 0;
+}
+
+.divider {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    color: var(--text-light);
+    font-size: 0.9rem;
+    margin-bottom: 1.5rem;
+}
+
+.divider::before,
+.divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--medium-gray);
+    margin: 0 1rem;
+}
+
+.alt-methods {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+}
+
+.alt-login-btn {
+    flex: 1;
+    max-width: 150px;
+    padding: 0.875rem 1rem;
+    border: 1px solid var(--medium-gray);
+    border-radius: 6px;
+    background: var(--white);
+    color: var(--text-medium);
+    font-weight: 500;
+    cursor: pointer;
+    transition: var(--transition);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+}
+
+.alt-login-btn:hover {
+    background: var(--accent-teal);
+    color: var(--white);
+    border-color: var(--accent-teal);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-sm);
+}
+
+.alt-login-btn i {
+    font-size: 1.2rem;
+}
+
+.create-account {
+    text-align: center;
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--medium-gray);
+    color: var(--text-medium);
+    font-size: 0.95rem;
+}
+
+.signup-link {
+    color: var(--accent-teal);
+    text-decoration: none;
+    font-weight: 600;
+    transition: var(--transition);
+}
+
+.signup-link:hover {
+    color: #2a6d6e;
+    text-decoration: underline;
+}
+
+/* Responsive adjustments for login */
+@media (max-width: 1024px) {
+    .login-page .form-section,
+    .login-page .inspiration-section {
+        flex: 1;
+        width: 100%;
+    }
+    
+    .login-page .inspiration-section {
+        display: none;
+    }
+}
+
+@media (max-width: 768px) {
+    .form-options {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+    
+    .alt-methods {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    
+    .alt-login-btn {
+        max-width: 100%;
+        width: 100%;
+    }
+}
