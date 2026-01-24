@@ -361,7 +361,7 @@ git push origin feature/voting-interface
 ## 👥 Team
 
 *KIBU Computer Science Students*
-- Developer 1: [Your Name]
+- Developer 1: [Phlevian]
 - Developer 2: [Friend's Name]
 
 ---
