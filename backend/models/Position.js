@@ -24,7 +24,16 @@ const positionSchema = new mongoose.Schema({
         default: 0
     }
 }, {
-    timestamps: true
+    timestamps: true,
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true }
+});
+
+// Virtual for candidates
+positionSchema.virtual('candidates', {
+    ref: 'Candidate',
+    localField: '_id',
+    foreignField: 'positionId'
 });
 
 module.exports = mongoose.model('Position', positionSchema);

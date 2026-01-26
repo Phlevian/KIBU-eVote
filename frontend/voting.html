@@ -6,328 +6,121 @@
     <title>Vote Now - KIBU Digital Democracy</title>
     <link rel="stylesheet" href="css/voting.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="dashboard-container">
-        <!-- Header Section -->
-        <header class="dashboard-header">
-            <div class="header-content">
-                <div class="header-left">
-                    <div class="logo">
-                        <img src="assets/images/logo.jpg" alt="KIBU Digital Democracy" class="logo-image">
-                        <div class="logo-text">
-                            <span class="main-text">Digital Democracy</span>
-                            <span class="sub-text">Student Voting Platform</span>
-                        </div>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-left">
+            <h1>KIBU Digital Democracy</h1>
+        </div>
+        <div class="header-right">
+            <span id="user-name">Loading...</span>
+            <button id="logout-btn" class="btn-logout">Logout</button>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="election-info">
+                <h2 id="election-title">Loading...</h2>
+                <p id="election-description">Please wait...</p>
+                <div class="election-stats">
+                    <div class="stat">
+                        <i class="fas fa-briefcase"></i>
+                        <span id="positions-count">0 positions</span>
                     </div>
-                </div>
-                
-                <div class="header-center">
-                    <div class="countdown-timer">
-                        <div class="timer-icon">
-                            <i class="fas fa-clock"></i>
-                        </div>
-                        <div class="timer-content">
-                            <div class="timer-label">VOTING ENDS IN:</div>
-                            <div class="timer-display" id="countdown-timer">Loading...</div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="header-right">
-                    <div class="user-profile">
-                        <div class="notification-bell" id="notification-bell">
-                            <i class="fas fa-bell"></i>
-                            <span class="notification-badge">3</span>
-                        </div>
-                        <div class="user-info" id="user-info">
-                            <div class="user-avatar">
-                                <div class="avatar-initial" id="user-avatar">U</div>
-                            </div>
-                            <div class="user-details">
-                                <span class="user-name" id="user-name">Loading...</span>
-                                <span class="user-id" id="user-reg-number">KIBU/---/--</span>
-                            </div>
-                        </div>
-                        <button class="logout-btn" id="logout-btn">
-                            <i class="fas fa-sign-out-alt"></i>
-                        </button>
+                    <div class="stat">
+                        <i class="fas fa-users"></i>
+                        <span id="candidates-count">0 candidates</span>
                     </div>
                 </div>
             </div>
-        </header>
 
-        <div class="dashboard-body">
-            <!-- Left Sidebar -->
-            <nav class="sidebar">
-                <div class="sidebar-header">
-                    <h3 class="sidebar-title">Navigation</h3>
+            <div class="progress-section">
+                <h3>Voting Progress</h3>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progress-fill"></div>
                 </div>
-                
-                <ul class="nav-menu">
-                    <li class="nav-item">
-                        <a href="dashboard.html" class="nav-link">
-                            <div class="nav-icon">
-                                <i class="fas fa-home"></i>
-                            </div>
-                            <span class="nav-text">Dashboard</span>
-                        </a>
-                    </li>
-                    <li class="nav-item active">
-                        <a href="voting.html" class="nav-link">
-                            <div class="nav-icon">
-                                <i class="fas fa-vote-yea"></i>
-                            </div>
-                            <span class="nav-text">Vote Now</span>
-                            <span class="nav-badge new">Active</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="confirmation.html" class="nav-link">
-                            <div class="nav-icon">
-                                <i class="fas fa-history"></i>
-                            </div>
-                            <span class="nav-text">My Votes</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="results.html" class="nav-link">
-                            <div class="nav-icon">
-                                <i class="fas fa-chart-bar"></i>
-                            </div>
-                            <span class="nav-text">Results</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="elections.html" class="nav-link">
-                            <div class="nav-icon">
-                                <i class="fas fa-calendar-alt"></i>
-                            </div>
-                            <span class="nav-text">Elections</span>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a href="settings.html" class="nav-link">
-                            <div class="nav-icon">
-                                <i class="fas fa-cog"></i>
-                            </div>
-                            <span class="nav-text">Settings</span>
-                        </a>
-                    </li>
-                </ul>
-                
-                <div class="sidebar-divider"></div>
-                
-                <!-- Voting Progress -->
-                <div class="voting-progress-card">
-                    <div class="progress-header">
-                        <i class="fas fa-tasks"></i>
-                        <span>Voting Progress</span>
-                    </div>
-                    <div class="progress-content">
-                        <div class="progress-circle" id="voting-progress-circle">
-                            <svg viewBox="0 0 36 36">
-                                <path class="circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
-                                <path class="circle-progress" stroke-dasharray="0, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
-                                <text x="18" y="20.35" class="percentage">0%</text>
-                            </svg>
-                        </div>
-                        <div class="progress-info">
-                            <span id="positions-voted">0</span> of <span id="total-positions">0</span> positions
-                        </div>
-                    </div>
+                <p class="progress-text">
+                    <span id="voted-count">0</span> of <span id="total-count">0</span> positions
+                </p>
+            </div>
+
+            <div class="timer-section">
+                <h3>Time Remaining</h3>
+                <div id="countdown-timer">Loading...</div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Position Tabs -->
+            <div class="position-tabs" id="position-tabs">
+                <!-- Tabs will be generated here -->
+            </div>
+
+            <!-- Current Position -->
+            <div class="current-position">
+                <h2 id="position-title">Select a position</h2>
+                <p id="position-description">Choose from the tabs above</p>
+            </div>
+
+            <!-- Candidates Grid -->
+            <div class="candidates-grid" id="candidates-grid">
+                <div class="loading">
+                    <i class="fas fa-spinner fa-spin"></i>
+                    <p>Loading candidates...</p>
                 </div>
-                
-                <div class="sidebar-divider"></div>
-                
-                <!-- Quick Stats -->
-                <div class="sidebar-stats">
-                    <div class="stat-item">
-                        <div class="stat-icon">
-                            <i class="fas fa-users"></i>
-                        </div>
-                        <div class="stat-content">
-                            <div class="stat-value" id="total-candidates">0</div>
-                            <div class="stat-label">Candidates</div>
-                        </div>
-                    </div>
+            </div>
+
+            <!-- Voting Summary -->
+            <div class="voting-summary">
+                <h3>Your Selections</h3>
+                <div id="selections-list">
+                    <p class="empty-message">No selections yet</p>
                 </div>
-                
-                <!-- System Status -->
-                <div class="system-status">
-                    <div class="status-item">
-                        <span class="status-dot secure"></span>
-                        <span>Secure Connection</span>
-                    </div>
+                <div class="action-buttons">
+                    <button id="clear-btn" class="btn-secondary" disabled>Clear All</button>
+                    <button id="submit-btn" class="btn-primary" disabled>Submit Vote</button>
                 </div>
-            </nav>
-
-            <!-- Main Content Area -->
-            <main class="main-content">
-                <!-- Election Header -->
-                <section class="election-header" id="election-header">
-                    <div class="election-info">
-                        <div class="election-icon">
-                            <i class="fas fa-crown"></i>
-                        </div>
-                        <div class="election-details">
-                            <h1 class="election-title" id="election-title">Loading Election...</h1>
-                            <p class="election-description" id="election-description">Please wait...</p>
-                        </div>
-                    </div>
-                    <div class="election-meta">
-                        <div class="meta-item">
-                            <i class="fas fa-briefcase"></i>
-                            <span id="positions-count">0 positions</span>
-                        </div>
-                        <div class="meta-item">
-                            <i class="fas fa-user-friends"></i>
-                            <span id="candidates-count">0 candidates</span>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- Position Navigation -->
-                <section class="position-navigation" id="position-navigation">
-                    <div class="nav-tabs" id="position-tabs">
-                        <!-- Tabs will be dynamically generated -->
-                    </div>
-                </section>
-
-                <!-- Voting Area -->
-                <section class="voting-area">
-                    <!-- Current Position Info -->
-                    <div class="position-header" id="position-header">
-                        <div class="position-info">
-                            <h2 class="position-title" id="position-title">Select a position to vote</h2>
-                            <p class="position-description" id="position-description">Choose from the tabs above</p>
-                        </div>
-                        <div class="position-status" id="position-status">
-                            <i class="fas fa-info-circle"></i>
-                            <span>Select one candidate</span>
-                        </div>
-                    </div>
-
-                    <!-- Candidates Grid -->
-                    <div class="candidates-container" id="candidates-container">
-                        <div class="loading-state">
-                            <div class="loading-spinner"></div>
-                            <p>Loading candidates...</p>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- Voting Summary -->
-                <section class="voting-summary" id="voting-summary">
-                    <div class="summary-header">
-                        <h3>
-                            <i class="fas fa-clipboard-check"></i>
-                            Your Selections
-                        </h3>
-                        <button class="btn-clear-all" id="clear-all-btn">
-                            <i class="fas fa-times"></i>
-                            Clear All
-                        </button>
-                    </div>
-                    <div class="summary-content" id="summary-content">
-                        <div class="empty-state">
-                            <i class="fas fa-inbox"></i>
-                            <p>No selections yet</p>
-                            <span>Start voting by selecting candidates above</span>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- Action Buttons -->
-                <section class="action-buttons">
-                    <button class="btn-secondary" id="save-draft-btn">
-                        <i class="fas fa-save"></i>
-                        Save Draft
-                    </button>
-                    <button class="btn-primary" id="submit-vote-btn" disabled>
-                        <i class="fas fa-check-circle"></i>
-                        Submit Vote
-                    </button>
-                </section>
-            </main>
-        </div>
+            </div>
+        </main>
     </div>
 
     <!-- Confirmation Modal -->
-    <div class="modal" id="confirmation-modal">
+    <div class="modal" id="confirm-modal">
         <div class="modal-content">
-            <div class="modal-header">
-                <h2>
-                    <i class="fas fa-exclamation-triangle"></i>
-                    Confirm Your Vote
-                </h2>
-            </div>
-            <div class="modal-body">
-                <p class="warning-text">
-                    <strong>Important:</strong> Once you submit your vote, it cannot be changed. 
-                    Please review your selections carefully.
-                </p>
-                <div class="final-selections" id="final-selections">
-                    <!-- Final selections will be populated here -->
-                </div>
-            </div>
-            <div class="modal-footer">
-                <button class="btn-cancel" id="cancel-submit-btn">
-                    <i class="fas fa-times"></i>
-                    Cancel
-                </button>
-                <button class="btn-confirm" id="confirm-submit-btn">
-                    <i class="fas fa-check"></i>
-                    Confirm & Submit
-                </button>
+            <h2>Confirm Your Vote</h2>
+            <p><strong>Warning:</strong> You cannot change your vote after submission.</p>
+            <div id="final-selections"></div>
+            <div class="modal-buttons">
+                <button id="cancel-btn" class="btn-secondary">Cancel</button>
+                <button id="confirm-btn" class="btn-primary">Confirm & Submit</button>
             </div>
         </div>
     </div>
 
     <!-- Success Modal -->
     <div class="modal" id="success-modal">
-        <div class="modal-content success">
-            <div class="success-icon">
-                <i class="fas fa-check-circle"></i>
+        <div class="modal-content">
+            <i class="fas fa-check-circle success-icon"></i>
+            <h2>Vote Submitted!</h2>
+            <div class="receipt">
+                <p><strong>Vote Hash:</strong></p>
+                <code id="vote-hash">---</code>
+                <p><strong>Time:</strong> <span id="vote-time">---</span></p>
             </div>
-            <h2>Vote Submitted Successfully!</h2>
-            <p>Your vote has been securely recorded on the blockchain.</p>
-            <div class="vote-receipt">
-                <div class="receipt-item">
-                    <span>Vote Hash:</span>
-                    <code id="vote-hash">---</code>
-                </div>
-                <div class="receipt-item">
-                    <span>Timestamp:</span>
-                    <span id="vote-timestamp">---</span>
-                </div>
-            </div>
-            <div class="modal-actions">
-                <button class="btn-secondary" id="download-receipt-btn">
-                    <i class="fas fa-download"></i>
-                    Download Receipt
-                </button>
-                <button class="btn-primary" id="view-results-btn">
-                    <i class="fas fa-chart-bar"></i>
-                    View Results
-                </button>
-            </div>
+            <button id="view-results-btn" class="btn-primary">View Results</button>
         </div>
     </div>
 
     <!-- Loading Overlay -->
     <div class="loading-overlay" id="loading-overlay">
-        <div class="loading-content">
-            <div class="loading-spinner"></div>
-            <p id="loading-text">Processing your vote...</p>
-        </div>
+        <i class="fas fa-spinner fa-spin"></i>
+        <p id="loading-text">Loading...</p>
     </div>
-
-    <!-- Mobile Menu Button -->
-    <button class="mobile-menu-btn" id="mobileMenuBtn">
-        <i class="fas fa-bars"></i>
-    </button>
 
     <script src="js/voting.js"></script>
 </body>

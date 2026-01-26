@@ -5,9 +5,13 @@ const {
   getPositionsByElection,
   deletePosition
 } = require('../controllers/positionController');
+const { protect, adminOnly } = require('../middleware/authMiddleware');
 
-router.post('/', createPosition);
-router.get('/election/:electionId', getPositionsByElection);
-router.delete('/:id', deletePosition);
+// Admin routes
+router.post('/', protect, adminOnly, createPosition);
+router.delete('/:id', protect, adminOnly, deletePosition);
+
+// Public (authenticated) routes
+router.get('/election/:electionId', protect, getPositionsByElection);
 
 module.exports = router;

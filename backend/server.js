@@ -29,6 +29,7 @@ const voteRoutes = require('./routes/voteRoutes');
 const resultsRoutes = require('./routes/resultsRoutes');
 const positionRoutes = require('./routes/positionRoutes');
 const candidateRoutes = require('./routes/candidateRoutes');
+
 // Use Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/elections', electionRoutes);

@@ -12,12 +12,12 @@ const {
 } = require('../controllers/electionController');
 const { protect, adminOnly } = require('../middleware/authMiddleware');
 
-// Public routes (protected but accessible to all authenticated users)
-router.get('/', protect, getAllElections);
-router.get('/active', protect, getActiveElections);
-router.get('/upcoming', protect, getUpcomingElections);
-router.get('/completed', protect, getCompletedElections);
-router.get('/:id', protect, getElection);
+// Public routes - NO AUTHENTICATION REQUIRED (students can browse without login)
+router.get('/', getAllElections);
+router.get('/active', getActiveElections);
+router.get('/upcoming', getUpcomingElections);
+router.get('/completed', getCompletedElections);
+router.get('/:id', getElection);
 
 // Admin only routes
 router.post('/', protect, adminOnly, createElection);
