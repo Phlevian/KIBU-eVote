@@ -1,17 +1,12 @@
 const express = require('express');
 const router = express.Router();
-const {
-    castVote,
-    verifyVote,
-    checkVotingStatus,
-    getVoteReceipt
-} = require('../controllers/voteController');
+const voteController = require('../controllers/voteController');
 const { protect } = require('../middleware/authMiddleware');
 
 // All vote routes require authentication
-router.post('/cast', protect, castVote);
-router.get('/verify/:voteHash', protect, verifyVote);
-router.get('/status/:electionId', protect, checkVotingStatus);
-router.get('/receipt/:electionId', protect, getVoteReceipt);
+router.post('/cast', protect, voteController.castVote);
+router.get('/verify/:voteHash', protect, voteController.verifyVote);
+router.get('/status/:electionId', protect, voteController.checkVotingStatus);
+router.get('/receipt/:electionId', protect, voteController.getVoteReceipt);
 
 module.exports = router;

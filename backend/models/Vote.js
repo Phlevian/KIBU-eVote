@@ -5,23 +5,27 @@ const voteSchema = new mongoose.Schema({
     studentId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Student',
-        required: true
+        required: [true, 'Student ID is required']
     },
     electionId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Election',
-        required: true
+        required: [true, 'Election ID is required']
     },
     votes: [{
         positionId: {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Position',
-            required: true
+            required: [true, 'Position ID is required']
         },
         candidateId: {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Candidate',
-            required: true
+            required: [true, 'Candidate ID is required']
+        },
+        votedAt: {
+            type: Date,
+            default: Date.now
         }
     }],
     voteHash: {
@@ -30,22 +34,28 @@ const voteSchema = new mongoose.Schema({
         unique: true
     },
     ipAddress: {
-        type: String
+        type: String,
+        default: ''
+    },
+    userAgent: {
+        type: String,
+        default: ''
     },
     verified: {
         type: Boolean,
-        default: true
+        default: false
     }
 }, {
     timestamps: true
 });
 
 // Generate vote hash before saving
-voteSchema.pre('save', function() {
+voteSchema.pre('save', function(next) {
     if (!this.voteHash) {
-        const data = `${this.studentId}-${this.electionId}-${Date.now()}`;
+        const data = `${this.studentId}-${this.electionId}-${Date.now()}-${Math.random()}`;
         this.voteHash = crypto.createHash('sha256').update(data).digest('hex');
     }
+    next();
 });
 
 // Ensure one vote per election per student

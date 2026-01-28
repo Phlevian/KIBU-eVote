@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Login - KIBU Voting</title>
+    <style>
+        body { font-family: Arial; padding: 20px; max-width: 400px; margin: 0 auto; }
+        input, button { width: 100%; padding: 10px; margin: 10px 0; }
+        .error { color: red; }
+    </style>
+</head>
+<body>
+    <h2>Admin Login</h2>
+    <input type="email" id="email" placeholder="Admin Email">
+    <input type="password" id="password" placeholder="Password">
+    <button onclick="login()">Login</button>
+    <div id="error" class="error"></div>
+
+    <script>
+        async function login() {
+            const response = await fetch('/api/admin/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    email: document.getElementById('email').value,
+                    password: document.getElementById('password').value
+                })
+            });
+            
+            const result = await response.json();
+            if (result.success) {
+                localStorage.setItem('adminToken', result.token);
+                window.location.href = '/admin/dashboard.html';
+            } else {
+                document.getElementById('error').textContent = result.error;
+            }
+        }
+    </script>
+</body>
+</html>

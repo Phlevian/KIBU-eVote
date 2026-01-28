@@ -3,19 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Vote Now - KIBU Digital Democracy</title>
+    <title>Cast Your Vote - KIBU Digital Democracy</title>
     <link rel="stylesheet" href="css/voting.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
     <!-- Header -->
     <header class="header">
-        <div class="header-left">
-            <h1>KIBU Digital Democracy</h1>
-        </div>
-        <div class="header-right">
-            <span id="user-name">Loading...</span>
-            <button id="logout-btn" class="btn-logout">Logout</button>
+        <div class="header-content">
+            <div class="header-left">
+                <div class="logo">
+                    <div class="logo-text">
+                        <span class="main-text">KIBU Digital Democracy</span>
+                        <span class="sub-text">Secure Online Voting Platform</span>
+                    </div>
+                </div>
+            </div>
+            <div class="header-right">
+                <span id="user-name">Loading...</span>
+                <button id="logout-btn" class="btn-logout">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </button>
+            </div>
         </div>
     </header>
 
@@ -23,34 +33,39 @@
     <div class="container">
         <!-- Sidebar -->
         <aside class="sidebar">
-            <div class="election-info">
-                <h2 id="election-title">Loading...</h2>
-                <p id="election-description">Please wait...</p>
-                <div class="election-stats">
-                    <div class="stat">
-                        <i class="fas fa-briefcase"></i>
-                        <span id="positions-count">0 positions</span>
-                    </div>
-                    <div class="stat">
-                        <i class="fas fa-users"></i>
-                        <span id="candidates-count">0 candidates</span>
+            <div class="sidebar-sticky">
+                <!-- Election Info -->
+                <div class="election-info">
+                    <h2 id="election-title">Loading Election...</h2>
+                    <p id="election-description">Please wait while we load election details...</p>
+                    <div class="election-stats">
+                        <div class="stat">
+                            <i class="fas fa-briefcase"></i>
+                            <span id="positions-count">0 positions</span>
+                        </div>
+                        <div class="stat">
+                            <i class="fas fa-users"></i>
+                            <span id="candidates-count">0 candidates</span>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="progress-section">
-                <h3>Voting Progress</h3>
-                <div class="progress-bar">
-                    <div class="progress-fill" id="progress-fill"></div>
+                <!-- Voting Progress -->
+                <div class="progress-section">
+                    <h3><i class="fas fa-chart-line"></i> Voting Progress</h3>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progress-fill" style="width: 0%"></div>
+                    </div>
+                    <p class="progress-text">
+                        <span id="voted-count">0</span> of <span id="total-count">0</span> positions completed
+                    </p>
                 </div>
-                <p class="progress-text">
-                    <span id="voted-count">0</span> of <span id="total-count">0</span> positions
-                </p>
-            </div>
 
-            <div class="timer-section">
-                <h3>Time Remaining</h3>
-                <div id="countdown-timer">Loading...</div>
+                <!-- Countdown Timer -->
+                <div class="timer-section">
+                    <h3><i class="fas fa-clock"></i> Time Remaining</h3>
+                    <div id="countdown-timer">Loading...</div>
+                </div>
             </div>
         </aside>
 
@@ -58,32 +73,42 @@
         <main class="main-content">
             <!-- Position Tabs -->
             <div class="position-tabs" id="position-tabs">
-                <!-- Tabs will be generated here -->
+                <div class="loading-message">
+                    <i class="fas fa-spinner fa-spin"></i> Loading positions...
+                </div>
             </div>
 
             <!-- Current Position -->
             <div class="current-position">
-                <h2 id="position-title">Select a position</h2>
-                <p id="position-description">Choose from the tabs above</p>
+                <h2 id="position-title">Select a position to begin voting</h2>
+                <p id="position-description">Choose from the position tabs above to view candidates</p>
             </div>
 
             <!-- Candidates Grid -->
             <div class="candidates-grid" id="candidates-grid">
-                <div class="loading">
-                    <i class="fas fa-spinner fa-spin"></i>
+                <div class="empty-message">
+                    <i class="fas fa-users"></i>
                     <p>Loading candidates...</p>
                 </div>
             </div>
 
             <!-- Voting Summary -->
             <div class="voting-summary">
-                <h3>Your Selections</h3>
+                <h3><i class="fas fa-check-circle"></i> Your Selections</h3>
                 <div id="selections-list">
-                    <p class="empty-message">No selections yet</p>
+                    <p class="empty-message" style="padding: 2rem; background: var(--light-gray); border-radius: 10px;">
+                        No selections yet. Choose candidates from above to get started.
+                    </p>
                 </div>
                 <div class="action-buttons">
-                    <button id="clear-btn" class="btn-secondary" disabled>Clear All</button>
-                    <button id="submit-btn" class="btn-primary" disabled>Submit Vote</button>
+                    <button id="clear-btn" class="btn-secondary" disabled>
+                        <i class="fas fa-eraser"></i>
+                        Clear All
+                    </button>
+                    <button id="submit-btn" class="btn-primary" disabled>
+                        <i class="fas fa-paper-plane"></i>
+                        Submit Vote
+                    </button>
                 </div>
             </div>
         </main>
@@ -92,12 +117,18 @@
     <!-- Confirmation Modal -->
     <div class="modal" id="confirm-modal">
         <div class="modal-content">
-            <h2>Confirm Your Vote</h2>
-            <p><strong>Warning:</strong> You cannot change your vote after submission.</p>
+            <h2><i class="fas fa-exclamation-triangle"></i> Confirm Your Vote</h2>
+            <p><strong>Warning:</strong> You cannot change your vote after submission. Please review your selections carefully.</p>
             <div id="final-selections"></div>
             <div class="modal-buttons">
-                <button id="cancel-btn" class="btn-secondary">Cancel</button>
-                <button id="confirm-btn" class="btn-primary">Confirm & Submit</button>
+                <button id="cancel-btn" class="btn-secondary">
+                    <i class="fas fa-times"></i>
+                    Cancel
+                </button>
+                <button id="confirm-btn" class="btn-primary">
+                    <i class="fas fa-check"></i>
+                    Confirm & Submit
+                </button>
             </div>
         </div>
     </div>
@@ -106,19 +137,26 @@
     <div class="modal" id="success-modal">
         <div class="modal-content">
             <i class="fas fa-check-circle success-icon"></i>
-            <h2>Vote Submitted!</h2>
+            <h2>Vote Submitted Successfully!</h2>
+            <p>Thank you for participating in the election. Your vote has been recorded securely.</p>
             <div class="receipt">
                 <p><strong>Vote Hash:</strong></p>
                 <code id="vote-hash">---</code>
-                <p><strong>Time:</strong> <span id="vote-time">---</span></p>
+                <p><strong>Timestamp:</strong> <span id="vote-time">---</span></p>
+                <p style="font-size: 0.85rem; color: var(--text-light); margin-top: 1rem;">
+                    <i class="fas fa-info-circle"></i> Save this hash for verification purposes
+                </p>
             </div>
-            <button id="view-results-btn" class="btn-primary">View Results</button>
+            <button id="view-results-btn" class="btn-primary" style="width: 100%; justify-content: center;">
+                <i class="fas fa-chart-bar"></i>
+                View Results
+            </button>
         </div>
     </div>
 
     <!-- Loading Overlay -->
     <div class="loading-overlay" id="loading-overlay">
-        <i class="fas fa-spinner fa-spin"></i>
+        <div class="loading-spinner"></div>
         <p id="loading-text">Loading...</p>
     </div>
 

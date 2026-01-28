@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - KIBU Voting</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
+        body { background: #f5f5f5; min-height: 100vh; }
+        
+        .navbar { 
+            background: white; 
+            padding: 15px 30px; 
+            display: flex; 
+            justify-content: space-between; 
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border-bottom: 3px solid #4a6ee0;
+        }
+        
+        .logo h2 { 
+            color: #333; 
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+            -webkit-background-clip: text; 
+            background-clip: text;
+            -webkit-text-fill-color: transparent; 
+        }
+        
+        .user-info { display: flex; align-items: center; gap: 15px; }
+        #admin-email { 
+            background: #f0f0f0; 
+            padding: 5px 10px; 
+            border-radius: 4px; 
+            font-size: 14px; 
+        }
+        
+        .logout-btn { 
+            background: #dc3545; 
+            color: white; 
+            border: none; 
+            padding: 8px 16px; 
+            border-radius: 5px; 
+            cursor: pointer; 
+        }
+        
+        .container { max-width: 1000px; margin: 20px auto; padding: 0 20px; }
+        
+        .dashboard-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 10px;
+            margin-bottom: 25px;
+        }
+        
+        .dashboard-header h1 { margin-bottom: 10px; font-size: 24px; }
+        #current-election-id { 
+            background: rgba(255,255,255,0.2); 
+            padding: 5px 10px; 
+            border-radius: 4px; 
+            font-family: monospace; 
+            display: inline-block;
+            margin-top: 5px;
+        }
+        
+        .tabs { display: flex; gap: 10px; margin-bottom: 20px; }
+        .tab-btn { 
+            padding: 12px 20px; 
+            background: white; 
+            border: 2px solid #ddd; 
+            border-radius: 6px; 
+            cursor: pointer; 
+            font-weight: 600; 
+            min-width: 120px;
+        }
+        .tab-btn.active { 
+            background: #667eea; 
+            color: white; 
+            border-color: #667eea; 
+        }
+        
+        .tab-content { 
+            display: none; 
+            background: white; 
+            padding: 25px; 
+            border-radius: 8px; 
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+        .tab-content.active { display: block; }
+        
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; color: #555; font-weight: 500; }
+        input, select, textarea { 
+            width: 100%; 
+            padding: 10px; 
+            border: 1px solid #ddd; 
+            border-radius: 5px; 
+            margin-top: 5px; 
+        }
+        
+        .action-btn { 
+            background: #28a745; 
+            color: white; 
+            border: none; 
+            padding: 12px; 
+            border-radius: 6px; 
+            cursor: pointer; 
+            width: 100%; 
+            font-weight: 600;
+            margin-top: 10px;
+        }
+        
+        .data-list { margin-top: 20px; }
+        .data-item { 
+            background: #f8f9fa; 
+            padding: 15px; 
+            border-radius: 6px; 
+            margin-bottom: 10px; 
+            border-left: 4px solid #667eea;
+        }
+        
+        .loading { text-align: center; padding: 20px; color: #666; }
+        .error { 
+            background: #fee; 
+            color: #c33; 
+            padding: 10px; 
+            border-radius: 5px; 
+            margin: 10px 0; 
+        }
+        .success { 
+            background: #efe; 
+            color: #3a3; 
+            padding: 10px; 
+            border-radius: 5px; 
+            margin: 10px 0; 
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <div class="logo">
+            <h2>KIBU Voting Admin</h2>
+        </div>
+        <div class="user-info">
+            <span id="admin-email">admin@kibu.edu</span>
+            <button class="logout-btn" onclick="logout()">Logout</button>
+        </div>
+    </div>
+    
+    <div class="container">
+        <div class="dashboard-header">
+            <h1>Election Management Dashboard</h1>
+            <p>Current Election ID:</p>
+            <div id="current-election-id">6974b51b5cf9093790b8c5fe</div>
+            <p style="margin-top: 10px; opacity: 0.9;">Add positions and candidates for voting</p>
+        </div>
+        
+        <div class="tabs">
+            <button class="tab-btn active" onclick="showTab('positions')">Positions</button>
+            <button class="tab-btn" onclick="showTab('candidates')">Candidates</button>
+        </div>
+        
+        <!-- Positions Tab -->
+        <div id="positions-tab" class="tab-content active">
+            <h3 style="margin-bottom: 15px;">Add New Position</h3>
+            <div class="form-group">
+                <label>Title (e.g., President, Secretary)</label>
+                <input type="text" id="position-title" placeholder="Student Body President">
+            </div>
+            <div class="form-group">
+                <label>Description (Optional)</label>
+                <input type="text" id="position-desc" placeholder="Leads student council meetings">
+            </div>
+            <div class="form-group">
+                <label>Order Number (1, 2, 3...)</label>
+                <input type="number" id="position-order" value="1" min="1">
+            </div>
+            <button class="action-btn" onclick="addPosition()">➕ Add Position</button>
+            
+            <div class="data-list">
+                <h3 style="margin-bottom: 15px;">Existing Positions</h3>
+                <div id="positions-list" class="loading">
+                    <p>Loading positions...</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Candidates Tab -->
+        <div id="candidates-tab" class="tab-content">
+            <h3 style="margin-bottom: 15px;">Add New Candidate</h3>
+            <div class="form-group">
+                <label>Select Position</label>
+                <select id="candidate-position">
+                    <option value="">Loading positions...</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Full Name</label>
+                <input type="text" id="candidate-name" placeholder="John Doe">
+            </div>
+            <div class="form-group">
+                <label>Registration Number</label>
+                <input type="text" id="candidate-regno" placeholder="STU001">
+            </div>
+            <div class="form-group">
+                <label>Department</label>
+                <input type="text" id="candidate-dept" placeholder="Computer Science">
+            </div>
+            <div class="form-group">
+                <label>Manifesto (Campaign Promise)</label>
+                <textarea id="candidate-manifesto" rows="3" placeholder="I will improve library hours..."></textarea>
+            </div>
+            <button class="action-btn" onclick="addCandidate()">➕ Add Candidate</button>
+            
+            <div class="data-list">
+                <h3 style="margin-bottom: 15px;">Existing Candidates</h3>
+                <div id="candidates-list" class="loading">
+                    <p>Loading candidates...</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ================= CONFIGURATION =================
+        const ELECTION_ID = '6974b51b5cf9093790b8c5fe';
+        const API_BASE = 'http://localhost:5000/api';
+        
+        // ================= INITIALIZATION =================
+        window.addEventListener('load', function() {
+            // Check if user is logged in
+            const token = localStorage.getItem('adminToken');
+            if (!token) {
+                alert('⚠️ Please login first');
+                window.location.href = '/admin-login.html';
+                return;
+            }
+            
+            // Set admin email
+            const email = localStorage.getItem('adminEmail') || 'admin@kibu.edu';
+            document.getElementById('admin-email').textContent = email;
+            
+            // Load initial data
+            loadPositions();
+            loadPositionsForSelect();
+        });
+        
+        // ================= TAB FUNCTIONS =================
+        function showTab(tabName) {
+            // Update active tab button
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Show selected tab content
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            document.getElementById(tabName + '-tab').classList.add('active');
+            
+            // Load data for tab
+            if (tabName === 'positions') {
+                loadPositions();
+            } else if (tabName === 'candidates') {
+                loadPositionsForSelect();
+                loadCandidates();
+            }
+        }
+        
+        // ================= POSITION FUNCTIONS =================
+        async function loadPositions() {
+            const container = document.getElementById('positions-list');
+            container.innerHTML = '<p class="loading">Loading positions...</p>';
+            
+            try {
+                const response = await fetch(`${API_BASE}/positions/election/${ELECTION_ID}`);
+                
+                if (!response.ok) {
+                    throw new Error(`Failed to load: ${response.status}`);
+                }
+                
+                const positions = await response.json();
+                
+                if (!positions || positions.length === 0) {
+                    container.innerHTML = '<p>No positions found. Add your first position above.</p>';
+                    return;
+                }
+                
+                const html = positions.map(pos => `
+                    <div class="data-item">
+                        <h4>${pos.title}</h4>
+                        <p>${pos.description || 'No description'}</p>
+                        <p><strong>Order:</strong> ${pos.order} | <strong>ID:</strong> ${pos._id}</p>
+                    </div>
+                `).join('');
+                
+                container.innerHTML = html;
+                
+            } catch (error) {
+                console.error('Error loading positions:', error);
+                container.innerHTML = `
+                    <div class="error">
+                        <strong>Error loading positions:</strong><br>
+                        ${error.message}
+                    </div>
+                `;
+            }
+        }
+        
+        async function loadPositionsForSelect() {
+            const select = document.getElementById('candidate-position');
+            select.innerHTML = '<option value="">Loading positions...</option>';
+            
+            try {
+                const response = await fetch(`${API_BASE}/positions/election/${ELECTION_ID}`);
+                const positions = await response.json();
+                
+                if (!positions || positions.length === 0) {
+                    select.innerHTML = '<option value="">No positions available</option>';
+                    return;
+                }
+                
+                select.innerHTML = '<option value="">Select Position</option>' +
+                    positions.map(pos => `<option value="${pos._id}">${pos.title}</option>`).join('');
+                    
+            } catch (error) {
+                console.error('Error loading positions:', error);
+                select.innerHTML = '<option value="">Error loading positions</option>';
+            }
+        }
+        
+        async function addPosition() {
+            const title = document.getElementById('position-title').value.trim();
+            const description = document.getElementById('position-desc').value.trim();
+            const order = parseInt(document.getElementById('position-order').value) || 1;
+            
+            if (!title) {
+                alert('Please enter a position title');
+                return;
+            }
+            
+            const positionData = {
+                electionId: ELECTION_ID,
+                title: title,
+                description: description,
+                order: order
+            };
+            
+            try {
+                const response = await fetch(`${API_BASE}/positions`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(positionData)
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    alert(`✅ Position "${title}" added successfully!`);
+                    
+                    // Clear form
+                    document.getElementById('position-title').value = '';
+                    document.getElementById('position-desc').value = '';
+                    
+                    // Reload data
+                    loadPositions();
+                    loadPositionsForSelect();
+                    
+                } else {
+                    alert(`❌ Error: ${result.error || 'Failed to add position'}`);
+                }
+                
+            } catch (error) {
+                console.error('Error adding position:', error);
+                alert('❌ Connection error. Make sure server is running.');
+            }
+        }
+        
+        // ================= CANDIDATE FUNCTIONS =================
+        async function loadCandidates() {
+            const container = document.getElementById('candidates-list');
+            container.innerHTML = '<p class="loading">Loading candidates...</p>';
+            
+            try {
+                const response = await fetch(`${API_BASE}/candidates/election/${ELECTION_ID}`);
+                
+                if (!response.ok) {
+                    throw new Error(`Failed to load: ${response.status}`);
+                }
+                
+                const candidates = await response.json();
+                
+                if (!candidates || candidates.length === 0) {
+                    container.innerHTML = '<p>No candidates found. Add your first candidate above.</p>';
+                    return;
+                }
+                
+                // Get positions for mapping
+                const positionsResponse = await fetch(`${API_BASE}/positions/election/${ELECTION_ID}`);
+                const positions = await positionsResponse.json();
+                const positionMap = {};
+                positions.forEach(pos => positionMap[pos._id] = pos.title);
+                
+                const html = candidates.map(cand => `
+                    <div class="data-item">
+                        <h4>${cand.name}</h4>
+                        <p><strong>Position:</strong> ${positionMap[cand.positionId] || 'Unknown'}</p>
+                        <p><strong>Reg No:</strong> ${cand.regNo} | <strong>Department:</strong> ${cand.department || 'N/A'}</p>
+                        <p>${cand.manifesto || 'No manifesto provided'}</p>
+                    </div>
+                `).join('');
+                
+                container.innerHTML = html;
+                
+            } catch (error) {
+                console.error('Error loading candidates:', error);
+                container.innerHTML = `
+                    <div class="error">
+                        <strong>Error loading candidates:</strong><br>
+                        ${error.message}
+                    </div>
+                `;
+            }
+        }
+        
+        async function addCandidate() {
+            const positionId = document.getElementById('candidate-position').value;
+            const name = document.getElementById('candidate-name').value.trim();
+            const regNo = document.getElementById('candidate-regno').value.trim();
+            const department = document.getElementById('candidate-dept').value.trim();
+            const manifesto = document.getElementById('candidate-manifesto').value.trim();
+            
+            if (!positionId) {
+                alert('Please select a position');
+                return;
+            }
+            
+            if (!name || !regNo) {
+                alert('Please enter name and registration number');
+                return;
+            }
+            
+            const candidateData = {
+                electionId: ELECTION_ID,
+                positionId: positionId,
+                name: name,
+                regNo: regNo,
+                department: department,
+                manifesto: manifesto
+            };
+            
+            try {
+                const response = await fetch(`${API_BASE}/candidates`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(candidateData)
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    alert(`✅ Candidate "${name}" added successfully!`);
+                    
+                    // Clear form
+                    document.getElementById('candidate-name').value = '';
+                    document.getElementById('candidate-regno').value = '';
+                    document.getElementById('candidate-dept').value = '';
+                    document.getElementById('candidate-manifesto').value = '';
+                    
+                    // Reload candidates
+                    loadCandidates();
+                    
+                } else {
+                    alert(`❌ Error: ${result.error || 'Failed to add candidate'}`);
+                }
+                
+            } catch (error) {
+                console.error('Error adding candidate:', error);
+                alert('❌ Connection error. Make sure server is running.');
+            }
+        }
+        
+        // ================= UTILITY FUNCTIONS =================
+        function logout() {
+            localStorage.removeItem('adminToken');
+            localStorage.removeItem('adminEmail');
+            window.location.href = '/admin-login.html';
+        }
+        
+        // Enter key support
+        document.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                const activeTab = document.querySelector('.tab-content.active').id;
+                if (activeTab === 'positions-tab') {
+                    addPosition();
+                } else if (activeTab === 'candidates-tab') {
+                    addCandidate();
+                }
+            }
+        });
+    </script>
+</body>
+</html>
