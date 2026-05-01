@@ -23,33 +23,14 @@ const voteSchema = new mongoose.Schema({
             ref: 'Candidate',
             required: [true, 'Candidate ID is required']
         },
-        votedAt: {
-            type: Date,
-            default: Date.now
-        }
+        votedAt: { type: Date, default: Date.now }
     }],
-    voteHash: {
-        type: String,
-        required: true,
-        unique: true
-    },
-    ipAddress: {
-        type: String,
-        default: ''
-    },
-    userAgent: {
-        type: String,
-        default: ''
-    },
-    verified: {
-        type: Boolean,
-        default: false
-    }
-}, {
-    timestamps: true
-});
+    voteHash: { type: String, required: true, unique: true },
+    ipAddress: { type: String, default: '' },
+    userAgent: { type: String, default: '' },
+    verified: { type: Boolean, default: false }
+}, { timestamps: true });
 
-// Generate vote hash before saving
 voteSchema.pre('save', function(next) {
     if (!this.voteHash) {
         const data = `${this.studentId}-${this.electionId}-${Date.now()}-${Math.random()}`;
@@ -58,7 +39,6 @@ voteSchema.pre('save', function(next) {
     next();
 });
 
-// Ensure one vote per election per student
 voteSchema.index({ studentId: 1, electionId: 1 }, { unique: true });
 
 module.exports = mongoose.model('Vote', voteSchema);

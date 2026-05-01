@@ -1,25 +1,21 @@
 const express = require('express');
 const router = express.Router();
 const {
-    getAllElections,
-    getActiveElections,
-    getUpcomingElections,
-    getCompletedElections,
-    getElection,
-    createElection,
-    updateElection,
-    deleteElection
+  createElection,
+  getAllElections,
+  getElection,
+  getActiveElections,
+  updateElection,
+  deleteElection
 } = require('../controllers/electionController');
 const { protect, adminOnly } = require('../middleware/authMiddleware');
 
-// Public routes - Anyone can view elections
-router.get('/', getAllElections);
-router.get('/active', getActiveElections);
-router.get('/upcoming', getUpcomingElections);
-router.get('/completed', getCompletedElections);
-router.get('/:id', getElection);
+// Public routes (with authentication for students)
+router.get('/active', protect, getActiveElections);   // ✅ ADDED
+router.get('/:id', protect, getElection);
+router.get('/', protect, getAllElections);
 
-// Admin only routes - Need authentication and admin role
+// Admin only routes
 router.post('/', protect, adminOnly, createElection);
 router.put('/:id', protect, adminOnly, updateElection);
 router.delete('/:id', protect, adminOnly, deleteElection);

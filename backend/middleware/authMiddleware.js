@@ -1,60 +1,41 @@
 const jwt = require('jsonwebtoken');
 const Student = require('../models/Student');
 
-// Protect routes - verify JWT token
 exports.protect = async (req, res, next) => {
-    try {
-        let token;
+  let token;
+  if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
+    token = req.headers.authorization.split(' ')[1];
+  }
 
-        // Check for token in headers
-        if (req.headers.authorization && req.headers.authorization.startsWith('Bearer')) {
-            token = req.headers.authorization.split(' ')[1];
-        }
+  if (!token) {
+    return res.status(401).json({ success: false, message: 'Not authorized, no token' });
+  }
 
-        if (!token) {
-            return res.status(401).json({
-                success: false,
-                message: 'Not authorized to access this route'
-            });
-        }
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET || 'your-secret-key');
 
-        try {
-            // Verify token
-            const decoded = jwt.verify(token, process.env.JWT_SECRET);
-
-            // Get student from token
-            req.student = await Student.findById(decoded.id);
-
-            if (!req.student) {
-                return res.status(401).json({
-                    success: false,
-                    message: 'Student not found'
-                });
-            }
-
-            next();
-        } catch (error) {
-            return res.status(401).json({
-                success: false,
-                message: 'Invalid token'
-            });
-        }
-    } catch (error) {
-        res.status(500).json({
-            success: false,
-            message: 'Server error in authentication'
-        });
+    // ✅ Admin token (contains role, no id)
+    if (decoded.role === 'admin') {
+      req.student = { role: 'admin', isAdmin: true, _id: 'admin' };
+      return next();
     }
+
+    // Normal student
+    const student = await Student.findById(decoded.id).select('-password');
+    if (!student) {
+      return res.status(401).json({ success: false, message: 'User not found' });
+    }
+    req.student = student;
+    next();
+  } catch (error) {
+    return res.status(401).json({ success: false, message: 'Invalid token' });
+  }
 };
 
-// Admin only access
 exports.adminOnly = (req, res, next) => {
-    if (req.student && req.student.role === 'admin') {
-        next();
-    } else {
-        res.status(403).json({
-            success: false,
-            message: 'Access denied. Admin only.'
-        });
-    }
+  if (req.student && (req.student.role === 'admin' || req.student.isAdmin)) {
+    next();
+  } else {
+    res.status(403).json({ success: false, message: 'Admin only' });
+  }
 };

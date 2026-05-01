@@ -1,11 +1,6 @@
 const mongoose = require('mongoose');
 
 const candidateSchema = new mongoose.Schema({
-    studentId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Student',
-        required: true
-    },
     electionId: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Election',
@@ -16,13 +11,27 @@ const candidateSchema = new mongoose.Schema({
         ref: 'Position',
         required: true
     },
-    manifesto: {
+    name: {
         type: String,
-        required: true
+        required: true,
+        trim: true
+    },
+    regNo: {
+        type: String,
+        required: true,
+        trim: true
+    },
+    department: {
+        type: String,
+        default: ''
     },
     photo: {
         type: String,
         default: null
+    },
+    manifesto: {
+        type: String,
+        default: ''
     },
     votes: {
         type: Number,
@@ -31,10 +40,8 @@ const candidateSchema = new mongoose.Schema({
     status: {
         type: String,
         enum: ['pending', 'approved', 'rejected'],
-        default: 'pending'
+        default: 'approved'
     }
-}, {
-    timestamps: true
-});
+}, { timestamps: true });
 
 module.exports = mongoose.model('Candidate', candidateSchema);

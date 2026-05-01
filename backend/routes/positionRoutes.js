@@ -7,11 +7,11 @@ const {
 } = require('../controllers/positionController');
 const { protect, adminOnly } = require('../middleware/authMiddleware');
 
-// Admin routes
+// Admin only routes
 router.post('/', protect, adminOnly, createPosition);
 router.delete('/:id', protect, adminOnly, deletePosition);
 
-// Public (authenticated) routes
+// Authenticated users can view positions
 router.get('/election/:electionId', protect, getPositionsByElection);
 
 module.exports = router;

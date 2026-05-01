@@ -1,14 +1,9 @@
-// models/index.js
 const mongoose = require('mongoose');
-
-// Load all models
 require('./Student');
 require('./Election');
-require('./Position');  // This ensures Position model is registered
+require('./Position');
 require('./Candidate');
 require('./Vote');
-
-console.log('✅ All models loaded successfully');
 
 module.exports = {
     Student: mongoose.model('Student'),

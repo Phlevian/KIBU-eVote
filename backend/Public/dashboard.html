@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - KIBU Digital Democracy</title>
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="dashboard-container">
+        <header class="dashboard-header">
+            <div class="header-content">
+                <div class="header-left">
+                    <div class="logo">
+                        <img src="assets/images/logo.jpg" alt="KIBU Digital Democracy" class="logo-image">
+                        <div class="logo-text">
+                            <span class="main-text">Digital Democracy</span>
+                            <span class="sub-text">Student Voting Platform</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="header-center">
+                    <div class="countdown-timer">
+                        <div class="timer-icon"><i class="fas fa-clock"></i></div>
+                        <div class="timer-content">
+                            <div class="timer-label">VOTING ENDS IN:</div>
+                            <div class="timer-display" id="countdown-timer">2 days 14:32:45</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="header-right">
+                    <div class="user-profile">
+                        <div class="notification-bell" id="notification-bell"><i class="fas fa-bell"></i><span class="notification-badge">3</span></div>
+                        <div class="user-info" id="user-info">
+                            <div class="user-avatar"><img src="assets/images/default-avatar.jpg" alt="Student Avatar" id="user-avatar"></div>
+                            <div class="user-details"><span class="user-name" id="user-name">Loading...</span><span class="user-id" id="user-reg-number">KIBU/---/--</span></div>
+                        </div>
+                        <button class="logout-btn" id="logout-btn"><i class="fas fa-sign-out-alt"></i></button>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <div class="dashboard-body">
+            <nav class="sidebar">
+                <div class="sidebar-header"><h3 class="sidebar-title">Navigation</h3></div>
+                <ul class="nav-menu">
+                    <li class="nav-item active"><a href="#" class="nav-link"><div class="nav-icon"><i class="fas fa-home"></i></div><span class="nav-text">Dashboard</span></a></li>
+                    <li class="nav-item"><a href="voting.html" class="nav-link"><div class="nav-icon"><i class="fas fa-vote-yea"></i></div><span class="nav-text">Vote Now</span><span class="nav-badge new">New</span></a></li>
+                    <li class="nav-item"><a href="confirmation.html" class="nav-link"><div class="nav-icon"><i class="fas fa-history"></i></div><span class="nav-text">My Votes</span></a></li>
+                    <li class="nav-item"><a href="results.html" class="nav-link"><div class="nav-icon"><i class="fas fa-chart-bar"></i></div><span class="nav-text">Results</span></a></li>
+                    <li class="nav-item"><a href="elections.html" class="nav-link"><div class="nav-icon"><i class="fas fa-calendar-alt"></i></div><span class="nav-text">Elections</span></a></li>
+                    <li class="nav-item"><a href="settings.html" class="nav-link"><div class="nav-icon"><i class="fas fa-cog"></i></div><span class="nav-text">Settings</span></a></li>
+                </ul>
+                <div class="sidebar-divider"></div>
+                <div class="sidebar-stats">
+                    <div class="stat-item"><div class="stat-icon"><i class="fas fa-check-circle"></i></div><div class="stat-content"><div class="stat-value" id="votes-count">0</div><div class="stat-label">Total Votes</div></div></div>
+                    <div class="stat-item"><div class="stat-icon"><i class="fas fa-calendar-check"></i></div><div class="stat-content"><div class="stat-value" id="participation-rate">0%</div><div class="stat-label">Participation</div></div></div>
+                </div>
+                <div class="sidebar-divider"></div>
+                <div class="student-card" id="student-card">
+                    <div class="student-avatar"><img src="assets/images/default-avatar.jpg" alt="Student Avatar" id="student-avatar-img"></div>
+                    <div class="student-info"><div class="student-name" id="student-name">Loading...</div><div class="student-faculty" id="student-faculty">---</div><div class="student-year" id="student-year">Year --</div></div>
+                </div>
+                <div class="system-status"><div class="status-item"><span class="status-dot online"></span><span>System: <strong>Online</strong></span></div><div class="status-item"><span class="status-dot secure"></span><span>Security: <strong>Verified</strong></span></div></div>
+            </nav>
+            <main class="main-content">
+                <section class="welcome-section">
+                    <div class="welcome-card">
+                        <div class="welcome-content">
+                            <h1 id="welcome-title">Welcome back!</h1>
+                            <p>Your voice matters in shaping KIBU's future. Cast your vote in ongoing elections.</p>
+                            <button class="cta-button" id="quick-vote-btn"><i class="fas fa-vote-yea"></i><span>VOTE NOW</span><i class="fas fa-arrow-right"></i></button>
+                        </div>
+                        <div class="welcome-stats">
+                            <div class="stat-badge"><div class="stat-icon"><i class="fas fa-users"></i></div><div class="stat-content"><div class="stat-number" id="today-votes">0</div><div class="stat-label">students voted today</div></div></div>
+                            <div class="live-badge"><i class="fas fa-circle"></i><span>Live</span></div>
+                        </div>
+                    </div>
+                </section>
+                <section class="elections-section">
+                    <div class="section-header"><h2 class="section-title"><i class="fas fa-bullhorn"></i> Active Elections</h2><a href="elections.html" class="view-all">View All <i class="fas fa-arrow-right"></i></a></div>
+                    <div class="elections-grid" id="elections-grid">
+                        <div class="loading-elections">Loading active elections...</div>
+                    </div>
+                </section>
+                <!-- Quick Actions, Activity, Stats etc. (keep your existing sections) -->
+            </main>
+        </div>
+    </div>
+    <button class="mobile-menu-btn" id="mobileMenuBtn"><i class="fas fa-bars"></i></button>
+    <div class="loading-overlay" id="loading-overlay"><div class="loading-content"><div class="loading-spinner"></div><p>Loading your dashboard...</p></div></div>
+    <script src="js/dashboard.js"></script>
+</body>
+</html>
